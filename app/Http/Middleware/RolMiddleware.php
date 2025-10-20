@@ -8,18 +8,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RolMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle($request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, string $role): Response
     {
-        if (auth()->check() && auth()->user()->role === $role) {
+        // Pastikan pengguna sudah login
+        if (!auth()->check()) {
+            return redirect('/login'); 
+        }
+
+        $user = auth()->user();
+
+        if ($user->hasRole($role)) {
             return $next($request);
         }
 
-        abort(403, 'Unauthorized');
+        // Jika tidak memiliki role yang sesuai, kembalikan 403 Unauthorized
+        abort(403, 'Anda tidak memiliki akses untuk halaman ini.');
     }
-
 }

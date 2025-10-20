@@ -82,9 +82,12 @@ class User extends Authenticatable
         return $this->hasMany(TanggapanPengaduan::class, 'user_id', 'id_user');
     }
 
-    public function hasRole(string $roleName): bool
+   public function hasRole(string $roleName): bool
     {
-       
+        if ($this->role === $roleName) {
+             return true;
+        }
+
         return optional($this->role)->nama_role === $roleName;
     }
 

@@ -1,61 +1,85 @@
+{{-- resources/views/admin/sidebar.blade.php --}}
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
         <div class="sidebar-brand-icon rotate-n-15">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Logo_kementerian_keuangan_republik_indonesia.png/969px-Logo_kementerian_keuangan_republik_indonesia.png"
-                alt="Logo" style="height: 40px; width: 40px;">
+            <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">KPPN Yogyakarta</div>
+        <div class="sidebar-brand-text mx-3">SDMG Admin</div>
     </a>
 
-    <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+    <li class="nav-item active">
         <a class="nav-link" href="{{ route('admin.dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
+            <span>Dashboard Admin</span>
         </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
     <div class="sidebar-heading">
-        Manajement Pengguna
+        Manajemen Konten
     </div>
 
-    <!-- nav item kelola admin -->
-    <li class="nav-item {{ request()->routeIs('admin.admins.*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('admin.admins.index') }}">
-            <i class="fas fa-user-cog"></i>
-            <span>Kelola Admin</span>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMasterData"
+            aria-expanded="true" aria-controls="collapseMasterData">
+            <i class="fas fa-fw fa-database"></i>
+            <span>Master Data</span>
+        </a>
+        <div id="collapseMasterData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Pengelolaan Data:</h6>
+                <a class="collapse-item" href="#">Users & Roles</a>
+                <a class="collapse-item" href="#">Fasilitas</a>
+                <a class="collapse-item" href="#">Tenaga Pendidik</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKonten"
+            aria-expanded="true" aria-controls="collapseKonten">
+            <i class="fas fa-fw fa-clipboard-list"></i>
+            <span>Konten Sekolah</span>
+        </a>
+        <div id="collapseKonten" class="collapse" aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Kelola Tampilan Home:</h6>
+                <a class="collapse-item" href="#">Konten Home</a>
+                <a class="collapse-item" href="#">Program Kegiatan</a>
+                <a class="collapse-item" href="#">Prestasi</a>
+                <a class="collapse-item" href="#">Info PPDB</a>
+            </div>
+        </div>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <div class="sidebar-heading">
+        Layanan Pengaduan
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-headset"></i>
+            <span>Kelola Pengaduan</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-reply-all"></i>
+            <span>Laporan Tanggapan</span>
         </a>
     </li>
 
-    <!-- staf -->
-    <li class="nav-item {{ request()->routeIs('admin.staffs.*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('admin.staffs.index') }}">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Kelola Staf</span>
-        </a>
-    </li>
 
-    <!-- user -->
-    <li class="nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('admin.users.index') }}">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Kelola User</span>
-        </a>
-    </li>
-
-    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
-    <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>

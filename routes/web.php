@@ -3,20 +3,30 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Public & Base Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', function () {
     return view('home');
 });
 
-Route::middleware(['auth', 'verified'])->get('/dashboard', function () {
-    $role = auth()->user()->role;
+// Admin Dashboard - Dilindungi oleh middleware 'auth' dan 'role:Admin'
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard'); 
+    })->name('admin.dashboard');
+});
 
-    return match ($role) {
-        'admin' => redirect()->route('admin.dashboard'),
-        // 'staff' => redirect()->route('staff.dashboard'),
-        // 'user' => redirect()->route('user.dashboard'),
-        default => redirect('/'),
-    };
-})->name('dashboard');
+// User Dashboard - Dilindungi oleh middleware 'auth' dan 'role:User'
+Route::middleware(['auth', 'role:User'])->group(function () {
+    Route::get('/user/dashboard', function () {
+        return view('user.dashboard');
+    })->name('user.dashboard');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
