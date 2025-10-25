@@ -23,6 +23,7 @@ Route::get('/', function () {
 // Admin Dashboard - Dilindungi oleh middleware 'auth' dan 'role:Admin'
 Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
+
         return view('admin.dashboard');
     })->name('admin.dashboard');
 });

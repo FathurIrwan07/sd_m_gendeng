@@ -85,6 +85,10 @@ class User extends Authenticatable
     public function hasRole(string $roleName): bool
     {
 
+        if ($this->role === $roleName) {
+            return true;
+        }
+
         return optional($this->role)->nama_role === $roleName;
     }
 

@@ -11,24 +11,20 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
-     * Display the login view.
-     */
     public function create(): View
     {
         return view('auth.login');
     }
 
-    /**
-     * Handle an incoming authentication request.
-     */
+
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $request->authenticate(); 
 
         $request->session()->regenerate();
 
         $user = Auth::user();
+<<<<<<< HEAD
 
 
         if ($user->isAdmin()) {
@@ -38,6 +34,17 @@ class AuthenticatedSessionController extends Controller
         if ($user->isRegularUser()) {
             return redirect()->intended(route('user.dashboard'))->with('success', 'Login berhasil sebagai User.');
         }
+=======
+        
+        
+        if ($user->isAdmin()) {
+            return redirect()->intended(route('admin.dashboard'))->with('success', 'Login berhasil sebagai Admin.');
+        } 
+        
+        if ($user->isRegularUser()) {
+            return redirect()->intended(route('user.dashboard'))->with('success', 'Login berhasil sebagai User.');
+        } 
+>>>>>>> e4e1b8e1011162dbc977b11acc6a18c66c3dfaee
 
         Auth::logout();
         return redirect('/')->with('error', 'Role pengguna tidak dikenal.');

@@ -34,43 +34,47 @@
                 </div>
 
                 <button id="mobile-menu-button" class="sm:hidden text-white hover:text-indigo-400 focus:outline-none">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
 
-                <div class="hidden sm:flex space-x-2 lg:space-x-4">
-                    <a href="#"
-                        class="rounded-lg bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition">Home</a>
-                    <a href="#program"
-                        class="rounded-lg px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white transition">
-                        Program Kegiatan
-                    </a>
+                    <button id="mobile-menu-button"
+                        class="sm:hidden text-white hover:text-indigo-400 focus:outline-none">
 
-                    <div class="relative group flex items-center">
-                        <a href="#informasi"
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+
+                    <div class="hidden sm:flex space-x-2 lg:space-x-4">
+                        <a href="#"
+                            class="rounded-lg bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition">Home</a>
+                        <a href="#program"
                             class="rounded-lg px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white transition">
-                            Informasi <i
-                                class="fas fa-chevron-down text-xs ml-1 transition-transform duration-300 group-hover:rotate-180"></i>
+                            Program Kegiatan
                         </a>
-                        <div
-                            class="absolute left-0 mt-32 w-48 bg-white rounded-lg shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-50 overflow-hidden">
-                            <a href="#prestasi"
-                                class="block px-4 py-3 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">Prestasi</a>
-                            <a href="#ppdb"
-                                class="block px-4 py-3 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">Informasi
-                                PPDB</a>
+
+                        <div class="relative group flex items-center">
+                            <a href="#informasi"
+                                class="rounded-lg px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white transition">
+                                Informasi <i
+                                    class="fas fa-chevron-down text-xs ml-1 transition-transform duration-300 group-hover:rotate-180"></i>
+                            </a>
+                            <div
+                                class="absolute left-0 mt-32 w-48 bg-white rounded-lg shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-50 overflow-hidden">
+                                <a href="#prestasi"
+                                    class="block px-4 py-3 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">Prestasi</a>
+                                <a href="#ppdb"
+                                    class="block px-4 py-3 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">Informasi
+                                    PPDB</a>
+                            </div>
                         </div>
+
+
+                        <a href="#tentang-kami"
+                            class="rounded-lg px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white transition">
+                            Tentang Kami
+                        </a>
+                        <a href="{{ route('login') }}"
+                            class="rounded-lg bg-green-500 px-3 py-2 text-sm font-medium text-white shadow-md hover:bg-green-600 transition transform hover:scale-105">
+                            Layanan Pengaduan
+                        </a>
                     </div>
-
-
-                    <a href="#tentang-kami"
-                        class="rounded-lg px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white transition">
-                        Tentang Kami
-                    </a>
-                    <a href="{{ route('login') }}"
-                        class="rounded-lg bg-green-500 px-3 py-2 text-sm font-medium text-white shadow-md hover:bg-green-600 transition transform hover:scale-105">
-                        Layanan Pengaduan
-                    </a>
-                </div>
             </div>
         </div>
     </nav>
@@ -125,24 +129,28 @@
 
             <div class="w-full md:w-2/3 text-gray-800">
                 <h3 class="text-4xl font-extrabold mb-4 text-gray-900 border-b-4 border-indigo-500 pb-2 inline-block">
-                    Sambutan Kepala Sekolah</h3>
-                <p class="text-lg leading-relaxed mb-4">
-                    Assalamu’alaikum warahmatullahi wabarakatuh.
-                </p>
-                <p class="text-lg leading-relaxed mb-4">
-                    Puji syukur kita panjatkan ke hadirat Allah SWT atas limpahan rahmat dan karunia-Nya.
-                    SD Muhammadiyah Gendeng berkomitmen untuk menjadi lembaga pendidikan yang **unggul dalam
-                    pembentukan karakter Islami**, penguasaan ilmu pengetahuan, dan pengembangan potensi siswa.
-                </p>
-                <p class="text-lg leading-relaxed mb-4 italic text-indigo-700">
-                    Kami berupaya menciptakan lingkungan belajar yang menyenangkan, kreatif, dan berakhlak
-                    mulia agar setiap peserta didik dapat tumbuh menjadi generasi yang beriman, cerdas, dan peduli.
-                </p>
-                <p class="text-lg leading-relaxed font-semibold">
-                    Wassalamu’alaikum warahmatullahi wabarakatuh.<br>
-                    <span class="block mt-4 text-gray-700">Kepala Sekolah</span>
-                    <span class="block text-indigo-700 font-extrabold text-xl">Nama Kepala Sekolah</span>
-                </p>
+
+                    <h3
+                        class="text-4xl font-extrabold mb-4 text-gray-900 border-b-4 border-indigo-500 pb-2 inline-block">
+
+                        Sambutan Kepala Sekolah</h3>
+                    <p class="text-lg leading-relaxed mb-4">
+                        Assalamu’alaikum warahmatullahi wabarakatuh.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-4">
+                        Puji syukur kita panjatkan ke hadirat Allah SWT atas limpahan rahmat dan karunia-Nya.
+                        SD Muhammadiyah Gendeng berkomitmen untuk menjadi lembaga pendidikan yang **unggul dalam
+                        pembentukan karakter Islami**, penguasaan ilmu pengetahuan, dan pengembangan potensi siswa.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-4 italic text-indigo-700">
+                        Kami berupaya menciptakan lingkungan belajar yang menyenangkan, kreatif, dan berakhlak
+                        mulia agar setiap peserta didik dapat tumbuh menjadi generasi yang beriman, cerdas, dan peduli.
+                    </p>
+                    <p class="text-lg leading-relaxed font-semibold">
+                        Wassalamu’alaikum warahmatullahi wabarakatuh.<br>
+                        <span class="block mt-4 text-gray-700">Kepala Sekolah</span>
+                        <span class="block text-indigo-700 font-extrabold text-xl">Nama Kepala Sekolah</span>
+                    </p>
             </div>
         </div>
     </section>
@@ -250,23 +258,26 @@
                 <div id="prestasi" class="p-6 bg-indigo-800 rounded-xl shadow-2xl">
                     <h3 class="text-3xl font-bold mb-4 flex items-center"><i
                             class="fas fa-trophy mr-3 text-yellow-400"></i>
-                        Prestasi Terbaru</h3>
-                    <div class="space-y-4">
-                        <div class="bg-indigo-700 p-4 rounded-lg flex items-center">
-                            <i class="fas fa-medal text-2xl text-yellow-400 mr-4"></i>
-                            <div>
-                                <p class="font-semibold text-lg">Juara 1 Lomba Tahfidz Quran (Tingkat Kota)</p>
-                                <p class="text-sm text-indigo-200">Diraih oleh Ananda Ahmad Zaki, Kelas V</p>
+
+                        <h3 class="text-3xl font-bold mb-4 flex items-center"><i
+                                class="fas fa-trophy mr-3 text-yellow-400"></i>
+                            Prestasi Terbaru</h3>
+                        <div class="space-y-4">
+                            <div class="bg-indigo-700 p-4 rounded-lg flex items-center">
+                                <i class="fas fa-medal text-2xl text-yellow-400 mr-4"></i>
+                                <div>
+                                    <p class="font-semibold text-lg">Juara 1 Lomba Tahfidz Quran (Tingkat Kota)</p>
+                                    <p class="text-sm text-indigo-200">Diraih oleh Ananda Ahmad Zaki, Kelas V</p>
+                                </div>
+                            </div>
+                            <div class="bg-indigo-700 p-4 rounded-lg flex items-center">
+                                <i class="fas fa-medal text-2xl text-yellow-400 mr-4"></i>
+                                <div>
+                                    <p class="font-semibold text-lg">Medali Perak Olimpiade Sains Nasional (OSN)</p>
+                                    <p class="text-sm text-indigo-200">Kategori Matematika, Ananda Budi, Kelas VI</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="bg-indigo-700 p-4 rounded-lg flex items-center">
-                            <i class="fas fa-medal text-2xl text-yellow-400 mr-4"></i>
-                            <div>
-                                <p class="font-semibold text-lg">Medali Perak Olimpiade Sains Nasional (OSN)</p>
-                                <p class="text-sm text-indigo-200">Kategori Matematika, Ananda Budi, Kelas VI</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -303,7 +314,17 @@
             <div>
                 <h3 class="text-xl font-extrabold text-white mb-4 border-b border-indigo-500 pb-2">Sosial Media</h3>
                 <div class="flex space-x-6 text-3xl">
+
                     <a href="#" class="text-gray-400 hover:text-blue-500 transition transform hover:scale-110"
+                        aria-label="Facebook">
+                        <i class="fab fa-facebook-square"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-pink-500 transition transform hover:scale-110"
+                        aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-red-500 transition transform hover:scale-110" <a
+                        href="#" class="text-gray-400 hover:text-blue-500 transition transform hover:scale-110"
                         aria-label="Facebook">
                         <i class="fab fa-facebook-square"></i>
                     </a>
