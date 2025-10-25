@@ -6,14 +6,34 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>KPPN Yogya - Login</title>
 
-    <!-- Fonts and Styles -->
+    <title>SD Muhammadiyah Gendeng - Layanan Pengaduan</title>
+
     <link href="{{ asset('template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet">
     <link href="{{ asset('template/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-    <!-- SweetAlert -->
+    {{-- Tambahan: Ubah warna background primary jadi merah marun --}}
+    <style>
+        .bg-gradient-primary {
+            background-color: #800000 !important;
+            /* Merah marun solid */
+            background-image: linear-gradient(180deg, #800000 10%, #4b0000 100%) !important;
+            /* Gradasi merah ke coklat gelap */
+            background-size: cover;
+        }
+
+        .btn-primary {
+            background-color: #800000 !important;
+            border-color: #660000 !important;
+        }
+
+        .btn-primary:hover {
+            background-color: #990000 !important;
+            border-color: #660000 !important;
+        }
+    </style>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -34,7 +54,9 @@
 
     @if ($errors->any())
         <script>
-            Swal.fire("Terjadi Kesalahan", "@foreach ($errors->all() as $error) {{ $error }}{{ !$loop->last ? ', ' : '' }} @endforeach", "error");
+            Swal.fire("Terjadi Kesalahan",
+                "@foreach ($errors->all() as $error) {{ $error }}{{ !$loop->last ? ', ' : '' }} @endforeach",
+                "error");
         </script>
     @endif
 
@@ -45,19 +67,20 @@
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <div class="row">
+                            {{-- Gambar dan teks alternatif --}}
                             <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center p-4">
-                                <img src="{{ asset('template/img/logoKPPN.png') }}" class="img-fluid"
-                                    style="max-height: 300px;" alt="Logo">
+                                <img src="{{ asset('template/img/logo_sd_gendeng.jpg') }}" class="img-fluid"
+                                    style="max-height: 300px;" alt="Logo SD Muhammadiyah Gendeng">
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center mb-4">
-                                        <h1 class="h4 text-gray-900">Login Akun</h1>
-
+                                        <h1 class="h8 text-gray-900">Welcome</h1>
+                                        <h1 class="h4 text-gray-900">Silahkan Login terlebih dahulu</h1>
                                     </div>
 
-                                    {{-- Form login dengan route Breeze --}}
+                                    {{-- Form login --}}
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
 
@@ -88,18 +111,6 @@
 
                                     <hr>
 
-                                    <!-- @if (Route::has('password.request'))
-                                        <div class="text-center">
-                                            <a class="small" href="{{ route('password.request') }}">Forgot Password?</a>
-                                        </div>
-                                    @endif -->
-
-                                    {{-- @if (Route::has('register'))
-                                    <div class="text-center">
-                                        <a class="small" href="{{ route('register') }}">Create an Account!</a>
-                                    </div>
-                                    @endif --}}
-
                                 </div>
                             </div>
                         </div>
@@ -109,7 +120,6 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="{{ asset('template/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('template/vendor/jquery-easing/jquery.easing.min.js') }}"></script>

@@ -13,7 +13,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'users';
-    protected $primaryKey = 'id_user'; 
+    protected $primaryKey = 'id_user';
     public $incrementing = true;
     protected $keyType = 'int';
 
@@ -84,7 +84,7 @@ class User extends Authenticatable
 
     public function hasRole(string $roleName): bool
     {
-       
+
         return optional($this->role)->nama_role === $roleName;
     }
 
