@@ -133,11 +133,10 @@ class KegiatanController extends Controller
             ->with('success', 'Program kegiatan berhasil dihapus.');
     }
 
-    /**
-     * Delete photo from kegiatan
-     */
-    public function deletePhoto(Kegiatan $kegiatan)
+    public function deletePhoto($id_kegiatan)
     {
+        $kegiatan = Kegiatan::where('id_kegiatan', $id_kegiatan)->firstOrFail();
+        
         if ($kegiatan->foto_program) {
             Storage::disk('public')->delete($kegiatan->foto_program);
             $kegiatan->update(['foto_program' => null]);

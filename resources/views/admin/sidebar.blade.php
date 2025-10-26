@@ -1,9 +1,7 @@
 {{-- resources/views/admin/sidebar.blade.php --}}
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    {{-- Tambahkan CSS di atas atau di layout utama --}}
     <style>
-        /* === Ubah warna sidebar jadi merah marun === */
         .bg-gradient-primary {
             background-color: #800000 !important;
             background-image: linear-gradient(180deg, #800000 10%, #4b0000 100%) !important;
@@ -27,6 +25,7 @@
         }
     </style>
 
+    <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
         <div class="sidebar-brand-icon rotate-n-15">
             <img src="{{ asset('template/img/logo_sd_gendeng.jpg') }}" class="img-fluid" alt="Logo"
@@ -56,12 +55,19 @@
             <i class="fas fa-fw fa-database"></i>
             <span>Master Data</span>
         </a>
-        <div id="collapseMasterData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseMasterData" class="collapse {{ Request::is('admin/fasilitas*') || Request::is('admin/tenaga-pendidik*') ? 'show' : '' }}" 
+             aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Pengelolaan Data:</h6>
                 <a class="collapse-item" href="#">Users & Roles</a>
-                <a class="collapse-item" href="#">Fasilitas</a>
-                <a class="collapse-item" href="#">Tenaga Pendidik</a>
+                <a class="collapse-item {{ Request::is('admin/fasilitas*') ? 'active' : '' }}" 
+                   href="{{ route('fasilitas.index') }}">
+                    <i class="fas fa-building"></i> Fasilitas
+                </a>
+                <a class="collapse-item {{ Request::is('admin/tenaga-pendidik*') ? 'active' : '' }}" 
+                   href="{{ route('tenaga-pendidik.index') }}">
+                    <i class="fas fa-chalkboard-teacher"></i> Tenaga Pendidik
+                </a>
             </div>
         </div>
     </li>
@@ -72,44 +78,29 @@
             <i class="fas fa-fw fa-clipboard-list"></i>
             <span>Konten Sekolah</span>
         </a>
-        {{-- **Logika 'show' hanya untuk 3 menu yang diminta** --}}
-        <div id="collapseKonten" 
-            class="collapse {{ 
-                Request::is('admin/konten-home*') || 
-                Request::is('admin/kategori-kegiatan*') || 
-                Request::is('admin/program-kegiatan*') 
-                ? 'show' : '' 
-            }}" 
-            aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="collapseKonten" class="collapse {{ Request::is('admin/konten-home*') || Request::is('admin/kategori-kegiatan*') || Request::is('admin/kegiatan*') || Request::is('admin/prestasi*') || Request::is('admin/info-ppdb*') ? 'show' : '' }}" 
+             aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Kelola Tampilan Home:</h6>
-                
-                {{-- Konten Home (Active Logic) --}}
                 <a class="collapse-item {{ Request::is('admin/konten-home*') ? 'active' : '' }}" 
-                    href="{{ route('konten-home.index') }}">
+                   href="{{ route('konten-home.index') }}">
                     <i class="fas fa-home"></i> Konten Home
                 </a>
-                
-                {{-- Kategori Kegiatan (Active Logic) --}}
                 <a class="collapse-item {{ Request::is('admin/kategori-kegiatan*') ? 'active' : '' }}" 
-                    href="{{ route('kategori-kegiatan.index') }}">
+                   href="{{ route('kategori-kegiatan.index') }}">
                     <i class="fas fa-tags"></i> Kategori Kegiatan
                 </a>
-                
-                {{-- Program Kegiatan (Active Logic) --}}
-                <a class="collapse-item {{ Request::is('admin/program-kegiatan*') ? 'active' : '' }}" 
-                    href="{{ route('kegiatan.index') }}">
-                    <i class="fas fa-puzzle-piece"></i> Program Kegiatan
+                <a class="collapse-item {{ Request::is('admin/kegiatan*') ? 'active' : '' }}" 
+                   href="{{ route('kegiatan.index') }}">
+                    <i class="fas fa-clipboard-list"></i> Program Kegiatan
                 </a>
-                
-                {{-- Prestasi (Default Link) --}}
-                <a class="collapse-item" href="#">
+                <a class="collapse-item {{ Request::is('admin/prestasi*') ? 'active' : '' }}" 
+                   href="{{ route('prestasi.index') }}">
                     <i class="fas fa-trophy"></i> Prestasi
                 </a>
-                
-                {{-- Info PPDB (Default Link) --}}
-                <a class="collapse-item" href="#">
-                    <i class="fas fa-bullhorn"></i> Info PPDB
+                <a class="collapse-item {{ Request::is('admin/info-ppdb*') ? 'active' : '' }}" 
+                   href="{{ route('info-ppdb.index') }}">
+                    <i class="fas fa-school"></i> Info PPDB
                 </a>
             </div>
         </div>

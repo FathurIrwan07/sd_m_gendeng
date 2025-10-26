@@ -1,14 +1,14 @@
-{{-- resources/views/admin/kegiatan/show.blade.php --}}
+{{-- resources/views/admin/prestasi/show.blade.php --}}
 @extends('admin.app')
 
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Detail Program Kegiatan</h1>
+    <h1 class="h3 mb-0 text-gray-800">Detail Prestasi</h1>
     <div>
-        <a href="{{ route('kegiatan.edit', $kegiatan->id_kegiatan) }}" class="btn btn-sm btn-warning shadow-sm mr-2">
+        <a href="{{ route('prestasi.edit', $prestasi->id_prestasi) }}" class="btn btn-sm btn-warning shadow-sm mr-2">
             <i class="fas fa-edit fa-sm text-white-50"></i> Edit
         </a>
-        <a href="{{ route('kegiatan.index') }}" class="btn btn-sm btn-secondary shadow-sm">
+        <a href="{{ route('prestasi.index') }}" class="btn btn-sm btn-secondary shadow-sm">
             <i class="fas fa-arrow-left fa-sm text-white-50"></i> Kembali
         </a>
     </div>
@@ -18,36 +18,35 @@
     <div class="col-lg-8">
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="background: linear-gradient(135deg, #800000 0%, #4b0000 100%);">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-white">
-                        <i class="fas fa-clipboard-list"></i> {{ $kegiatan->nama_program }}
-                    </h6>
-                    <span class="badge badge-light">{{ $kegiatan->kategori->nama_kategori }}</span>
-                </div>
+                <h6 class="m-0 font-weight-bold text-white">
+                    <i class="fas fa-trophy"></i> {{ $prestasi->judul_prestasi }}
+                </h6>
             </div>
             <div class="card-body">
-                @if($kegiatan->foto_program)
+                @if($prestasi->gambar)
                 <div class="text-center mb-4">
-                    <img src="{{ asset('storage/' . $kegiatan->foto_program) }}" 
-                         alt="{{ $kegiatan->nama_program }}" 
+                    <img src="{{ asset('storage/' . $prestasi->gambar) }}" 
+                         alt="{{ $prestasi->judul_prestasi }}" 
                          class="img-fluid rounded shadow"
                          style="max-height: 400px; object-fit: cover; width: 100%;">
                 </div>
                 @endif
 
-                <h3 class="text-primary mb-3">{{ $kegiatan->nama_program }}</h3>
+                <h3 class="text-primary mb-3">{{ $prestasi->judul_prestasi }}</h3>
                 
+                @if($prestasi->tanggal)
                 <div class="mb-3">
-                    <span class="badge badge-{{ $kegiatan->kategori->nama_kategori === 'Ekstrakurikuler' ? 'primary' : ($kegiatan->kategori->nama_kategori === 'Rutin' ? 'success' : 'warning') }} badge-lg px-3 py-2">
-                        <i class="fas fa-tag"></i> {{ $kegiatan->kategori->nama_kategori }}
+                    <span class="badge badge-info badge-lg px-3 py-2">
+                        <i class="fas fa-calendar"></i> {{ $prestasi->tanggal->format('d F Y') }}
                     </span>
                 </div>
+                @endif
 
                 <hr>
 
-                <h5 class="font-weight-bold mb-3">Deskripsi Program:</h5>
+                <h5 class="font-weight-bold mb-3">Deskripsi Prestasi:</h5>
                 <div class="content-display">
-                    <p class="text-justify" style="font-size: 1.05rem; line-height: 1.8; white-space: pre-line;">{{ $kegiatan->deskripsi }}</p>
+                    <p class="text-justify" style="font-size: 1.05rem; line-height: 1.8; white-space: pre-line;">{{ $prestasi->deskripsi }}</p>
                 </div>
             </div>
         </div>
@@ -57,18 +56,18 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <a href="{{ route('kegiatan.edit', $kegiatan->id_kegiatan) }}" class="btn btn-warning">
-                            <i class="fas fa-edit"></i> Edit Program
+                        <a href="{{ route('prestasi.edit', $prestasi->id_prestasi) }}" class="btn btn-warning">
+                            <i class="fas fa-edit"></i> Edit Prestasi
                         </a>
                         <button type="button" 
                                 class="btn btn-danger" 
                                 data-toggle="modal" 
                                 data-target="#deleteModal">
-                            <i class="fas fa-trash"></i> Hapus Program
+                            <i class="fas fa-trash"></i> Hapus Prestasi
                         </button>
                     </div>
-                    <a href="{{ route('kegiatan.index') }}" class="btn btn-secondary">
-                        <i class="fas fa-list"></i> Lihat Semua Program
+                    <a href="{{ route('prestasi.index') }}" class="btn btn-secondary">
+                        <i class="fas fa-list"></i> Lihat Semua Prestasi
                     </a>
                 </div>
             </div>
@@ -80,39 +79,41 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="background-color: #800000;">
                 <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-info-circle"></i> Informasi Program
+                    <i class="fas fa-info-circle"></i> Informasi Prestasi
                 </h6>
             </div>
             <div class="card-body">
+                @if($prestasi->tanggal)
                 <div class="mb-3">
-                    <small class="text-muted">Kategori:</small><br>
-                    <span class="badge badge-primary badge-lg">{{ $kegiatan->kategori->nama_kategori }}</span>
+                    <small class="text-muted">Tanggal Prestasi:</small><br>
+                    <strong>{{ $prestasi->tanggal->format('d F Y') }}</strong>
                 </div>
+                @endif
 
                 <div class="mb-3">
                     <small class="text-muted">Dibuat Pada:</small><br>
-                    <strong>{{ $kegiatan->created_at->format('d F Y') }}</strong><br>
-                    <small>{{ $kegiatan->created_at->format('H:i') }} WIB</small>
+                    <strong>{{ $prestasi->created_at->format('d F Y') }}</strong><br>
+                    <small>{{ $prestasi->created_at->format('H:i') }} WIB</small>
                 </div>
 
                 <div class="mb-3">
                     <small class="text-muted">Terakhir Diperbarui:</small><br>
-                    <strong>{{ $kegiatan->updated_at->format('d F Y') }}</strong><br>
-                    <small>{{ $kegiatan->updated_at->format('H:i') }} WIB</small><br>
-                    <small class="text-info">({{ $kegiatan->updated_at->diffForHumans() }})</small>
+                    <strong>{{ $prestasi->updated_at->format('d F Y') }}</strong><br>
+                    <small>{{ $prestasi->updated_at->format('H:i') }} WIB</small><br>
+                    <small class="text-info">({{ $prestasi->updated_at->diffForHumans() }})</small>
                 </div>
 
-                @if($kegiatan->user)
+                @if($prestasi->user)
                 <div class="mb-3">
                     <small class="text-muted">Terakhir Diubah Oleh:</small><br>
                     <div class="d-flex align-items-center mt-2">
                         <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mr-2" 
                              style="width: 40px; height: 40px;">
-                            <strong>{{ substr($kegiatan->user->name, 0, 1) }}</strong>
+                            <strong>{{ substr($prestasi->user->name, 0, 1) }}</strong>
                         </div>
                         <div>
-                            <strong>{{ $kegiatan->user->name }}</strong><br>
-                            <small class="text-muted">{{ $kegiatan->user->email }}</small>
+                            <strong>{{ $prestasi->user->name }}</strong><br>
+                            <small class="text-muted">{{ $prestasi->user->email }}</small>
                         </div>
                     </div>
                 </div>
@@ -121,14 +122,14 @@
                 <hr>
 
                 <div class="mb-0">
-                    <small class="text-muted">Status Foto:</small><br>
-                    @if($kegiatan->foto_program)
+                    <small class="text-muted">Status Gambar:</small><br>
+                    @if($prestasi->gambar)
                     <span class="badge badge-success">
-                        <i class="fas fa-check-circle"></i> Ada Foto
+                        <i class="fas fa-check-circle"></i> Ada Gambar
                     </span>
                     @else
                     <span class="badge badge-secondary">
-                        <i class="fas fa-times-circle"></i> Tanpa Foto
+                        <i class="fas fa-times-circle"></i> Tanpa Gambar
                     </span>
                     @endif
                 </div>
@@ -144,9 +145,9 @@
             </div>
             <div class="card-body text-center">
                 <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
-                <h6>Program Sudah Dipublikasikan</h6>
+                <h6>Prestasi Sudah Dipublikasikan</h6>
                 <p class="small text-muted mb-0">
-                    Program ini akan tampil di halaman website
+                    Prestasi ini akan tampil di halaman website
                 </p>
             </div>
         </div>
@@ -161,30 +162,14 @@
             <div class="card-body">
                 <div class="row text-center">
                     <div class="col-6 border-right">
-                        <h4 class="text-primary">{{ str_word_count($kegiatan->deskripsi) }}</h4>
+                        <h4 class="text-primary">{{ str_word_count($prestasi->deskripsi) }}</h4>
                         <small class="text-muted">Kata</small>
                     </div>
                     <div class="col-6">
-                        <h4 class="text-success">{{ strlen($kegiatan->deskripsi) }}</h4>
+                        <h4 class="text-success">{{ strlen($prestasi->deskripsi) }}</h4>
                         <small class="text-muted">Karakter</small>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Related Category -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-link"></i> Kategori Terkait
-                </h6>
-            </div>
-            <div class="card-body">
-                <a href="{{ route('kategori-kegiatan.show', $kegiatan->kategori->id_kategori) }}" 
-                   class="btn btn-outline-primary btn-block">
-                    <i class="fas fa-folder-open"></i> 
-                    Lihat Semua Program {{ $kegiatan->kategori->nama_kategori }}
-                </a>
             </div>
         </div>
     </div>
@@ -206,18 +191,18 @@
                     <strong>Peringatan!</strong> 
                     Tindakan ini tidak dapat dibatalkan.
                 </div>
-                <p>Apakah Anda yakin ingin menghapus program <strong>{{ $kegiatan->nama_program }}</strong>?</p>
-                @if($kegiatan->foto_program)
-                <p class="mb-0"><small class="text-muted">* Foto yang terlampir juga akan dihapus</small></p>
+                <p>Apakah Anda yakin ingin menghapus prestasi <strong>{{ $prestasi->judul_prestasi }}</strong>?</p>
+                @if($prestasi->gambar)
+                <p class="mb-0"><small class="text-muted">* Gambar yang terlampir juga akan dihapus</small></p>
                 @endif
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                <form action="{{ route('kegiatan.destroy', $kegiatan->id_kegiatan) }}" method="POST">
+                <form action="{{ route('prestasi.destroy', $prestasi->id_prestasi) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">
-                        <i class="fas fa-trash"></i> Ya, Hapus Program
+                        <i class="fas fa-trash"></i> Ya, Hapus Prestasi
                     </button>
                 </form>
             </div>
