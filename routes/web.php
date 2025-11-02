@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\KontenHomeController;
 use App\Http\Controllers\KategoriKegiatanController;
 use App\Http\Controllers\KegiatanController;
@@ -26,6 +27,21 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    // Users Management Routes
+    Route::resource('admin/users', UserController::class)->names([
+        'index' => 'users.index',
+        'create' => 'users.create',
+        'store' => 'users.store',
+        'show' => 'users.show',
+        'edit' => 'users.edit',
+        'update' => 'users.update',
+        'destroy' => 'users.destroy',
+    ]);
+    
+    // Route untuk reset password user
+    Route::post('admin/users/{user}/reset-password', [UserController::class, 'resetPassword'])
+        ->name('users.reset-password');
 
     // Konten Home Routes
     Route::resource('admin/konten-home', KontenHomeController::class)->names([
@@ -104,7 +120,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         'destroy' => 'tenaga-pendidik.destroy',
     ]);
     
-    // Route tambahan untuk hapus foto
+    // Route tambahan untuk hapus foto/gambar
     Route::delete('admin/konten-home/{kontenHome}/delete-photo', [KontenHomeController::class, 'deletePhoto'])
         ->name('konten-home.delete-photo');
     Route::delete('admin/kegiatan/{id}/delete-photo', [KegiatanController::class, 'deletePhoto'])
