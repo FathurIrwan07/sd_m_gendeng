@@ -1,16 +1,13 @@
-{{-- resources/views/admin/sidebar.blade.php --}}
+{{-- resources/views/user/sidebar.blade.php --}}
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    {{-- CSS sidebar bisa dipindahkan ke file CSS utama agar lebih bersih --}}
     <style>
-        /* === Warna sidebar merah marun === */
         .bg-gradient-primary {
             background-color: #800000 !important;
             background-image: linear-gradient(180deg, #800000 10%, #4b0000 100%) !important;
             background-size: cover;
         }
 
-        /* Efek hover dan aktif */
         .sidebar .nav-item .nav-link:hover {
             background-color: rgba(255, 255, 255, 0.15);
         }
@@ -19,7 +16,6 @@
             background-color: rgba(255, 255, 255, 0.25);
         }
 
-        /* Tombol toggle */
         #sidebarToggle {
             background-color: #660000 !important;
         }
@@ -41,32 +37,60 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item {{ Request::is('user/dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('user.dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard Pengaduan</span>
+            <span>Dashboard</span>
         </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
     <div class="sidebar-heading">Layanan Pengaduan</div>
 
-    <!-- Form Pengaduan -->
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fas fa-fw fa-headset"></i>
-            <span>Form Pengaduan</span>
+    <!-- Riwayat Pengaduan -->
+    <li class="nav-item {{ Request::is('user/pengaduan') && !Request::is('user/pengaduan/create') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('user.pengaduan.index') }}">
+            <i class="fas fa-fw fa-list"></i>
+            <span>Riwayat Pengaduan</span>
         </a>
     </li>
 
-    <!-- Divider -->
+    <!-- Form Pengaduan -->
+    <li class="nav-item {{ Request::is('user/pengaduan/create') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('user.pengaduan.create') }}">
+            <i class="fas fa-fw fa-edit"></i>
+            <span>Buat Pengaduan Baru</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">Lainnya</div>
+
+    <!-- Pengaduan Anonim -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('pengaduan.anonim.create') }}" target="_blank">
+            <i class="fas fa-fw fa-user-secret"></i>
+            <span>Pengaduan Anonim</span>
+        </a>
+    </li>
+
+    <!-- Pengaduan Publik -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('pengaduan.public.index') }}" target="_blank">
+            <i class="fas fa-fw fa-globe"></i>
+            <span>Lihat Pengaduan Publik</span>
+        </a>
+    </li>
+
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
+
 </ul>

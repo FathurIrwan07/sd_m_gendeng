@@ -9,27 +9,50 @@ use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\InfoPpdbController;
 use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\TenagaPendidikController;
+use App\Http\Controllers\KategoriPengaduanController;
+use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\TanggapanPengaduanController;
+use App\Http\Controllers\UserPengaduanController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+// ============================================
+// HOME / LANDING PAGE
+// ============================================
 Route::get('/', function () {
     if (Auth::check()) {
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
     }
-
     return view('home');
-});
+})->name('home');
 
-// Admin Dashboard - Dilindungi oleh middleware 'auth' dan 'role:Admin'
-Route::middleware(['auth', 'role:Admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+// ============================================
+// ROUTES PUBLIK (TANPA AUTH)
+// ============================================
 
-    // Users Management Routes
-    Route::resource('admin/users', UserController::class)->names([
+// Pengaduan Publik - Lihat daftar pengaduan
+Route::get('/pengaduan/public', [UserPengaduanController::class, 'publicIndex'])
+    ->name('pengaduan.public.index');
+
+// Pengaduan Anonim - Form & Store
+Route::get('/pengaduan/anonim/create', [UserPengaduanController::class, 'createAnonim'])
+    ->name('pengaduan.anonim.create');
+Route::post('/pengaduan/anonim', [UserPengaduanController::class, 'storeAnonim'])
+    ->name('pengaduan.anonim.store');
+
+// ============================================
+// ADMIN ROUTES - PREFIX: /admin
+// ============================================
+Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function () {
+    
+    // Dashboard Admin
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    // ========== USERS MANAGEMENT ==========
+    Route::resource('users', UserController::class)->names([
         'index' => 'users.index',
         'create' => 'users.create',
         'store' => 'users.store',
@@ -38,13 +61,11 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         'update' => 'users.update',
         'destroy' => 'users.destroy',
     ]);
-    
-    // Route untuk reset password user
-    Route::post('admin/users/{user}/reset-password', [UserController::class, 'resetPassword'])
+    Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])
         ->name('users.reset-password');
 
-    // Konten Home Routes
-    Route::resource('admin/konten-home', KontenHomeController::class)->names([
+    // ========== KONTEN HOME ==========
+    Route::resource('konten-home', KontenHomeController::class)->names([
         'index' => 'konten-home.index',
         'create' => 'konten-home.create',
         'store' => 'konten-home.store',
@@ -53,9 +74,11 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         'update' => 'konten-home.update',
         'destroy' => 'konten-home.destroy',
     ]);
+    Route::delete('konten-home/{kontenHome}/delete-photo', [KontenHomeController::class, 'deletePhoto'])
+        ->name('konten-home.delete-photo');
 
-    // Kategori Kegiatan Routes
-    Route::resource('admin/kategori-kegiatan', KategoriKegiatanController::class)->names([
+    // ========== KATEGORI KEGIATAN ==========
+    Route::resource('kategori-kegiatan', KategoriKegiatanController::class)->names([
         'index' => 'kategori-kegiatan.index',
         'create' => 'kategori-kegiatan.create',
         'store' => 'kategori-kegiatan.store',
@@ -64,9 +87,9 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         'update' => 'kategori-kegiatan.update',
         'destroy' => 'kategori-kegiatan.destroy',
     ]);
-    
-    // Program Kegiatan Routes
-    Route::resource('admin/kegiatan', KegiatanController::class)->names([
+
+    // ========== PROGRAM KEGIATAN ==========
+    Route::resource('kegiatan', KegiatanController::class)->names([
         'index' => 'kegiatan.index',
         'create' => 'kegiatan.create',
         'store' => 'kegiatan.store',
@@ -75,9 +98,11 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         'update' => 'kegiatan.update',
         'destroy' => 'kegiatan.destroy',
     ]);
+    Route::delete('kegiatan/{id}/delete-photo', [KegiatanController::class, 'deletePhoto'])
+        ->name('kegiatan.delete-photo');
 
-    // Prestasi Routes
-    Route::resource('admin/prestasi', PrestasiController::class)->names([
+    // ========== PRESTASI ==========
+    Route::resource('prestasi', PrestasiController::class)->names([
         'index' => 'prestasi.index',
         'create' => 'prestasi.create',
         'store' => 'prestasi.store',
@@ -86,9 +111,11 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         'update' => 'prestasi.update',
         'destroy' => 'prestasi.destroy',
     ]);
-    
-    // Info PPDB Routes
-    Route::resource('admin/info-ppdb', InfoPpdbController::class)->names([
+    Route::delete('prestasi/{id}/delete-photo', [PrestasiController::class, 'deletePhoto'])
+        ->name('prestasi.delete-photo');
+
+    // ========== INFO PPDB ==========
+    Route::resource('info-ppdb', InfoPpdbController::class)->names([
         'index' => 'info-ppdb.index',
         'create' => 'info-ppdb.create',
         'store' => 'info-ppdb.store',
@@ -97,9 +124,11 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         'update' => 'info-ppdb.update',
         'destroy' => 'info-ppdb.destroy',
     ]);
+    Route::delete('info-ppdb/{id}/delete-brosur', [InfoPpdbController::class, 'deleteBrosur'])
+        ->name('info-ppdb.delete-brosur');
 
-    // Fasilitas Routes
-    Route::resource('admin/fasilitas', FasilitasController::class)->names([
+    // ========== FASILITAS ==========
+    Route::resource('fasilitas', FasilitasController::class)->names([
         'index' => 'fasilitas.index',
         'create' => 'fasilitas.create',
         'store' => 'fasilitas.store',
@@ -108,9 +137,11 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         'update' => 'fasilitas.update',
         'destroy' => 'fasilitas.destroy',
     ]);
+    Route::delete('fasilitas/{id}/delete-gambar', [FasilitasController::class, 'deleteGambar'])
+        ->name('fasilitas.delete-gambar');
 
-    // Tenaga Pendidik Routes
-    Route::resource('admin/tenaga-pendidik', TenagaPendidikController::class)->names([
+    // ========== TENAGA PENDIDIK ==========
+    Route::resource('tenaga-pendidik', TenagaPendidikController::class)->names([
         'index' => 'tenaga-pendidik.index',
         'create' => 'tenaga-pendidik.create',
         'store' => 'tenaga-pendidik.store',
@@ -119,33 +150,70 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         'update' => 'tenaga-pendidik.update',
         'destroy' => 'tenaga-pendidik.destroy',
     ]);
-    
-    // Route tambahan untuk hapus foto/gambar
-    Route::delete('admin/konten-home/{kontenHome}/delete-photo', [KontenHomeController::class, 'deletePhoto'])
-        ->name('konten-home.delete-photo');
-    Route::delete('admin/kegiatan/{id}/delete-photo', [KegiatanController::class, 'deletePhoto'])
-        ->name('kegiatan.delete-photo');
-    Route::delete('admin/info-ppdb/{id}/delete-brosur', [InfoPpdbController::class, 'deleteBrosur'])
-        ->name('info-ppdb.delete-brosur');
-    Route::delete('admin/prestasi/{id}/delete-photo', [PrestasiController::class, 'deletePhoto'])
-        ->name('prestasi.delete-photo');
-    Route::delete('admin/fasilitas/{id}/delete-gambar', [FasilitasController::class, 'deleteGambar'])
-        ->name('fasilitas.delete-gambar');
-    Route::delete('admin/tenaga-pendidik/{id}/delete-foto', [TenagaPendidikController::class, 'deleteFoto'])
+    Route::delete('tenaga-pendidik/{id}/delete-foto', [TenagaPendidikController::class, 'deleteFoto'])
         ->name('tenaga-pendidik.delete-foto');
+
+    // ========== KATEGORI PENGADUAN ==========
+    Route::resource('kategori-pengaduan', KategoriPengaduanController::class)->names([
+        'index' => 'kategori-pengaduan.index',
+        'create' => 'kategori-pengaduan.create',
+        'store' => 'kategori-pengaduan.store',
+        'show' => 'kategori-pengaduan.show',
+        'edit' => 'kategori-pengaduan.edit',
+        'update' => 'kategori-pengaduan.update',
+        'destroy' => 'kategori-pengaduan.destroy',
+    ]);
+
+    // ========== PENGADUAN (ADMIN) ==========
+    Route::resource('pengaduan', PengaduanController::class)->names([
+        'index' => 'pengaduan.index',
+        'show' => 'pengaduan.show',
+        'edit' => 'pengaduan.edit',
+        'update' => 'pengaduan.update',
+        'destroy' => 'pengaduan.destroy',
+    ]);
+    Route::patch('pengaduan/{pengaduan}/update-status', [PengaduanController::class, 'updateStatus'])
+        ->name('pengaduan.updateStatus');
+
+    // ========== TANGGAPAN PENGADUAN ==========
+    Route::resource('tanggapan', TanggapanPengaduanController::class)->names([
+        'index' => 'tanggapan.index',
+        'create' => 'tanggapan.create',
+        'store' => 'tanggapan.store',
+        'show' => 'tanggapan.show',
+        'edit' => 'tanggapan.edit',
+        'update' => 'tanggapan.update',
+        'destroy' => 'tanggapan.destroy',
+    ]);
 });
 
-// User Dashboard - Dilindungi oleh middleware 'auth' dan 'role:User'
-Route::middleware(['auth', 'role:User'])->group(function () {
-    Route::get('/user/dashboard', function () {
-        return view('user.dashboard');
-    })->name('user.dashboard');
+Route::middleware(['auth', 'role:User'])->prefix('user')->group(function () {
+    
+    // Dashboard User
+    Route::get('/dashboard', [\App\Http\Controllers\UserPengaduanController::class, 'dashboard'])
+        ->name('user.dashboard');
+
+    // ========== PENGADUAN (USER) ==========
+    Route::get('/pengaduan', [UserPengaduanController::class, 'index'])
+        ->name('user.pengaduan.index');
+    Route::get('/pengaduan/create', [UserPengaduanController::class, 'create'])
+        ->name('user.pengaduan.create');
+    Route::post('/pengaduan', [UserPengaduanController::class, 'store'])
+        ->name('user.pengaduan.store');
+    Route::get('/pengaduan/{pengaduan}', [UserPengaduanController::class, 'show'])
+        ->name('user.pengaduan.show');
 });
 
+// ============================================
+// PROFILE ROUTES (UNTUK SEMUA USER)
+// ============================================
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// ============================================
+// AUTH ROUTES
+// ============================================
 require __DIR__ . '/auth.php';

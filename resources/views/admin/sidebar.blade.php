@@ -55,7 +55,7 @@
             <i class="fas fa-fw fa-database"></i>
             <span>Master Data</span>
         </a>
-        <div id="collapseMasterData" class="collapse {{ Request::is('admin/fasilitas*') || Request::is('admin/tenaga-pendidik*') ? 'show' : '' }}" 
+        <div id="collapseMasterData" class="collapse {{ Request::is('admin/fasilitas*') || Request::is('admin/tenaga-pendidik*') || Request::is('admin/users*') ? 'show' : '' }}" 
              aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Pengelolaan Data:</h6>
@@ -115,15 +115,22 @@
         Layanan Pengaduan
     </div>
 
-    <li class="nav-item">
-        <a class="nav-link" href="#">
+    <li class="nav-item {{ Request::is('admin/kategori-pengaduan*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('kategori-pengaduan.index') }}">
+            <i class="fas fa-fw fa-tags"></i>
+            <span>Kategori Pengaduan</span>
+        </a>
+    </li>
+
+    <li class="nav-item {{ Request::is('admin/pengaduan*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('pengaduan.index') }}">
             <i class="fas fa-fw fa-headset"></i>
             <span>Kelola Pengaduan</span>
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="#">
+    <li class="nav-item {{ Request::is('admin/tanggapan*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('tanggapan.index') }}">
             <i class="fas fa-fw fa-reply-all"></i>
             <span>Laporan Tanggapan</span>
         </a>

@@ -24,7 +24,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::all();
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -33,11 +34,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'role_id' => 'required|exists:roles,role_id',
             'username' => 'required|string|max:50|unique:users,username',
             'nama_lengkap' => 'required|string|max:100',
             'email' => 'nullable|email|max:100|unique:users,email',
             'password' => ['required', 'confirmed', Password::min(8)],
         ], [
+            'role_id.required' => 'Role wajib dipilih',
+            'role_id.exists' => 'Role tidak valid',
             'username.required' => 'Username wajib diisi',
             'username.unique' => 'Username sudah digunakan',
             'username.max' => 'Username maksimal 50 karakter',
@@ -50,9 +54,6 @@ class UserController extends Controller
             'password.min' => 'Password minimal 8 karakter',
         ]);
 
-        // Auto assign role "User"
-        $userRole = Role::where('nama_role', 'User')->first();
-        $validated['role_id'] = $userRole->role_id;
         $validated['password'] = Hash::make($validated['password']);
 
         User::create($validated);
