@@ -168,7 +168,7 @@
                 @if($kegiatan->user)
                 <div class="mb-3">
                     <small class="text-muted">Diubah Oleh:</small><br>
-                    <strong>{{ $kegiatan->user->name }}</strong>
+                    <strong>{{ $kegiatan->user->nama_lengkap  }}</strong>
                 </div>
                 @endif
                 

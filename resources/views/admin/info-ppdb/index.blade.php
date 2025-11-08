@@ -45,7 +45,7 @@
                 @if($item->user)
                 <div class="mt-3">
                     <small class="text-muted">
-                        <i class="fas fa-user-edit"></i> Diubah oleh: <strong>{{ $item->user->name }}</strong>
+                        <i class="fas fa-user-edit"></i> Diubah oleh: <strong>{{ $item->user->nama_lengkap  }}</strong>
                     </small>
                 </div>
                 @endif

@@ -49,7 +49,7 @@
                 <div class="mt-auto">
                     @if($item->user)
                     <small class="text-muted d-block mb-2">
-                        <i class="fas fa-user-edit"></i> {{ $item->user->name }}
+                        <i class="fas fa-user-edit"></i> {{ $item->user->nama_lengkap  }}
                     </small>
                     @endif
                     <small class="text-muted d-block mb-3">

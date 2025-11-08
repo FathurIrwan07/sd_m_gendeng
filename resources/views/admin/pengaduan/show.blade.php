@@ -1,4 +1,7 @@
-{{-- resources/views/admin/pengaduan/show.blade.php --}}
+{{-- ============================================ --}}
+{{-- FILE: resources/views/admin/pengaduan/show.blade.php --}}
+{{-- FULL VERSION WITH EXPORT PDF --}}
+{{-- ============================================ --}}
 @extends('admin.app')
 
 @section('content')
@@ -16,8 +19,8 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3" style="background-color: 
                         {{ $pengaduan->status_pengaduan === 'Selesai' ? '#28a745' :
-        ($pengaduan->status_pengaduan === 'Diproses' ? '#ffc107' :
-            ($pengaduan->status_pengaduan === 'Ditolak' ? '#dc3545' : '#6c757d')) }};">
+                           ($pengaduan->status_pengaduan === 'Diproses' ? '#ffc107' :
+                           ($pengaduan->status_pengaduan === 'Ditolak' ? '#dc3545' : '#6c757d')) }};">
                     <h6 class="m-0 font-weight-bold text-white">
                         <i class="fas fa-file-alt"></i> Pengaduan - {{ $pengaduan->kategori->nama_kategori }}
                     </h6>
@@ -66,8 +69,8 @@
                                     <td>
                                         <span class="badge badge-{{ 
                                             $pengaduan->status_pengaduan === 'Selesai' ? 'success' :
-        ($pengaduan->status_pengaduan === 'Diproses' ? 'warning' :
-            ($pengaduan->status_pengaduan === 'Ditolak' ? 'danger' : 'secondary')) 
+                                            ($pengaduan->status_pengaduan === 'Diproses' ? 'warning' :
+                                            ($pengaduan->status_pengaduan === 'Ditolak' ? 'danger' : 'secondary')) 
                                         }} badge-lg">
                                             {{ $pengaduan->status_pengaduan }}
                                         </span>
@@ -113,8 +116,16 @@
             <!-- Action Buttons -->
             <div class="card shadow mb-4">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
                         <div>
+                            <a href="{{ route('pengaduan.edit', $pengaduan->id_pengaduan) }}" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a href="{{ route('pengaduan.export-pdf-detail', $pengaduan->id_pengaduan) }}" 
+                               class="btn btn-danger" 
+                               target="_blank">
+                                <i class="fas fa-file-pdf"></i> Export PDF
+                            </a>
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
                                 <i class="fas fa-trash"></i> Hapus
                             </button>
@@ -162,7 +173,7 @@
                     </h6>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('pengaduan.edit', $pengaduan->id_pengaduan) }}" method="POST">
+                    <form action="{{ route('pengaduan.update-status', $pengaduan->id_pengaduan) }}" method="POST">
                         @csrf
                         @method('PATCH')
                         <div class="form-group mb-3">

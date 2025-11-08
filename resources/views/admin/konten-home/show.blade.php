@@ -98,16 +98,20 @@
                     <small class="text-info">({{ $kontenHome->updated_at->diffForHumans() }})</small>
                 </div>
 
-                @if($kontenHome->user)
+               @if($kontenHome->user)
                 <div class="mb-3">
                     <small class="text-muted">Terakhir Diubah Oleh:</small><br>
                     <div class="d-flex align-items-center mt-2">
                         <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mr-2" 
-                             style="width: 40px; height: 40px;">
-                            <strong>{{ substr($kontenHome->user->name, 0, 1) }}</strong>
+                            style="width: 40px; height: 40px;">
+                            <strong>{{ substr($kontenHome->user->nama_lengkap ?? 'U', 0, 1) }}</strong>
                         </div>
                         <div>
-                            <strong>{{ $kontenHome->user->name }}</strong><br>
+                            <strong>{{ $kontenHome->user->nama_lengkap }}</strong><br>
+                            @if($kontenHome->user->role)
+                                <small class="badge badge-info">{{ $kontenHome->user->role->nama_role }}</small>
+                            @endif
+                            <br>
                             <small class="text-muted">{{ $kontenHome->user->email }}</small>
                         </div>
                     </div>

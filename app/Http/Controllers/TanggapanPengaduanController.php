@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TanggapanPengaduan;
 use App\Models\Pengaduan;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 
 class TanggapanPengaduanController extends Controller
@@ -127,5 +128,41 @@ class TanggapanPengaduanController extends Controller
 
         return redirect()->route('tanggapan.index')
             ->with('success', 'Tanggapan berhasil dihapus dan status pengaduan dikembalikan.');
+    }
+
+     public function exportPdfTanggapan(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $query = TanggapanPengaduan::with(['pengaduan.pelapor', 'pengaduan.kategori', 'penanggap']);
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('tanggal_tanggapan', [$startDate, $endDate]);
+            $periode = Carbon::parse($startDate)->format('d M Y') . ' - ' . Carbon::parse($endDate)->format('d M Y');
+        } else {
+            $query->whereMonth('tanggal_tanggapan', now()->month)
+                  ->whereYear('tanggal_tanggapan', now()->year);
+            $periode = now()->format('F Y');
+        }
+
+        $tanggapan = $query->orderBy('tanggal_tanggapan', 'desc')->get();
+
+        $perPenanggap = $tanggapan->groupBy('penanggap.nama_lengkap')
+            ->map(fn($items) => $items->count())
+            ->sortDesc();
+
+        $data = [
+            'tanggapan' => $tanggapan,
+            'total' => $tanggapan->count(),
+            'perPenanggap' => $perPenanggap,
+            'periode' => $periode,
+            'tanggal_cetak' => now()->format('d F Y, H:i') . ' WIB',
+        ];
+
+        $pdf = Pdf::loadView('admin.tanggapan.pdf-rekap', $data)
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download('Laporan_Tanggapan_' . now()->format('d-m-Y') . '.pdf');
     }
 }

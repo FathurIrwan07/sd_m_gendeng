@@ -185,6 +185,13 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function () {
         'update' => 'tanggapan.update',
         'destroy' => 'tanggapan.destroy',
     ]);
+
+    Route::get('pengaduan-export/pdf', [PengaduanController::class, 'exportPdf'])
+        ->name('pengaduan.export-pdf');
+    Route::get('pengaduan-export/{pengaduan}/pdf', [PengaduanController::class, 'exportPdfDetail'])
+        ->name('pengaduan.export-pdf-detail');
+     Route::get('tanggapan-export/pdf', [TanggapanPengaduanController::class, 'exportPdfTanggapan'])
+        ->name('tanggapan.export-pdf');
 });
 
 Route::middleware(['auth', 'role:User'])->prefix('user')->group(function () {

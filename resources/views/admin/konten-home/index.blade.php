@@ -52,7 +52,7 @@
                 @if($konten->user)
                 <small class="text-muted">
                     <i class="fas fa-user-edit"></i> 
-                    Terakhir diubah oleh: <strong>{{ $konten->user->name }}</strong>
+                    Terakhir diubah oleh: <strong>{{ $konten->user->nama_lengkap  }}</strong>
                 </small>
                 @endif
             </div>

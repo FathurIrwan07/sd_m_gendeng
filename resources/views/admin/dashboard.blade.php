@@ -113,7 +113,7 @@
                             <tr>
                                 <td>
                                     @if($p->pelapor)
-                                        {{ $p->pelapor->name }}
+                                        {{ $p->pelapor->nama_lengkap }}
                                     @else
                                         <span class="text-muted">Anonim</span>
                                     @endif

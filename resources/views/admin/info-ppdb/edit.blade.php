@@ -125,7 +125,7 @@
                 @if($infoPpdb->user)
                 <div class="mb-3">
                     <small class="text-muted">Diubah Oleh:</small><br>
-                    <strong>{{ $infoPpdb->user->name }}</strong>
+                    <strong>{{ $infoPpdb->user->nama_lengkap  }}</strong>
                 </div>
                 @endif
                 

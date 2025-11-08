@@ -1,4 +1,3 @@
-{{-- resources/views/admin/tanggapan/index.blade.php --}}
 @extends('admin.app')
 
 @section('content')
@@ -17,6 +16,77 @@
     </button>
 </div>
 @endif
+
+{{-- CARD EXPORT PDF --}}
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h6 class="font-weight-bold text-primary mb-0">
+                    <i class="fas fa-file-pdf text-danger"></i> Export Laporan Tanggapan
+                </h6>
+                <small class="text-muted">Unduh laporan tanggapan dalam format PDF</small>
+            </div>
+            <div class="col-md-4 text-right">
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exportTanggapanModal">
+                    <i class="fas fa-file-pdf"></i> Export PDF
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- MODAL EXPORT TANGGAPAN --}}
+<div class="modal fade" id="exportTanggapanModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #800000 0%, #4b0000 100%);">
+                <h5 class="modal-title text-white">
+                    <i class="fas fa-file-pdf"></i> Export Laporan Tanggapan
+                </h5>
+                <button class="close text-white" type="button" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('tanggapan.export-pdf') }}" method="GET" target="_blank">
+                <div class="modal-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> 
+                        <strong>Informasi:</strong> Pilih periode untuk laporan tanggapan.
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tanggal Mulai</label>
+                        <input type="date" name="start_date" class="form-control" value="{{ now()->startOfMonth()->format('Y-m-d') }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Akhir</label>
+                        <input type="date" name="end_date" class="form-control" value="{{ now()->format('Y-m-d') }}">
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <label class="d-block mb-3">Quick Filter:</label>
+                        <button type="button" class="btn btn-sm btn-outline-primary mr-2" onclick="setMonthTanggapan()">
+                            <i class="fas fa-calendar"></i> Bulan Ini
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-success mr-2" onclick="setWeekTanggapan()">
+                            <i class="fas fa-calendar-week"></i> Minggu Ini
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-info" onclick="setTodayTanggapan()">
+                            <i class="fas fa-calendar-day"></i> Hari Ini
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-file-pdf"></i> Generate PDF
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <!-- Summary Card -->
 <div class="row">
@@ -143,3 +213,29 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function setMonthTanggapan() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), 1);
+    document.querySelector('#exportTanggapanModal [name="start_date"]').value = start.toISOString().split('T')[0];
+    document.querySelector('#exportTanggapanModal [name="end_date"]').value = now.toISOString().split('T')[0];
+}
+
+function setWeekTanggapan() {
+    const now = new Date();
+    const first = now.getDate() - now.getDay();
+    const start = new Date(now.setDate(first));
+    const end = new Date();
+    document.querySelector('#exportTanggapanModal [name="start_date"]').value = start.toISOString().split('T')[0];
+    document.querySelector('#exportTanggapanModal [name="end_date"]').value = end.toISOString().split('T')[0];
+}
+
+function setTodayTanggapan() {
+    const now = new Date();
+    document.querySelector('#exportTanggapanModal [name="start_date"]').value = now.toISOString().split('T')[0];
+    document.querySelector('#exportTanggapanModal [name="end_date"]').value = now.toISOString().split('T')[0];
+}
+</script>
+@endpush

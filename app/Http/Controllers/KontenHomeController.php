@@ -54,11 +54,13 @@ class KontenHomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(KontenHome $kontenHome)
-    {
-        $kontenHome->load('user');
-        return view('admin.konten-home.show', compact('kontenHome')); // ← UBAH INI
-    }
+   public function show($id)
+{
+    $kontenHome = KontenHome::with(['user.role']) // Eager load user dan role
+        ->findOrFail($id);
+    
+    return view('admin.konten-home.show', compact('kontenHome'));
+}
 
     /**
      * Show the form for editing the specified resource.

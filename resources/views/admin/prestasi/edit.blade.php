@@ -153,7 +153,7 @@
                 @if($prestasi->user)
                 <div class="mb-3">
                     <small class="text-muted">Diubah Oleh:</small><br>
-                    <strong>{{ $prestasi->user->name }}</strong>
+                    <strong>{{ $prestasi->user->nama_lengkap  }}</strong>
                 </div>
                 @endif
                 
