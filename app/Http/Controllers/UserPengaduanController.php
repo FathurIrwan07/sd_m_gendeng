@@ -12,7 +12,7 @@ class UserPengaduanController extends Controller
     public function dashboard()
     {
         $userId = auth()->id();
-        
+
         // Statistik Pengaduan User
         $totalPengaduan = Pengaduan::where('user_id', $userId)->count();
         $menunggu = Pengaduan::where('user_id', $userId)
@@ -24,14 +24,14 @@ class UserPengaduanController extends Controller
         $selesai = Pengaduan::where('user_id', $userId)
             ->where('status_pengaduan', 'Selesai')
             ->count();
-        
+
         // Pengaduan Terbaru (3 data terakhir)
         $pengaduanTerbaru = Pengaduan::with(['kategori', 'tanggapan'])
             ->where('user_id', $userId)
             ->latest()
             ->limit(3)
             ->get();
-        
+
         return view('user.dashboard', compact(
             'totalPengaduan',
             'menunggu',
@@ -40,14 +40,14 @@ class UserPengaduanController extends Controller
             'pengaduanTerbaru'
         ));
     }
-    
+
     public function index()
     {
         $pengaduan = Pengaduan::with(['kategori', 'tanggapan'])
             ->where('user_id', auth()->id())
             ->latest()
             ->get();
-        
+
         return view('user.pengaduan.index', compact('pengaduan'));
     }
 
@@ -59,22 +59,32 @@ class UserPengaduanController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        // Validasi input (tanpa tgl_pengaduan)
+        $validatedData = $request->validate([
             'id_kategori' => 'required|exists:kategori_pengaduan,id_kategori',
             'deskripsi' => 'required|string|min:20',
         ], [
+            // Pesan kustom
             'id_kategori.required' => 'Kategori pengaduan wajib dipilih',
             'id_kategori.exists' => 'Kategori yang dipilih tidak valid',
             'deskripsi.required' => 'Deskripsi pengaduan wajib diisi',
             'deskripsi.min' => 'Deskripsi pengaduan minimal 20 karakter',
         ]);
 
-        $validated['user_id'] = auth()->id();
-        $validated['tanggal_pengaduan'] = Carbon::now()->toDateString();
-        $validated['status_pengaduan'] = 'Menunggu Konfirmasi';
+        // Siapkan data untuk disimpan
+        $dataToCreate = [
+            'id_kategori' => $validatedData['id_kategori'],
+            'deskripsi' => $validatedData['deskripsi'],
+            // ⬇️ PERUBAHAN DI SINI: Tambahkan 'Asia/Jakarta' ⬇️
+            'tanggal_pengaduan' => Carbon::now('Asia/Jakarta'), // Waktu otomatis saat ini (WIB)
+            'user_id' => auth()->id(),
+            'status_pengaduan' => 'Menunggu Konfirmasi',
+        ];
 
-        Pengaduan::create($validated);
+        // Buat entri pengaduan
+        Pengaduan::create($dataToCreate);
 
+        // Redirect
         return redirect()->route('user.pengaduan.index')
             ->with('success', 'Pengaduan Anda berhasil dikirim dan sedang menunggu konfirmasi.');
     }
@@ -95,7 +105,7 @@ class UserPengaduanController extends Controller
             ->whereIn('status_pengaduan', ['Diproses', 'Selesai'])
             ->latest()
             ->paginate(10);
-        
+
         return view('public.pengaduan.index', compact('pengaduan'));
     }
 
@@ -107,22 +117,32 @@ class UserPengaduanController extends Controller
 
     public function storeAnonim(Request $request)
     {
-        $validated = $request->validate([
+        // Validasi input (tanpa tgl_pengaduan)
+        $validatedData = $request->validate([
             'id_kategori' => 'required|exists:kategori_pengaduan,id_kategori',
             'deskripsi' => 'required|string|min:20',
         ], [
+            // Pesan kustom
             'id_kategori.required' => 'Kategori pengaduan wajib dipilih',
             'id_kategori.exists' => 'Kategori yang dipilih tidak valid',
             'deskripsi.required' => 'Deskripsi pengaduan wajib diisi',
             'deskripsi.min' => 'Deskripsi pengaduan minimal 20 karakter',
         ]);
 
-        $validated['user_id'] = null; 
-        $validated['tanggal_pengaduan'] = Carbon::now()->toDateString();
-        $validated['status_pengaduan'] = 'Menunggu Konfirmasi';
+        // Siapkan data untuk disimpan
+        $dataToCreate = [
+            'id_kategori' => $validatedData['id_kategori'],
+            'deskripsi' => $validatedData['deskripsi'],
+            // ⬇️ PERUBAHAN DI SINI: Tambahkan 'Asia/Jakarta' ⬇️
+            'tanggal_pengaduan' => Carbon::now('Asia/Jakarta'), // Waktu otomatis saat ini (WIB)
+            'user_id' => null, // Anonim
+            'status_pengaduan' => 'Menunggu Konfirmasi',
+        ];
 
-        Pengaduan::create($validated);
+        // Buat entri pengaduan
+        Pengaduan::create($dataToCreate);
 
+        // Redirect
         return redirect()->route('pengaduan.anonim.create')
             ->with('success', 'Pengaduan anonim Anda berhasil dikirim dan sedang menunggu konfirmasi.');
     }

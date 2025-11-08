@@ -47,7 +47,7 @@ Route::post('/pengaduan/anonim', [UserPengaduanController::class, 'storeAnonim']
 // ADMIN ROUTES - PREFIX: /admin
 // ============================================
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function () {
-    
+
     // Dashboard Admin
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -188,7 +188,7 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function () {
 });
 
 Route::middleware(['auth', 'role:User'])->prefix('user')->group(function () {
-    
+
     // Dashboard User
     Route::get('/dashboard', [\App\Http\Controllers\UserPengaduanController::class, 'dashboard'])
         ->name('user.dashboard');

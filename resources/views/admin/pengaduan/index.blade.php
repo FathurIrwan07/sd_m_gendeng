@@ -1,200 +1,192 @@
-{{-- resources/views/admin/pengaduan/index.blade.php --}}
 @extends('admin.app')
 
 @section('content')
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Kelola Pengaduan</h1>
-</div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Kelola Pengaduan</h1>
+    </div>
 
-@if(session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Berhasil!</strong> {{ session('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
-
-<!-- Summary Cards -->
-<div class="row">
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Pengaduan</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pengaduan->count() }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-file-alt fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Berhasil!</strong> {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-    </div>
+    @endif
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Menunggu Konfirmasi</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            {{ $pengaduan->where('status_pengaduan', 'Menunggu Konfirmasi')->count() }}
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clock fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Diproses</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            {{ $pengaduan->where('status_pengaduan', 'Diproses')->count() }}
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-spinner fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Selesai</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            {{ $pengaduan->where('status_pengaduan', 'Selesai')->count() }}
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card shadow mb-4">
-    <div class="card-header py-3" style="background-color: #800000;">
-        <h6 class="m-0 font-weight-bold text-white">
-            <i class="fas fa-list"></i> Daftar Pengaduan
-        </h6>
-    </div>
-    <div class="card-body">
-        @if($pengaduan->count() > 0)
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover" width="100%" cellspacing="0">
-                <thead class="bg-light">
-                    <tr>
-                        <th width="5%" class="text-center">No</th>
-                        <th width="15%">Pelapor</th>
-                        <th width="15%">Kategori</th>
-                        <th width="30%">Deskripsi</th>
-                        <th width="10%" class="text-center">Tanggal</th>
-                        <th width="10%" class="text-center">Status</th>
-                        <th width="15%" class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($pengaduan as $index => $item)
-                    <tr>
-                        <td class="text-center">{{ $index + 1 }}</td>
-                        <td>
-                            @if($item->pelapor)
-                            <strong>{{ $item->pelapor->nama_lengkap }}</strong><br>
-                            <small class="text-muted">{{ $item->pelapor->username }}</small>
-                            @else
-                            <span class="badge badge-secondary">Anonim</span>
-                            @endif
-                        </td>
-                        <td>
-                            <span class="badge badge-info">{{ $item->kategori->nama_kategori }}</span>
-                        </td>
-                        <td>{{ Str::limit($item->deskripsi, 80) }}</td>
-                        <td class="text-center">
-                            <small>{{ $item->tanggal_pengaduan->format('d/m/Y') }}</small>
-                        </td>
-                        <td class="text-center">
-                            <span class="badge badge-{{ 
-                                $item->status_pengaduan === 'Selesai' ? 'success' : 
-                                ($item->status_pengaduan === 'Diproses' ? 'warning' : 
-                                ($item->status_pengaduan === 'Ditolak' ? 'danger' : 'secondary')) 
-                            }}">
-                                {{ $item->status_pengaduan }}
-                            </span>
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ route('pengaduan.show', $item->id_pengaduan) }}" 
-                               class="btn btn-info btn-sm" 
-                               title="Lihat Detail">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            @if(!$item->tanggapan)
-                            <a href="{{ route('tanggapan.create') }}?pengaduan_id={{ $item->id_pengaduan }}" 
-                               class="btn btn-success btn-sm"
-                               title="Beri Tanggapan">
-                                <i class="fas fa-reply"></i>
-                            </a>
-                            @endif
-                            <button type="button" 
-                                    class="btn btn-danger btn-sm" 
-                                    data-toggle="modal" 
-                                    data-target="#deleteModal{{ $item->id_pengaduan }}"
-                                    title="Hapus">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <!-- Delete Modal -->
-                    <div class="modal fade" id="deleteModal{{ $item->id_pengaduan }}" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Konfirmasi Hapus</h5>
-                                    <button class="close" type="button" data-dismiss="modal">
-                                        <span>&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Apakah Anda yakin ingin menghapus pengaduan ini?
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                    <form action="{{ route('pengaduan.destroy', $item->id_pengaduan) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Hapus</button>
-                                    </form>
-                                </div>
+    {{-- Fitur Pencarian --}}
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form action="{{ route('pengaduan.index') }}" method="GET">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
                             </div>
+                            <input type="text" class="form-control" name="search"
+                                placeholder="Cari berdasarkan nama pelapor, kategori, deskripsi, atau status..."
+                                value="{{ request('search') }}">
                         </div>
                     </div>
-                    @endforeach
-                </tbody>
-            </table>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-search"></i> Cari
+                        </button>
+                    </div>
+                </div>
+
+                @if(request('search'))
+                    <div class="mt-2">
+                        <a href="{{ route('pengaduan.index') }}" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-times"></i> Reset Pencarian
+                        </a>
+                        <span class="text-muted ml-2">
+                            Menampilkan hasil untuk: <strong>"{{ request('search') }}"</strong>
+                        </span>
+                    </div>
+                @endif
+            </form>
         </div>
-        @else
-        <div class="text-center py-5">
-            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-            <h5 class="text-muted">Belum ada pengaduan</h5>
-            <p class="text-muted">Pengaduan dari masyarakat akan muncul di sini</p>
-        </div>
-        @endif
     </div>
-</div>
+
+    {{-- Fitur Filter Waktu --}}
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form action="{{ route('pengaduan.index') }}" method="GET">
+                <div class="row align-items-end">
+                    <div class="col-md-3">
+                        <label for="filter">Filter Waktu</label>
+                        <select name="filter" id="filter" class="form-control">
+                            <option value="">Semua Waktu</option>
+                            <option value="minggu" {{ request('filter') == 'minggu' ? 'selected' : '' }}>Minggu Ini</option>
+                            <option value="bulan" {{ request('filter') == 'bulan' ? 'selected' : '' }}>Bulan Ini</option>
+                            <option value="tahun" {{ request('filter') == 'tahun' ? 'selected' : '' }}>Tahun Ini</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-filter"></i> Terapkan
+                        </button>
+                    </div>
+
+                    @if(request('filter'))
+                        <div class="col-md-2 mt-2 mt-md-0">
+                            <a href="{{ route('pengaduan.index') }}" class="btn btn-secondary btn-block">
+                                <i class="fas fa-times"></i> Reset
+                            </a>
+                        </div>
+                    @endif
+                </div>
+            </form>
+
+            @if(request('filter'))
+                <div class="mt-3 alert alert-info">
+                    Menampilkan pengaduan:
+                    <strong>
+                        @if(request('filter') == 'minggu') Minggu Ini
+                        @elseif(request('filter') == 'bulan') Bulan Ini
+                        @elseif(request('filter') == 'tahun') Tahun Ini
+                        @endif
+                    </strong>
+                </div>
+            @endif
+        </div>
+    </div>
+
+    {{-- Daftar Pengaduan --}}
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color: #800000;">
+            <h6 class="m-0 font-weight-bold text-white"><i class="fas fa-list"></i> Daftar Pengaduan</h6>
+        </div>
+        <div class="card-body">
+            @if($pengaduan->count() > 0)
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="text-center">No</th>
+                                <th>Pelapor</th>
+                                <th>Kategori</th>
+                                <th>Deskripsi</th>
+                                <th class="text-center">Tanggal</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($pengaduan as $index => $item)
+                                        <tr>
+                                            <td class="text-center">{{ $index + 1 }}</td>
+                                            <td>
+                                                @if($item->pelapor)
+                                                    <strong>{{ $item->pelapor->nama_lengkap }}</strong><br>
+                                                    <small class="text-muted">{{ $item->pelapor->username }}</small>
+                                                @else
+                                                    <span class="badge badge-secondary">Anonim</span>
+                                                @endif
+                                            </td>
+                                            <td><span class="badge badge-info">{{ $item->kategori->nama_kategori }}</span></td>
+                                            <td>{{ Str::limit($item->deskripsi, 80) }}</td>
+                                            <td class="text-center"><small>{{ $item->tanggal_pengaduan->format('d/m/Y') }}</small></td>
+                                            <td class="text-center">
+                                                <span class="badge badge-{{ 
+                                                            $item->status_pengaduan === 'Selesai' ? 'success' :
+                                ($item->status_pengaduan === 'Diproses' ? 'warning' :
+                                    ($item->status_pengaduan === 'Ditolak' ? 'danger' : 'secondary')) 
+                                                        }}">
+                                                    {{ $item->status_pengaduan }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('pengaduan.show', $item->id_pengaduan) }}" class="btn btn-info btn-sm"
+                                                    title="Lihat Detail">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                @if(!$item->tanggapan)
+                                                    <a href="{{ route('tanggapan.create') }}?pengaduan_id={{ $item->id_pengaduan }}"
+                                                        class="btn btn-success btn-sm" title="Beri Tanggapan">
+                                                        <i class="fas fa-reply"></i>
+                                                    </a>
+                                                @endif
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#deleteModal{{ $item->id_pengaduan }}" title="Hapus">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        {{-- Modal Hapus --}}
+                                        <div class="modal fade" id="deleteModal{{ $item->id_pengaduan }}" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Konfirmasi Hapus</h5>
+                                                        <button class="close" type="button"
+                                                            data-dismiss="modal"><span>&times;</span></button>
+                                                    </div>
+                                                    <div class="modal-body">Apakah Anda yakin ingin menghapus pengaduan ini?</div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                                        <form action="{{ route('pengaduan.destroy', $item->id_pengaduan) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="text-center py-5">
+                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Tidak ada pengaduan ditemukan</h5>
+                </div>
+            @endif
+        </div>
+    </div>
 @endsection

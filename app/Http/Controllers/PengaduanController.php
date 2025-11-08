@@ -11,12 +11,44 @@ class PengaduanController extends Controller
     /**
      * Display a listing of the resource (Admin).
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pengaduan = Pengaduan::with(['pelapor', 'kategori', 'tanggapan'])
-            ->latest()
-            ->get();
-        
+        $search = $request->input('search');
+        $filter = $request->input('filter'); // Filter waktu (minggu, bulan, tahun)
+
+        // Query dasar dengan relasi
+        $query = Pengaduan::with(['pelapor', 'kategori', 'tanggapan']);
+
+        // 🔍 Jika ada pencarian
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('deskripsi', 'like', '%' . $search . '%')
+                    ->orWhere('status_pengaduan', 'like', '%' . $search . '%')
+                    ->orWhereHas('kategori', function ($query) use ($search) {
+                        $query->where('nama_kategori', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereHas('pelapor', function ($query) use ($search) {
+                        $query->where('nama_lengkap', 'like', '%' . $search . '%')
+                            ->orWhere('username', 'like', '%' . $search . '%');
+                    });
+            });
+        }
+
+        // 🗓️ Filter berdasarkan waktu
+        if ($filter) {
+            if ($filter === 'minggu') {
+                $query->whereBetween('tanggal_pengaduan', [now()->startOfWeek(), now()->endOfWeek()]);
+            } elseif ($filter === 'bulan') {
+                $query->whereMonth('tanggal_pengaduan', now()->month)
+                    ->whereYear('tanggal_pengaduan', now()->year);
+            } elseif ($filter === 'tahun') {
+                $query->whereYear('tanggal_pengaduan', now()->year);
+            }
+        }
+
+        // Urutkan berdasarkan tanggal terbaru
+        $pengaduan = $query->latest()->get();
+
         return view('admin.pengaduan.index', compact('pengaduan'));
     }
 
@@ -75,7 +107,7 @@ class PengaduanController extends Controller
     }
 
     /**
-     * Update status pengaduan
+     * Update status pengaduan.
      */
     public function updateStatus(Request $request, Pengaduan $pengaduan)
     {

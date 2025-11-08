@@ -4,7 +4,7 @@
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Edit Pengaduan</h1>
-    <a href="{{ route('pengaduan.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+    <a href="{{ route('admin.pengaduan.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
         <i class="fas fa-arrow-left fa-sm text-white-50"></i> Kembali
     </a>
 </div>
@@ -18,7 +18,7 @@
                 </h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('pengaduan.update', $pengaduan->id_pengaduan) }}" method="POST">
+                <form action="{{ route('admin.pengaduan.update', $pengaduan->id_pengaduan) }}" method="POST">
                     @csrf
                     @method('PUT')
                     
@@ -55,20 +55,25 @@
                     </div>
 
                     <!-- Tanggal Pengaduan -->
+                    {{-- ⬇️ PERUBAHAN DI SINI ⬇️ --}}
                     <div class="form-group">
                         <label for="tanggal_pengaduan" class="font-weight-bold">
-                            Tanggal Pengaduan <span class="text-danger">*</span>
+                            Tanggal & Waktu Pengaduan <span class="text-danger">*</span>
                         </label>
-                        <input type="date" 
+                        {{-- 1. Mengubah type="date" menjadi "datetime-local" --}}
+                        <input type="datetime-local" 
                                class="form-control @error('tanggal_pengaduan') is-invalid @enderror" 
                                id="tanggal_pengaduan" 
                                name="tanggal_pengaduan"
-                               value="{{ old('tanggal_pengaduan', $pengaduan->tanggal_pengaduan->format('Y-m-d')) }}"
+                               {{-- 2. Mengubah format value agar sesuai dengan datetime-local (Y-m-d\TH:i) --}}
+                               {{--    Kita juga pastikan $pengaduan->tanggal_pengaduan di-cast sebagai Carbon --}}
+                               value="{{ old('tanggal_pengaduan', \Carbon\Carbon::parse($pengaduan->tanggal_pengaduan)->format('Y-m-d\TH:i')) }}"
                                required>
                         @error('tanggal_pengaduan')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    {{-- ⬆️ AKHIR PERUBAHAN ⬆️ --}}
 
                     <!-- Status Pengaduan -->
                     <div class="form-group">
@@ -118,7 +123,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save"></i> Update Pengaduan
                         </button>
-                        <a href="{{ route('pengaduan.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('admin.pengaduan.index') }}" class="btn btn-secondary">
                             <i class="fas fa-times"></i> Batal
                         </a>
                     </div>
@@ -137,12 +142,13 @@
             <div class="card-body">
                 <div class="mb-3">
                     <small class="text-muted">Dibuat:</small><br>
-                    <strong>{{ $pengaduan->created_at->format('d M Y, H:i') }}</strong>
+                    {{-- ⬇️ PERUBAHAN DI SINI: Cast ke Carbon untuk format yang aman ⬇️ --}}
+                    <strong>{{ \Carbon\Carbon::parse($pengaduan->created_at)->format('d M Y, H:i') }}</strong>
                 </div>
                 
                 <div class="mb-3">
                     <small class="text-muted">Terakhir Diubah:</small><br>
-                    <strong>{{ $pengaduan->updated_at->format('d M Y, H:i') }}</strong>
+                    <strong>{{ \Carbon\Carbon::parse($pengaduan->updated_at)->format('d M Y, H:i') }}</strong>
                 </div>
 
                 <div class="mb-0">
@@ -164,7 +170,7 @@
                     <i class="fas fa-check-circle"></i> Sudah Ditanggapi
                 </h6>
                 <p class="small mb-0">
-                    Pengaduan ini sudah mendapat tanggapan pada {{ $pengaduan->tanggapan->tanggal_tanggapan->format('d F Y') }}
+                    Pengaduan ini sudah mendapat tanggapan pada {{ \Carbon\Carbon::parse($pengaduan->tanggapan->tanggal_tanggapan)->format('d F Y') }}
                 </p>
             </div>
         </div>
