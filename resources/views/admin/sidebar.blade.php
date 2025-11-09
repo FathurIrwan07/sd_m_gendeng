@@ -1,4 +1,3 @@
-{{-- resources/views/admin/sidebar.blade.php --}}
 <ul class="navbar-nav sidebar accordion shadow-sm" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -104,14 +103,30 @@
         </a>
     </li>
 
+    {{-- MENU CHAT BARU --}}
+    <li class="nav-item {{ Request::is('admin/chat*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('chat.index') }}">
+            <i class="fas fa-comments me-2"></i>
+            <span>Chat Pengaduan</span>
+            @php
+                $unreadTotal = \App\Models\ChatPengaduan::where('is_admin', false)
+                    ->where('is_read', false)
+                    ->count();
+            @endphp
+            @if($unreadTotal > 0)
+                <span class="badge badge-danger badge-counter ml-auto">{{ $unreadTotal }}</span>
+            @endif
+        </a>
+    </li>
+
+    <hr class="sidebar-divider d-none d-md-block">
+
     <li class="nav-item mt-3 mb-3">
         <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
             <i class="fas fa-sign-out-alt me-2"></i>
             <span>Logout</span>
         </a>
     </li>
-
-    <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler -->
     <div class="text-center d-none d-md-inline my-3">

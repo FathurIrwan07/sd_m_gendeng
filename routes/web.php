@@ -14,6 +14,7 @@ use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\TanggapanPengaduanController;
 use App\Http\Controllers\UserPengaduanController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatPengaduanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -185,6 +186,11 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function () {
         'update' => 'tanggapan.update',
         'destroy' => 'tanggapan.destroy',
     ]);
+     Route::get('chat', [ChatPengaduanController::class, 'index'])->name('chat.index');
+        Route::get('chat/{pengaduan}', [ChatPengaduanController::class, 'show'])->name('chat.show');
+        Route::post('chat/{pengaduan}', [ChatPengaduanController::class, 'store'])->name('chat.store');
+        Route::get('chat/{pengaduan}/new-messages', [ChatPengaduanController::class, 'getNewMessages'])
+            ->name('chat.get-new-messages');
 
     Route::get('pengaduan-export/pdf', [PengaduanController::class, 'exportPdf'])
         ->name('pengaduan.export-pdf');
@@ -193,6 +199,7 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function () {
      Route::get('tanggapan-export/pdf', [TanggapanPengaduanController::class, 'exportPdfTanggapan'])
         ->name('tanggapan.export-pdf');
 });
+
 
 Route::middleware(['auth', 'role:User'])->prefix('user')->group(function () {
 
@@ -209,6 +216,13 @@ Route::middleware(['auth', 'role:User'])->prefix('user')->group(function () {
         ->name('user.pengaduan.store');
     Route::get('/pengaduan/{pengaduan}', [UserPengaduanController::class, 'show'])
         ->name('user.pengaduan.show');
+
+     Route::get('chat/{pengaduan}', [ChatPengaduanController::class, 'userChat'])->name('user.chat.show');
+        Route::post('chat/{pengaduan}', [ChatPengaduanController::class, 'userStore'])->name('user.chat.store');
+        Route::get('chat/{pengaduan}/new-messages', [ChatPengaduanController::class, 'userGetNewMessages'])
+            ->name('user.chat.get-new-messages');
+    Route::get('chat', [ChatPengaduanController::class, 'userIndex'])
+    ->name('user.chat.index');
 });
 
 // ============================================

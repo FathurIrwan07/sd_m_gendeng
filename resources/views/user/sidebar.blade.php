@@ -1,4 +1,3 @@
-{{-- resources/views/user/sidebar.blade.php --}}
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <style>
@@ -22,6 +21,15 @@
 
         #sidebarToggle:hover {
             background-color: #990000 !important;
+        }
+
+        .badge-counter {
+            font-size: 0.65rem;
+            padding: 0.25rem 0.5rem;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
         }
     </style>
 
@@ -64,6 +72,26 @@
             <span>Buat Pengaduan Baru</span>
         </a>
     </li>
+
+   <li class="nav-item {{ Request::is('user/chat*') ? 'active' : '' }}">
+    <a class="nav-link position-relative" href="{{ route('user.chat.index') }}">
+        <i class="fas fa-fw fa-comments"></i>
+        <span>Chat dengan Admin</span>
+        @php
+            $userUnread = \App\Models\Pengaduan::where('user_id', auth()->id())
+                ->withCount([
+                    'chats as unread_count' => function($q) {
+                        $q->where('is_admin', true)->where('is_read', false);
+                    }
+                ])
+                ->get()
+                ->sum('unread_count');
+        @endphp
+        @if($userUnread > 0)
+            <span class="badge badge-danger badge-counter">{{ $userUnread }}</span>
+        @endif
+    </a>
+</li>
 
     <hr class="sidebar-divider">
 
