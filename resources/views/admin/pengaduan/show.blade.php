@@ -173,7 +173,7 @@
                     </h6>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('pengaduan.update-status', $pengaduan->id_pengaduan) }}" method="POST">
+                    <form action="{{ route('pengaduan.updateStatus', $pengaduan->id_pengaduan) }}" method="POST">
                         @csrf
                         @method('PATCH')
                         <div class="form-group mb-3">

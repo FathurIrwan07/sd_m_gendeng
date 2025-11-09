@@ -25,7 +25,7 @@
         <div class="card shadow h-100">
             <!-- Card Header with Maroon Background -->
             <div class="card-header py-3" style="background: linear-gradient(180deg, #800000 10%, #4b0000 100%); color: white;">
-                <h6 class="m-0 font-weight-bold">
+               <h6 class="m-0 font-weight-bold text-white">
                     <i class="fas fa-chalkboard-teacher"></i> {{ $item->jabatan }}
                 </h6>
                 <small>{{ $item->updated_at->diffForHumans() }}</small>
@@ -142,7 +142,7 @@
 <!-- Informasi Section -->
 <div class="card shadow mb-4 mt-4" style="border-left: 4px solid #800000;">
     <div class="card-header py-3" style="background-color: #800000; color: white;">
-        <h6 class="m-0 font-weight-bold">
+        <h6 class="m-0 font-weight-bold text-white">
             <i class="fas fa-info-circle"></i> Informasi Tenaga Pendidik
         </h6>
     </div>

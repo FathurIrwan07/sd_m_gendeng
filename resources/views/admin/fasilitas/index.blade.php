@@ -24,12 +24,13 @@
     <div class="col-lg-4 col-md-6 mb-4">
         <div class="card shadow h-100">
             <!-- Card Header with Maroon Background -->
-            <div class="card-header py-3" style="background: linear-gradient(180deg, #800000 10%, #4b0000 100%); color: white;">
-                <h6 class="m-0 font-weight-bold">
-                    <i class="fas fa-building"></i> {{ $item->nama_fasilitas }}
-                </h6>
-                <small>{{ $item->updated_at->diffForHumans() }}</small>
-            </div>
+          <div class="card-header py-3" style="background: linear-gradient(180deg, #800000 10%, #4b0000 100%); color: white;">
+            <h6 class="m-0 font-weight-bold" style="color: white;">
+                <i class="fas fa-building"></i> {{ $item->nama_fasilitas }}
+            </h6>
+            <small style="color: white;">{{ $item->updated_at->diffForHumans() }}</small>
+        </div>
+
             
             <!-- Card Body -->
             <div class="card-body">
@@ -138,7 +139,7 @@
 <!-- Informasi Section -->
 <div class="card shadow mb-4 mt-4" style="border-left: 4px solid #800000;">
     <div class="card-header py-3" style="background-color: #800000; color: white;">
-        <h6 class="m-0 font-weight-bold">
+        <h6 class="m-0 font-weight-bold" style="color: white;">
             <i class="fas fa-info-circle"></i> Informasi Fasilitas
         </h6>
     </div>
