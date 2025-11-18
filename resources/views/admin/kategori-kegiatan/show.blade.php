@@ -5,9 +5,6 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Detail Kategori Kegiatan</h1>
     <div>
-        <a href="{{ route('kategori-kegiatan.edit', $kategoriKegiatan->id_kategori) }}" class="btn btn-sm btn-warning shadow-sm mr-2">
-            <i class="fas fa-edit fa-sm text-white-50"></i> Edit
-        </a>
         <a href="{{ route('kategori-kegiatan.index') }}" class="btn btn-sm btn-secondary shadow-sm">
             <i class="fas fa-arrow-left fa-sm text-white-50"></i> Kembali
         </a>
@@ -110,29 +107,6 @@
             <div class="card-body text-center">
                 <h2 class="text-primary">{{ $kategoriKegiatan->kegiatan->count() }}</h2>
                 <p class="text-muted mb-0">Total Program Kegiatan</p>
-            </div>
-        </div>
-
-        <!-- Status -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #4b0000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-info-circle"></i> Status Kategori
-                </h6>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <small class="text-muted">Status:</small><br>
-                    <span class="badge badge-success">Aktif</span>
-                </div>
-                <div class="mb-3">
-                    <small class="text-muted">Dapat Dihapus:</small><br>
-                    @if($kategoriKegiatan->kegiatan->count() == 0)
-                    <span class="badge badge-success">Ya</span>
-                    @else
-                    <span class="badge badge-danger">Tidak ({{ $kategoriKegiatan->kegiatan->count() }} program aktif)</span>
-                    @endif
-                </div>
             </div>
         </div>
     </div>

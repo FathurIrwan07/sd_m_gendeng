@@ -192,12 +192,8 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function () {
         Route::get('chat/{pengaduan}/new-messages', [ChatPengaduanController::class, 'getNewMessages'])
             ->name('chat.get-new-messages');
 
-    Route::get('pengaduan-export/pdf', [PengaduanController::class, 'exportPdf'])
-        ->name('pengaduan.export-pdf');
-    Route::get('pengaduan-export/{pengaduan}/pdf', [PengaduanController::class, 'exportPdfDetail'])
-        ->name('pengaduan.export-pdf-detail');
-     Route::get('tanggapan-export/pdf', [TanggapanPengaduanController::class, 'exportPdfTanggapan'])
-        ->name('tanggapan.export-pdf');
+        Route::get('pengaduan-export/pdf-gabungan', [TanggapanPengaduanController::class, 'exportPdfGabungan'])
+        ->name('pengaduan.export-pdf-gabungan');
 });
 
 

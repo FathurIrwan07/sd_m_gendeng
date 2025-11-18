@@ -40,6 +40,45 @@
                         @enderror
                     </div>
 
+                    <!-- Nama Peraih -->
+                    <div class="form-group">
+                        <label for="nama_peraih" class="font-weight-bold">
+                            Nama Peraih <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" 
+                               class="form-control @error('nama_peraih') is-invalid @enderror" 
+                               id="nama_peraih" 
+                               name="nama_peraih"
+                               placeholder="Contoh: Ahmad Fauzi (Kelas 6A)"
+                               maxlength="150"
+                               value="{{ old('nama_peraih', $prestasi->nama_peraih) }}"
+                               required>
+                        @error('nama_peraih')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Tingkat Prestasi -->
+                    <div class="form-group">
+                        <label for="tingkat_prestasi" class="font-weight-bold">
+                            Tingkat Prestasi <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control @error('tingkat_prestasi') is-invalid @enderror" 
+                                id="tingkat_prestasi" 
+                                name="tingkat_prestasi"
+                                required>
+                            <option value="">-- Pilih Tingkat Prestasi --</option>
+                            <option value="Internasional" {{ old('tingkat_prestasi', $prestasi->tingkat_prestasi) == 'Internasional' ? 'selected' : '' }}>Internasional</option>
+                            <option value="Nasional" {{ old('tingkat_prestasi', $prestasi->tingkat_prestasi) == 'Nasional' ? 'selected' : '' }}>Nasional</option>
+                            <option value="Provinsi" {{ old('tingkat_prestasi', $prestasi->tingkat_prestasi) == 'Provinsi' ? 'selected' : '' }}>Provinsi</option>
+                            <option value="Kabupaten/Kota" {{ old('tingkat_prestasi', $prestasi->tingkat_prestasi) == 'Kabupaten/Kota' ? 'selected' : '' }}>Kabupaten/Kota</option>
+                            <option value="Kecamatan" {{ old('tingkat_prestasi', $prestasi->tingkat_prestasi) == 'Kecamatan' ? 'selected' : '' }}>Kecamatan</option>
+                        </select>
+                        @error('tingkat_prestasi')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <!-- Tanggal -->
                     <div class="form-group">
                         <label for="tanggal" class="font-weight-bold">Tanggal Prestasi</label>
@@ -153,7 +192,7 @@
                 @if($prestasi->user)
                 <div class="mb-3">
                     <small class="text-muted">Diubah Oleh:</small><br>
-                    <strong>{{ $prestasi->user->nama_lengkap  }}</strong>
+                    <strong>{{ $prestasi->user->nama_lengkap }}</strong>
                 </div>
                 @endif
                 

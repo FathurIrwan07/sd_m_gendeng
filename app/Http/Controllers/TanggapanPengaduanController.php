@@ -129,40 +129,102 @@ class TanggapanPengaduanController extends Controller
         return redirect()->route('tanggapan.index')
             ->with('success', 'Tanggapan berhasil dihapus dan status pengaduan dikembalikan.');
     }
-
-     public function exportPdfTanggapan(Request $request)
+     public function exportPdfDetail(Pengaduan $pengaduan)
     {
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
+        $pengaduan->load(['pelapor', 'kategori', 'tanggapan.penanggap']);
 
-        $query = TanggapanPengaduan::with(['pengaduan.pelapor', 'pengaduan.kategori', 'penanggap']);
-
-        if ($startDate && $endDate) {
-            $query->whereBetween('tanggal_tanggapan', [$startDate, $endDate]);
-            $periode = Carbon::parse($startDate)->format('d M Y') . ' - ' . Carbon::parse($endDate)->format('d M Y');
-        } else {
-            $query->whereMonth('tanggal_tanggapan', now()->month)
-                  ->whereYear('tanggal_tanggapan', now()->year);
-            $periode = now()->format('F Y');
+        // Hitung durasi penyelesaian
+        $durasi = null;
+        if ($pengaduan->tanggapan && $pengaduan->status_pengaduan === 'Selesai') {
+            $mulai = $pengaduan->tanggal_pengaduan;
+            $selesai = $pengaduan->tanggapan->tanggal_tanggapan;
+            
+            $days = $mulai->diffInDays($selesai);
+            $hours = $mulai->copy()->addDays($days)->diffInHours($selesai);
+            
+            $durasi = $days . ' hari ' . $hours . ' jam';
         }
 
-        $tanggapan = $query->orderBy('tanggal_tanggapan', 'desc')->get();
-
-        $perPenanggap = $tanggapan->groupBy('penanggap.nama_lengkap')
-            ->map(fn($items) => $items->count())
-            ->sortDesc();
-
         $data = [
-            'tanggapan' => $tanggapan,
-            'total' => $tanggapan->count(),
-            'perPenanggap' => $perPenanggap,
-            'periode' => $periode,
+            'pengaduan' => $pengaduan,
+            'durasi' => $durasi,
             'tanggal_cetak' => now()->format('d F Y, H:i') . ' WIB',
         ];
 
-        $pdf = Pdf::loadView('admin.tanggapan.pdf-rekap', $data)
+        $pdf = Pdf::loadView('admin.pengaduan.pdf-detail', $data)
             ->setPaper('a4', 'portrait');
 
-        return $pdf->download('Laporan_Tanggapan_' . now()->format('d-m-Y') . '.pdf');
+        return $pdf->download('Detail_Pengaduan_' . $pengaduan->id_pengaduan . '.pdf');
     }
+    public function exportPdfGabungan(Request $request)
+{
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
+    $status = $request->input('status');
+    $kategori = $request->input('kategori');
+
+    // Query dengan filter
+    $query = Pengaduan::with(['pelapor', 'kategori', 'tanggapan.penanggap']);
+
+    // Filter tanggal
+    if ($startDate && $endDate) {
+        $query->whereBetween('tanggal_pengaduan', [$startDate, $endDate]);
+        $periode = Carbon::parse($startDate)->format('d M Y') . ' - ' . Carbon::parse($endDate)->format('d M Y');
+    } else {
+        // Default bulan ini
+        $query->whereMonth('tanggal_pengaduan', now()->month)
+              ->whereYear('tanggal_pengaduan', now()->year);
+        $periode = now()->format('F Y');
+    }
+
+    // Filter status
+    if ($status) {
+        $query->where('status_pengaduan', $status);
+    }
+
+    // Filter kategori
+    if ($kategori) {
+        $query->where('id_kategori', $kategori);
+    }
+
+    $pengaduan = $query->orderBy('tanggal_pengaduan', 'desc')->get();
+
+    // Hitung statistik
+    $statistik = [
+        'total' => $pengaduan->count(),
+        'menunggu' => $pengaduan->where('status_pengaduan', 'Menunggu Konfirmasi')->count(),
+        'diproses' => $pengaduan->where('status_pengaduan', 'Diproses')->count(),
+        'selesai' => $pengaduan->where('status_pengaduan', 'Selesai')->count(),
+        'ditolak' => $pengaduan->where('status_pengaduan', 'Ditolak')->count(),
+    ];
+
+    // Hitung per kategori
+    $perKategori = $pengaduan->groupBy('kategori.nama_kategori')
+        ->map(fn($items) => $items->count())
+        ->sortDesc();
+
+    // Hitung rata-rata penyelesaian (untuk yang selesai)
+    $selesai = $pengaduan->where('status_pengaduan', 'Selesai')->filter(function($item) {
+        return $item->tanggapan;
+    });
+    
+    $rataRata = $selesai->count() > 0 
+        ? round($selesai->avg(function($item) {
+            return $item->tanggal_pengaduan->diffInDays($item->tanggapan->tanggal_tanggapan);
+        }), 1)
+        : 0;
+
+    $data = [
+        'pengaduan' => $pengaduan,
+        'statistik' => $statistik,
+        'perKategori' => $perKategori,
+        'periode' => $periode,
+        'tanggal_cetak' => now()->format('d F Y, H:i') . ' WIB',
+    ];
+
+    $pdf = Pdf::loadView('admin.tanggapan.pdf-gabungan', $data)
+        ->setPaper('a4', 'landscape'); // Landscape karena kolom lebih banyak
+
+    return $pdf->download('Laporan_Pengaduan_Tanggapan_' . now()->format('d-m-Y') . '.pdf');
+}
 }

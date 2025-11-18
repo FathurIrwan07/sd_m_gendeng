@@ -41,15 +41,6 @@
                 <div class="content-box bg-light p-3 rounded">
                     <p class="mb-0" style="white-space: pre-line;">{{ Str::limit($item->syarat_pendaftaran, 300) }}</p>
                 </div>
-
-                @if($item->user)
-                <div class="mt-3">
-                    <small class="text-muted">
-                        <i class="fas fa-user-edit"></i> Diubah oleh: <strong>{{ $item->user->nama_lengkap  }}</strong>
-                    </small>
-                </div>
-                @endif
-
                 <div class="mt-2">
                     <small class="text-muted">
                         <i class="fas fa-clock"></i> {{ $item->updated_at->diffForHumans() }}

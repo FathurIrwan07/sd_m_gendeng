@@ -142,27 +142,6 @@
                 </p>
             </div>
         </div>
-
-        <!-- Quick Stats -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #660000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-chart-bar"></i> Statistik Cepat
-                </h6>
-            </div>
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-6 border-right">
-                        <h4 class="text-primary">{{ str_word_count($kontenHome->isi_konten) }}</h4>
-                        <small class="text-muted">Kata</small>
-                    </div>
-                    <div class="col-6">
-                        <h4 class="text-success">{{ strlen($kontenHome->isi_konten) }}</h4>
-                        <small class="text-muted">Karakter</small>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

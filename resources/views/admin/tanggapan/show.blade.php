@@ -25,15 +25,10 @@
             <div class="card-body">
                 <table class="table table-borderless">
                     <tr>
-                        <th width="35%">ID Pengaduan</th>
-                        <td>{{ $tanggapan->pengaduan->id_pengaduan }}</td>
-                    </tr>
-                    <tr>
                         <th>Pelapor</th>
                         <td>
                             @if($tanggapan->pengaduan->pelapor)
-                                <strong>{{ $tanggapan->pengaduan->pelapor->name }}</strong><br>
-                                <small class="text-muted">{{ $tanggapan->pengaduan->pelapor->email }}</small>
+                                <strong>{{ $tanggapan->pengaduan->pelapor->nama_lengkap }}</strong><br>
                             @else
                                 <span class="text-muted">Anonim</span>
                             @endif
@@ -83,17 +78,6 @@
             </div>
             <div class="card-body">
                 <table class="table table-borderless">
-                    <tr>
-                        <th width="35%">ID Tanggapan</th>
-                        <td>{{ $tanggapan->id_tanggapan }}</td>
-                    </tr>
-                    <tr>
-                        <th>Penanggap</th>
-                        <td>
-                            <strong>{{ $tanggapan->penanggap->name }}</strong><br>
-                            <small class="text-muted">{{ $tanggapan->penanggap->email }}</small>
-                        </td>
-                    </tr>
                     <tr>
                         <th>Tanggal Tanggapan</th>
                         <td>{{ \Carbon\Carbon::parse($tanggapan->tanggal_tanggapan)->format('d F Y') }}</td>

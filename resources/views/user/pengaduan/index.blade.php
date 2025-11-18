@@ -18,80 +18,8 @@
         </div>
     @endif
 
-    <div class="row">
-        @forelse($pengaduan as $item)
-            <div class="col-lg-6 mb-4">
-                <div class="card shadow h-100">
-                    <div class="card-header py-3" style="background-color: 
-                                    {{ $item->status_pengaduan === 'Selesai' ? '#28a745' :
-                ($item->status_pengaduan === 'Diproses' ? '#ffc107' :
-                    ($item->status_pengaduan === 'Ditolak' ? '#dc3545' : '#6c757d')) }};">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-white">
-                                <i class="fas fa-file-alt"></i> {{ $item->kategori->nama_kategori }}
-                            </h6>
-                            <span class="badge badge-light">{{ $item->tanggal_pengaduan->format('d M Y') }}</span>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <span class="badge badge-{{ 
-                                        $item->status_pengaduan === 'Selesai' ? 'success' :
-                ($item->status_pengaduan === 'Diproses' ? 'warning' :
-                    ($item->status_pengaduan === 'Ditolak' ? 'danger' : 'secondary')) 
-                                    }} badge-lg px-3 py-2">
-                                {{ $item->status_pengaduan }}
-                            </span>
-                        </div>
-
-                        <p class="card-text text-justify">
-                            {{ Str::limit($item->deskripsi, 150) }}
-                        </p>
-
-                        @if($item->tanggapan)
-                            <div class="alert alert-info mb-3">
-                                <small>
-                                    <i class="fas fa-reply"></i> <strong>Sudah Ditanggapi</strong><br>
-                                    {{ $item->tanggapan->tanggal_tanggapan->format('d M Y') }}
-                                </small>
-                            </div>
-                        @else
-                            <div class="alert alert-secondary mb-3">
-                                <small>
-                                    <i class="fas fa-clock"></i> Belum ada tanggapan
-                                </small>
-                            </div>
-                        @endif
-
-                        <a href="{{ route('user.pengaduan.show', $item->id_pengaduan) }}" class="btn btn-primary btn-block">
-                            <i class="fas fa-eye"></i> Lihat Detail
-                        </a>
-                    </div>
-
-                    <div class="card-footer bg-light text-muted small">
-                        <i class="fas fa-clock"></i> Dibuat {{ $item->created_at->diffForHumans() }}
-                    </div>
-                </div>
-            </div>
-        @empty
-            <div class="col-12">
-                <div class="card shadow">
-                    <div class="card-body text-center py-5">
-                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">Anda belum memiliki pengaduan</h5>
-                        <p class="text-muted">Silakan buat pengaduan baru jika ada keluhan atau saran</p>
-                        <a href="{{ route('user.pengaduan.create') }}" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> Buat Pengaduan Baru
-                        </a>
-                    </div>
-                </div>
-            </div>
-        @endforelse
-    </div>
-
     @if($pengaduan->count() > 0)
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="card border-left-secondary shadow h-100 py-2">
                     <div class="card-body">
@@ -163,4 +91,84 @@
             </div>
         </div>
     @endif
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color: #800000;">
+            <h6 class="m-0 font-weight-bold text-white">
+                <i class="fas fa-list"></i> Daftar Pengaduan
+            </h6>
+        </div>
+        <div class="card-body">
+            @if($pengaduan->count() > 0)
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="text-center" width="5%">No</th>
+                                <th width="15%">Kategori</th>
+                                <th width="30%">Deskripsi</th>
+                                <th width="12%">Tanggal</th>
+                                <th class="text-center" width="10%">Status</th>
+                                <th class="text-center" width="10%">Tanggapan</th>
+                                <th class="text-center" width="8%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($pengaduan as $key => $item)
+                            <tr>
+                                <td class="text-center">{{ $key + 1 }}</td>
+                                <td>
+                                    <span class="badge badge-info">{{ $item->kategori->nama_kategori }}</span>
+                                </td>
+                                <td>{{ Str::limit($item->deskripsi, 100) }}</td>
+                                <td>
+                                    <small>
+                                        <i class="fas fa-calendar"></i> {{ $item->tanggal_pengaduan->format('d M Y') }}<br>
+                                        <i class="fas fa-clock"></i> {{ $item->created_at->diffForHumans() }}
+                                    </small>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge badge-{{ 
+                                        $item->status_pengaduan === 'Selesai' ? 'success' :
+                                        ($item->status_pengaduan === 'Diproses' ? 'warning' :
+                                        ($item->status_pengaduan === 'Ditolak' ? 'danger' : 'secondary')) 
+                                    }}">
+                                        {{ $item->status_pengaduan }}
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    @if($item->tanggapan)
+                                        <span class="badge badge-success">
+                                            <i class="fas fa-check"></i> Sudah
+                                        </span>
+                                    @else
+                                        <span class="badge badge-secondary">
+                                            <i class="fas fa-times"></i> Belum
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('user.pengaduan.show', $item->id_pengaduan) }}" 
+                                       class="btn btn-sm btn-primary" 
+                                       title="Lihat Detail">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="text-center py-5">
+                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Anda belum memiliki pengaduan</h5>
+                    <p class="text-muted">Silakan buat pengaduan baru jika ada keluhan atau saran</p>
+                    <a href="{{ route('user.pengaduan.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Buat Pengaduan Baru
+                    </a>
+                </div>
+            @endif
+        </div>
+    </div>
 @endsection

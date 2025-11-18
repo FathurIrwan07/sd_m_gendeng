@@ -50,15 +50,20 @@
                 <h5 class="font-weight-bold mb-2">{{ $item->nama_lengkap }}</h5>
                 
                 <!-- Jabatan -->
-                <p class="text-muted mb-3">
+                <p class="text-muted mb-2">
                     <i class="fas fa-id-badge"></i> {{ $item->jabatan }}
                 </p>
                 
-                <!-- Info Tambahan -->
-                <div class="small text-muted mb-3">
-                    <i class="fas fa-user-edit"></i> Terakhir diubah oleh: 
-                    <strong>{{ $item->user ? $item->user->nama_lengkap : 'N/A' }}</strong>
-                </div>
+                <!-- Lulusan -->
+                @if($item->lulusan)
+                <p class="text-primary mb-3">
+                    <i class="fas fa-graduation-cap"></i> {{ Str::limit($item->lulusan, 50) }}
+                </p>
+                @else
+                <p class="text-secondary mb-3">
+                    <small><i>Belum ada info pendidikan</i></small>
+                </p>
+                @endif
             </div>
             
             <!-- Card Footer with Action Buttons -->
@@ -103,6 +108,9 @@
                         @endif
                         <h6 class="font-weight-bold">{{ $item->nama_lengkap }}</h6>
                         <p class="text-muted">{{ $item->jabatan }}</p>
+                        @if($item->lulusan)
+                        <p class="text-primary"><small>{{ $item->lulusan }}</small></p>
+                        @endif
                     </div>
                     <p class="text-danger"><strong>Data yang dihapus tidak dapat dikembalikan!</strong></p>
                 </div>
@@ -148,7 +156,8 @@
     </div>
     <div class="card-body">
         <p class="mb-2"><i class="fas fa-chalkboard-teacher text-primary"></i> <strong>Tenaga Pendidik:</strong> Guru dan staff pengajar di SD Muhammadiyah Gendeng</p>
-        <p class="mb-0"><i class="fas fa-camera text-success"></i> <strong>Foto:</strong> Gunakan foto formal dengan latar belakang polos untuk hasil terbaik</p>
+        <p class="mb-2"><i class="fas fa-graduation-cap text-success"></i> <strong>Lulusan:</strong> Informasi pendidikan terakhir tenaga pendidik</p>
+        <p class="mb-0"><i class="fas fa-camera text-warning"></i> <strong>Foto:</strong> Gunakan foto formal dengan latar belakang polos untuk hasil terbaik</p>
     </div>
 </div>
 @endsection

@@ -32,12 +32,18 @@ class PrestasiController extends Controller
     {
         $validated = $request->validate([
             'judul_prestasi' => 'required|string|max:255',
+            'nama_peraih' => 'required|string|max:150',
+            'tingkat_prestasi' => 'required|in:Internasional,Nasional,Provinsi,Kabupaten/Kota,Kecamatan',
             'tanggal' => 'nullable|date',
             'deskripsi' => 'required|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'judul_prestasi.required' => 'Judul prestasi wajib diisi',
             'judul_prestasi.max' => 'Judul prestasi maksimal 255 karakter',
+            'nama_peraih.required' => 'Nama peraih prestasi wajib diisi',
+            'nama_peraih.max' => 'Nama peraih maksimal 150 karakter',
+            'tingkat_prestasi.required' => 'Tingkat prestasi wajib dipilih',
+            'tingkat_prestasi.in' => 'Tingkat prestasi tidak valid',
             'tanggal.date' => 'Format tanggal tidak valid',
             'deskripsi.required' => 'Deskripsi prestasi wajib diisi',
             'gambar.image' => 'File harus berupa gambar',
@@ -82,12 +88,18 @@ class PrestasiController extends Controller
     {
         $validated = $request->validate([
             'judul_prestasi' => 'required|string|max:255',
+            'nama_peraih' => 'required|string|max:150',
+            'tingkat_prestasi' => 'required|in:Internasional,Nasional,Provinsi,Kabupaten/Kota,Kecamatan',
             'tanggal' => 'nullable|date',
             'deskripsi' => 'required|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'judul_prestasi.required' => 'Judul prestasi wajib diisi',
             'judul_prestasi.max' => 'Judul prestasi maksimal 255 karakter',
+            'nama_peraih.required' => 'Nama peraih prestasi wajib diisi',
+            'nama_peraih.max' => 'Nama peraih maksimal 150 karakter',
+            'tingkat_prestasi.required' => 'Tingkat prestasi wajib dipilih',
+            'tingkat_prestasi.in' => 'Tingkat prestasi tidak valid',
             'tanggal.date' => 'Format tanggal tidak valid',
             'deskripsi.required' => 'Deskripsi prestasi wajib diisi',
             'gambar.image' => 'File harus berupa gambar',

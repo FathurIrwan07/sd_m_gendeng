@@ -34,7 +34,17 @@ class TenagaPendidikController extends Controller
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:150',
             'jabatan' => 'required|string|max:100',
+            'lulusan' => 'nullable|string|max:200',
             'foto_tenaga_pendidik' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'nama_lengkap.required' => 'Nama lengkap wajib diisi',
+            'nama_lengkap.max' => 'Nama lengkap maksimal 150 karakter',
+            'jabatan.required' => 'Jabatan wajib diisi',
+            'jabatan.max' => 'Jabatan maksimal 100 karakter',
+            'lulusan.max' => 'Lulusan maksimal 200 karakter',
+            'foto_tenaga_pendidik.image' => 'File harus berupa gambar',
+            'foto_tenaga_pendidik.mimes' => 'Format gambar harus: jpeg, png, jpg, gif',
+            'foto_tenaga_pendidik.max' => 'Ukuran gambar maksimal 2MB',
         ]);
 
         $validated['user_id'] = Auth::id();
@@ -75,7 +85,17 @@ class TenagaPendidikController extends Controller
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:150',
             'jabatan' => 'required|string|max:100',
+            'lulusan' => 'nullable|string|max:200',
             'foto_tenaga_pendidik' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'nama_lengkap.required' => 'Nama lengkap wajib diisi',
+            'nama_lengkap.max' => 'Nama lengkap maksimal 150 karakter',
+            'jabatan.required' => 'Jabatan wajib diisi',
+            'jabatan.max' => 'Jabatan maksimal 100 karakter',
+            'lulusan.max' => 'Lulusan maksimal 200 karakter',
+            'foto_tenaga_pendidik.image' => 'File harus berupa gambar',
+            'foto_tenaga_pendidik.mimes' => 'Format gambar harus: jpeg, png, jpg, gif',
+            'foto_tenaga_pendidik.max' => 'Ukuran gambar maksimal 2MB',
         ]);
 
         $validated['user_id'] = Auth::id();

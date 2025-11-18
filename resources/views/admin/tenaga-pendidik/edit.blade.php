@@ -10,8 +10,10 @@
 </div>
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Form Edit Tenaga Pendidik</h6>
+    <div class="card-header py-3" style="background-color: #800000;">
+        <h6 class="m-0 font-weight-bold text-white">
+            <i class="fas fa-edit"></i> Edit: {{ $tenagaPendidik->nama_lengkap }}
+        </h6>
     </div>
     <div class="card-body">
         <form action="{{ route('tenaga-pendidik.update', $tenagaPendidik->id_tenaga_pendidik) }}" method="POST" enctype="multipart/form-data">
@@ -34,6 +36,18 @@
                        id="jabatan" name="jabatan" 
                        value="{{ old('jabatan', $tenagaPendidik->jabatan) }}" required>
                 @error('jabatan')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="lulusan">Lulusan / Pendidikan</label>
+                <input type="text" class="form-control @error('lulusan') is-invalid @enderror" 
+                       id="lulusan" name="lulusan" 
+                       value="{{ old('lulusan', $tenagaPendidik->lulusan) }}" 
+                       placeholder="Contoh: S1 Pendidikan Bahasa Indonesia">
+                <small class="form-text text-muted">Opsional: Isi jika ingin menampilkan informasi pendidikan terakhir</small>
+                @error('lulusan')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

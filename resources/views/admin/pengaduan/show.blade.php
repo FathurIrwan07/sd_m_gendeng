@@ -112,30 +112,6 @@
                     @endif
                 </div>
             </div>
-
-            <!-- Action Buttons -->
-            <div class="card shadow mb-4">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <a href="{{ route('pengaduan.edit', $pengaduan->id_pengaduan) }}" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                            <a href="{{ route('pengaduan.export-pdf-detail', $pengaduan->id_pengaduan) }}" 
-                               class="btn btn-danger" 
-                               target="_blank">
-                                <i class="fas fa-file-pdf"></i> Export PDF
-                            </a>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
-                                <i class="fas fa-trash"></i> Hapus
-                            </button>
-                        </div>
-                        <a href="{{ route('pengaduan.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-list"></i> Kembali ke Daftar
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="col-lg-4">

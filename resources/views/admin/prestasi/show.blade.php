@@ -5,9 +5,6 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Detail Prestasi</h1>
     <div>
-        <a href="{{ route('prestasi.edit', $prestasi->id_prestasi) }}" class="btn btn-sm btn-warning shadow-sm mr-2">
-            <i class="fas fa-edit fa-sm text-white-50"></i> Edit
-        </a>
         <a href="{{ route('prestasi.index') }}" class="btn btn-sm btn-secondary shadow-sm">
             <i class="fas fa-arrow-left fa-sm text-white-50"></i> Kembali
         </a>
@@ -34,13 +31,23 @@
 
                 <h3 class="text-primary mb-3">{{ $prestasi->judul_prestasi }}</h3>
                 
-                @if($prestasi->tanggal)
                 <div class="mb-3">
+                    <span class="badge {{ $prestasi->tingkat_badge_color }} badge-lg px-3 py-2">
+                        <i class="fas fa-medal"></i> {{ $prestasi->tingkat_prestasi }}
+                    </span>
+                    @if($prestasi->tanggal)
                     <span class="badge badge-info badge-lg px-3 py-2">
                         <i class="fas fa-calendar"></i> {{ $prestasi->tanggal->format('d F Y') }}
                     </span>
+                    @endif
                 </div>
-                @endif
+
+                <div class="alert alert-light border-left-primary mb-4">
+                    <h6 class="font-weight-bold text-primary mb-2">
+                        <i class="fas fa-user-graduate"></i> Peraih Prestasi
+                    </h6>
+                    <h5 class="mb-0">{{ $prestasi->nama_peraih }}</h5>
+                </div>
 
                 <hr>
 
@@ -83,6 +90,18 @@
                 </h6>
             </div>
             <div class="card-body">
+                <div class="mb-3">
+                    <small class="text-muted">Nama Peraih:</small><br>
+                    <strong>{{ $prestasi->nama_peraih }}</strong>
+                </div>
+
+                <div class="mb-3">
+                    <small class="text-muted">Tingkat Prestasi:</small><br>
+                    <span class="badge {{ $prestasi->tingkat_badge_color }}">
+                        {{ $prestasi->tingkat_prestasi }}
+                    </span>
+                </div>
+
                 @if($prestasi->tanggal)
                 <div class="mb-3">
                     <small class="text-muted">Tanggal Prestasi:</small><br>
@@ -109,7 +128,7 @@
                     <div class="d-flex align-items-center mt-2">
                         <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mr-2" 
                              style="width: 40px; height: 40px;">
-                            <strong>{{ substr($prestasi->user->name, 0, 1) }}</strong>
+                            <strong>{{ substr($prestasi->user->nama_lengkap, 0, 1) }}</strong>
                         </div>
                         <div>
                             <strong>{{ $prestasi->user->name }}</strong><br>
@@ -150,28 +169,7 @@
                     Prestasi ini akan tampil di halaman website
                 </p>
             </div>
-        </div>
-
-        <!-- Quick Stats -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #660000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-chart-bar"></i> Statistik
-                </h6>
-            </div>
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-6 border-right">
-                        <h4 class="text-primary">{{ str_word_count($prestasi->deskripsi) }}</h4>
-                        <small class="text-muted">Kata</small>
-                    </div>
-                    <div class="col-6">
-                        <h4 class="text-success">{{ strlen($prestasi->deskripsi) }}</h4>
-                        <small class="text-muted">Karakter</small>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </div>      
     </div>
 </div>
 

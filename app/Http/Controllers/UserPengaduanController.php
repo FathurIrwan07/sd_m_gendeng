@@ -75,8 +75,7 @@ class UserPengaduanController extends Controller
         $dataToCreate = [
             'id_kategori' => $validatedData['id_kategori'],
             'deskripsi' => $validatedData['deskripsi'],
-            // ⬇️ PERUBAHAN DI SINI: Tambahkan 'Asia/Jakarta' ⬇️
-            'tanggal_pengaduan' => Carbon::now('Asia/Jakarta'), // Waktu otomatis saat ini (WIB)
+            'tanggal_pengaduan' => Carbon::now('Asia/Jakarta'),
             'user_id' => auth()->id(),
             'status_pengaduan' => 'Menunggu Konfirmasi',
         ];
@@ -100,15 +99,15 @@ class UserPengaduanController extends Controller
     }
 
     public function publicIndex()
-    {
-        $pengaduan = Pengaduan::with(['kategori', 'tanggapan'])
-            ->whereIn('status_pengaduan', ['Diproses', 'Selesai'])
-            ->latest()
-            ->paginate(10);
+{
+    $pengaduan = Pengaduan::with(['kategori', 'tanggapan.penanggap', 'pelapor'])
+        ->whereIn('status_pengaduan', ['Diproses', 'Selesai',])
+        ->whereNull('user_id') // ✅ Hanya yang anonim
+        ->latest()
+        ->paginate(10);
 
-        return view('public.pengaduan.index', compact('pengaduan'));
-    }
-
+    return view('public.pengaduan.index', compact('pengaduan'));
+}
     public function createAnonim()
     {
         $kategori = KategoriPengaduan::all();
@@ -133,8 +132,7 @@ class UserPengaduanController extends Controller
         $dataToCreate = [
             'id_kategori' => $validatedData['id_kategori'],
             'deskripsi' => $validatedData['deskripsi'],
-            // ⬇️ PERUBAHAN DI SINI: Tambahkan 'Asia/Jakarta' ⬇️
-            'tanggal_pengaduan' => Carbon::now('Asia/Jakarta'), // Waktu otomatis saat ini (WIB)
+            'tanggal_pengaduan' => Carbon::now('Asia/Jakarta'),
             'user_id' => null, // Anonim
             'status_pengaduan' => 'Menunggu Konfirmasi',
         ];

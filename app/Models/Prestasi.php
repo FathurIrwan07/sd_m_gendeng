@@ -15,6 +15,8 @@ class Prestasi extends Model
 
     protected $fillable = [
         'judul_prestasi',
+        'nama_peraih',
+        'tingkat_prestasi',
         'tanggal',
         'deskripsi',
         'gambar',
@@ -31,5 +33,20 @@ class Prestasi extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id_user');
+    }
+
+    /**
+     * Get badge color based on tingkat_prestasi
+     */
+    public function getTingkatBadgeColorAttribute(): string
+    {
+        return match($this->tingkat_prestasi) {
+            'Internasional' => 'badge-danger',
+            'Nasional' => 'badge-primary',
+            'Provinsi' => 'badge-info',
+            'Kabupaten/Kota' => 'badge-success',
+            'Kecamatan' => 'badge-warning',
+            default => 'badge-secondary'
+        };
     }
 }

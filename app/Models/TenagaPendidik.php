@@ -16,6 +16,7 @@ class TenagaPendidik extends Model
     protected $fillable = [
         'nama_lengkap',
         'jabatan',
+        'lulusan',
         'foto_tenaga_pendidik',
         'user_id',
     ];

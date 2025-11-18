@@ -5,9 +5,6 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Detail Info PPDB</h1>
     <div>
-        <a href="{{ route('info-ppdb.edit', $infoPpdb->id_info_ppdb) }}" class="btn btn-sm btn-warning shadow-sm mr-2">
-            <i class="fas fa-edit fa-sm text-white-50"></i> Edit
-        </a>
         <a href="{{ route('info-ppdb.index') }}" class="btn btn-sm btn-secondary shadow-sm">
             <i class="fas fa-arrow-left fa-sm text-white-50"></i> Kembali
         </a>
@@ -94,7 +91,7 @@
                     <div class="d-flex align-items-center mt-2">
                         <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mr-2" 
                              style="width: 40px; height: 40px;">
-                            <strong>{{ substr($infoPpdb->user->name, 0, 1) }}</strong>
+                            <strong>{{ substr($infoPpdb->user->username, 0, 1) }}</strong>
                         </div>
                         <div>
                             <strong>{{ $infoPpdb->user->name }}</strong><br>
@@ -134,27 +131,6 @@
                 <p class="small text-muted mb-0">
                     Informasi ini akan tampil di halaman PPDB website
                 </p>
-            </div>
-        </div>
-
-        <!-- Quick Stats -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #660000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-chart-bar"></i> Statistik
-                </h6>
-            </div>
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-6 border-right">
-                        <h4 class="text-primary">{{ str_word_count($infoPpdb->syarat_pendaftaran) }}</h4>
-                        <small class="text-muted">Kata</small>
-                    </div>
-                    <div class="col-6">
-                        <h4 class="text-success">{{ strlen($infoPpdb->syarat_pendaftaran) }}</h4>
-                        <small class="text-muted">Karakter</small>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

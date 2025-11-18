@@ -1,12 +1,9 @@
-{{-- ============================================ --}}
-{{-- FILE: resources/views/admin/pengaduan/pdf-rekap.blade.php --}}
-{{-- LAPORAN REKAP PENGADUAN --}}
-{{-- ============================================ --}}
+{{-- resources/views/admin/pengaduan/pdf-gabungan.blade.php --}}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Laporan Pengaduan</title>
+    <title>Laporan Pengaduan & Tanggapan</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; font-size: 12px; line-height: 1.6; color: #333; }
@@ -22,7 +19,7 @@
         .stat-label { font-size: 10px; color: #666; margin-top: 5px; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th { background: #f8f9fa; color: #333; padding: 10px 8px; text-align: left; font-size: 11px; border: 1px solid #ddd; }
-        td { padding: 8px; border: 1px solid #ddd; font-size: 11px; }
+        td { padding: 8px; border: 1px solid #ddd; font-size: 11px; vertical-align: top; }
         tr:nth-child(even) { background: #f9f9f9; }
         .badge { display: inline-block; padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: bold; }
         .badge-menunggu { background: #ffc107; color: #000; }
@@ -32,13 +29,14 @@
         .footer { margin-top: 50px; display: table; width: 100%; }
         .signature { display: table-cell; width: 50%; text-align: center; padding: 20px; }
         .signature-line { margin-top: 60px; border-top: 1px solid #333; width: 200px; margin-left: auto; margin-right: auto; padding-top: 5px; }
+        .tanggapan-box { background: #e8f5e9; padding: 5px 8px; border-radius: 3px; font-size: 10px; margin-top: 3px; }
     </style>
 </head>
 <body>
     {{-- HEADER --}}
     <div class="header">
         <h1>SD MUHAMMADIYAH GENDENG</h1>
-        <h2>LAPORAN PENGADUAN MASYARAKAT</h2>
+        <h2>LAPORAN PENGADUAN & TANGGAPAN</h2>
     </div>
 
     {{-- INFO LAPORAN --}}
@@ -57,7 +55,7 @@
 
     {{-- STATISTIK --}}
     <div class="section">
-        <div class="section-title">📊 RINGKASAN STATISTIK</div>
+        <div class="section-title">RINGKASAN STATISTIK</div>
         
         <div class="stats-grid">
             <div class="stat-box">
@@ -85,7 +83,6 @@
         <table style="margin-top: 20px;">
             <tr>
                 <th style="width: 50%;">Kategori Terbanyak</th>
-                <th style="width: 50%;">Rata-rata Penyelesaian</th>
             </tr>
             <tr>
                 <td>
@@ -96,28 +93,25 @@
                         <div>Tidak ada data</div>
                     @endif
                 </td>
-                <td style="text-align: center;">
-                    <strong style="font-size: 16px; color: #800000;">{{ $rataRata }} hari</strong>
-                </td>
             </tr>
         </table>
     </div>
 
-    {{-- DAFTAR PENGADUAN --}}
+    {{-- DAFTAR PENGADUAN & TANGGAPAN --}}
     <div class="section">
-        <div class="section-title">📋 DAFTAR PENGADUAN</div>
+        <div class="section-title">DAFTAR PENGADUAN & TANGGAPAN</div>
         
         @if($pengaduan->count() > 0)
         <table>
             <thead>
                 <tr>
-                    <th style="width: 5%;">No</th>
-                    <th style="width: 12%;">Tanggal</th>
-                    <th style="width: 15%;">Pelapor</th>
-                    <th style="width: 12%;">Kategori</th>
-                    <th style="width: 36%;">Deskripsi</th>
-                    <th style="width: 10%;">Status</th>
-                    <th style="width: 10%;">Ditanggapi</th>
+                    <th style="width: 3%;">No</th>
+                    <th style="width: 10%;">Tanggal</th>
+                    <th style="width: 12%;">Pelapor</th>
+                    <th style="width: 10%;">Kategori</th>
+                    <th style="width: 25%;">Deskripsi</th>
+                    <th style="width: 8%;">Status</th>
+                    <th style="width: 32%;">Tanggapan</th>
                 </tr>
             </thead>
             <tbody>
@@ -133,7 +127,7 @@
                         @endif
                     </td>
                     <td>{{ $item->kategori->nama_kategori }}</td>
-                    <td>{{ Str::limit($item->deskripsi, 100) }}</td>
+                    <td>{{ Str::limit($item->deskripsi, 80) }}</td>
                     <td>
                         <span class="badge badge-{{ 
                             $item->status_pengaduan === 'Menunggu Konfirmasi' ? 'menunggu' : 
@@ -143,11 +137,17 @@
                             {{ $item->status_pengaduan }}
                         </span>
                     </td>
-                    <td style="text-align: center;">
+                    <td>
                         @if($item->tanggapan)
-                            ✓
+                            <div><strong>{{ $item->tanggapan->penanggap->nama_lengkap }}</strong></div>
+                            <div style="font-size: 9px; color: #666; margin: 2px 0;">
+                                {{ $item->tanggapan->tanggal_tanggapan->format('d/m/Y') }}
+                            </div>
+                            <div class="tanggapan-box">
+                                {{ Str::limit($item->tanggapan->isi_tanggapan, 100) }}
+                            </div>
                         @else
-                            -
+                            <em style="color: #999;">Belum ada tanggapan</em>
                         @endif
                     </td>
                 </tr>

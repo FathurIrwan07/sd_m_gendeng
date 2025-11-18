@@ -36,24 +36,28 @@
             
             <div class="card-body d-flex flex-column">
                 <div class="mb-2">
+                    <span class="badge {{ $item->tingkat_badge_color }}">
+                        <i class="fas fa-medal"></i> {{ $item->tingkat_prestasi }}
+                    </span>
                     @if($item->tanggal)
-                    <span class="badge badge-info">
+                    <span class="badge badge-secondary">
                         <i class="fas fa-calendar"></i> {{ $item->tanggal->format('d M Y') }}
                     </span>
                     @endif
                 </div>
                 
                 <h5 class="card-title font-weight-bold">{{ $item->judul_prestasi }}</h5>
+                
+                <p class="mb-2">
+                    <i class="fas fa-user-graduate text-primary"></i> 
+                    <strong>{{ $item->nama_peraih }}</strong>
+                </p>
+                
                 <p class="card-text text-justify flex-grow-1">
-                    {{ Str::limit($item->deskripsi, 120) }}
+                    {{ Str::limit($item->deskripsi, 100) }}
                 </p>
                 
                 <div class="mt-auto">
-                    @if($item->user)
-                    <small class="text-muted d-block mb-2">
-                        <i class="fas fa-user-edit"></i> {{ $item->user->nama_lengkap  }}
-                    </small>
-                    @endif
                     <small class="text-muted d-block mb-3">
                         <i class="fas fa-clock"></i> {{ $item->updated_at->diffForHumans() }}
                     </small>

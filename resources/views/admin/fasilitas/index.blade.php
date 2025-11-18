@@ -51,12 +51,6 @@
                 <p class="text-muted mb-3" style="min-height: 60px;">
                     {{ Str::limit($item->deskripsi, 120) }}
                 </p>
-                
-                <!-- Info Tambahan -->
-                <div class="small text-muted">
-                    <i class="fas fa-user-edit"></i> Terakhir diubah oleh: 
-                    <strong>{{ $item->user ? $item->user->nama_lengkap : 'N/A' }}</strong>
-                </div>
             </div>
             
             <!-- Card Footer with Action Buttons -->

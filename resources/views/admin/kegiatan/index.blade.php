@@ -47,11 +47,6 @@
                 </p>
                 
                 <div class="mt-auto">
-                    @if($item->user)
-                    <small class="text-muted d-block mb-2">
-                        <i class="fas fa-user-edit"></i> {{ $item->user->nama_lengkap  }}
-                    </small>
-                    @endif
                     <small class="text-muted d-block mb-3">
                         <i class="fas fa-clock"></i> {{ $item->updated_at->diffForHumans() }}
                     </small>

@@ -23,7 +23,7 @@
                         <th width="40%">Pelapor</th>
                         <td>
                             @if($tanggapan->pengaduan->pelapor)
-                                {{ $tanggapan->pengaduan->pelapor->name }}
+                                {{ $tanggapan->pengaduan->pelapor->nama_lengkap }}
                             @else
                                 <span class="text-muted">Anonim</span>
                             @endif

@@ -26,10 +26,6 @@
                         <td>: {{ $fasilita->deskripsi }}</td>
                     </tr>
                     <tr>
-                        <th>Dibuat Oleh</th>
-                        <td>: {{ $fasilita->user ? $fasilita->user->nama_lengkap : 'N/A' }}</td>
-                    </tr>
-                    <tr>
                         <th>Tanggal Dibuat</th>
                         <td>: {{ $fasilita->created_at->format('d F Y, H:i') }}</td>
                     </tr>

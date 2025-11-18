@@ -1,4 +1,3 @@
-{{-- resources/views/user/pengaduan/show.blade.php --}}
 @extends('user.app')
 
 @section('content')
@@ -70,7 +69,7 @@
             </div>
         </div>
 
-        <!-- Timeline -->
+        <!-- Riwayat Pengaduan Table -->
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="background-color: #800000;">
                 <h6 class="m-0 font-weight-bold text-white">
@@ -78,34 +77,63 @@
                 </h6>
             </div>
             <div class="card-body">
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <i class="fas fa-paper-plane bg-primary"></i>
-                        <div class="timeline-content">
-                            <h6 class="mb-0">Pengaduan Dibuat</h6>
-                            <small class="text-muted">{{ $pengaduan->created_at->format('d F Y, H:i') }}</small>
-                        </div>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th width="10%" class="text-center">No</th>
+                                <th width="30%">Status</th>
+                                <th width="60%">Waktu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>
+                                    <span class="badge badge-primary">
+                                        <i class="fas fa-paper-plane"></i> Pengaduan Dibuat
+                                    </span>
+                                </td>
+                                <td>{{ $pengaduan->created_at->format('d F Y, H:i') }} WIB</td>
+                            </tr>
 
-                    @if($pengaduan->tanggapan)
-                    <div class="timeline-item">
-                        <i class="fas fa-reply bg-success"></i>
-                        <div class="timeline-content">
-                            <h6 class="mb-0">Mendapat Tanggapan</h6>
-                            <small class="text-muted">{{ $pengaduan->tanggapan->created_at->format('d F Y, H:i') }}</small>
-                        </div>
-                    </div>
-                    @endif
+                            @if($pengaduan->tanggapan)
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>
+                                    <span class="badge badge-success">
+                                        <i class="fas fa-reply"></i> Mendapat Tanggapan
+                                    </span>
+                                </td>
+                                <td>{{ $pengaduan->tanggapan->created_at->format('d F Y, H:i') }} WIB</td>
+                            </tr>
+                            @endif
 
-                    @if($pengaduan->status_pengaduan === 'Selesai')
-                    <div class="timeline-item">
-                        <i class="fas fa-check-circle bg-success"></i>
-                        <div class="timeline-content">
-                            <h6 class="mb-0">Pengaduan Selesai</h6>
-                            <small class="text-muted">{{ $pengaduan->updated_at->format('d F Y, H:i') }}</small>
-                        </div>
-                    </div>
-                    @endif
+                            @if($pengaduan->status_pengaduan === 'Selesai')
+                            <tr>
+                                <td class="text-center">{{ $pengaduan->tanggapan ? '3' : '2' }}</td>
+                                <td>
+                                    <span class="badge badge-success">
+                                        <i class="fas fa-check-circle"></i> Pengaduan Selesai
+                                    </span>
+                                </td>
+                                <td>{{ $pengaduan->updated_at->format('d F Y, H:i') }} WIB</td>
+                            </tr>
+                            @endif
+
+                            @if($pengaduan->status_pengaduan === 'Ditolak')
+                            <tr>
+                                <td class="text-center">{{ $pengaduan->tanggapan ? '3' : '2' }}</td>
+                                <td>
+                                    <span class="badge badge-danger">
+                                        <i class="fas fa-times-circle"></i> Pengaduan Ditolak
+                                    </span>
+                                </td>
+                                <td>{{ $pengaduan->updated_at->format('d F Y, H:i') }} WIB</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -170,43 +198,4 @@
         </div>
     </div>
 </div>
-
-<style>
-.timeline {
-    position: relative;
-    padding: 20px 0;
-}
-.timeline-item {
-    position: relative;
-    padding-left: 60px;
-    padding-bottom: 30px;
-}
-.timeline-item:last-child {
-    padding-bottom: 0;
-}
-.timeline-item i {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    border-radius: 50%;
-    color: white;
-    font-size: 16px;
-}
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: 19px;
-    top: 40px;
-    width: 2px;
-    height: calc(100% - 10px);
-    background: #e0e0e0;
-}
-.timeline-item:last-child::before {
-    display: none;
-}
-</style>
 @endsection
