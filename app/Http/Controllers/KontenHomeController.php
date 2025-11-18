@@ -9,9 +9,15 @@ use Illuminate\Validation\Rule;
 
 class KontenHomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function publicIndex()
+    {
+        $sambutan = KontenHome::where('tipe_konten', 'Sambutan')->first();
+        $visi = KontenHome::where('tipe_konten', 'Visi')->first();
+        $misi = KontenHome::where('tipe_konten', 'Misi')->first();
+        
+        return view('about', compact('sambutan', 'visi', 'misi'));
+    }
+    
     public function index()
     {
         $kontenHome = KontenHome::with('user')->get();

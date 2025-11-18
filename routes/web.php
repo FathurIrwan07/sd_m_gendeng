@@ -30,8 +30,26 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// Tentang Kami
+Route::get('/tentang', [KontenHomeController::class, 'publicIndex'])->name('about');
+
+// Program & Kegiatan
+Route::get('/program', [KegiatanController::class, 'publicIndex'])->name('programs');
+
+// Prestasi
+Route::get('/prestasi', [PrestasiController::class, 'publicIndex'])->name('achievements');
+
+// Fasilitas
+Route::get('/fasilitas', [FasilitasController::class, 'publicIndex'])->name('facilities');
+
+// Tenaga Pendidik
+Route::get('/guru', [TenagaPendidikController::class, 'publicIndex'])->name('teachers');
+
+// Info PPDB
+Route::get('/ppdb', [InfoPpdbController::class, 'publicIndex'])->name('ppdb');
+
 // ============================================
-// ROUTES PUBLIK (TANPA AUTH)
+// PENGADUAN PUBLIK (TANPA AUTH)
 // ============================================
 
 // Pengaduan Publik - Lihat daftar pengaduan
@@ -186,21 +204,26 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function () {
         'update' => 'tanggapan.update',
         'destroy' => 'tanggapan.destroy',
     ]);
-     Route::get('chat', [ChatPengaduanController::class, 'index'])->name('chat.index');
-        Route::get('chat/{pengaduan}', [ChatPengaduanController::class, 'show'])->name('chat.show');
-        Route::post('chat/{pengaduan}', [ChatPengaduanController::class, 'store'])->name('chat.store');
-        Route::get('chat/{pengaduan}/new-messages', [ChatPengaduanController::class, 'getNewMessages'])
-            ->name('chat.get-new-messages');
 
-        Route::get('pengaduan-export/pdf-gabungan', [TanggapanPengaduanController::class, 'exportPdfGabungan'])
+    // ========== CHAT PENGADUAN (ADMIN) ==========
+    Route::get('chat', [ChatPengaduanController::class, 'index'])->name('chat.index');
+    Route::get('chat/{pengaduan}', [ChatPengaduanController::class, 'show'])->name('chat.show');
+    Route::post('chat/{pengaduan}', [ChatPengaduanController::class, 'store'])->name('chat.store');
+    Route::get('chat/{pengaduan}/new-messages', [ChatPengaduanController::class, 'getNewMessages'])
+        ->name('chat.get-new-messages');
+
+    // ========== EXPORT PDF ==========
+    Route::get('pengaduan-export/pdf-gabungan', [TanggapanPengaduanController::class, 'exportPdfGabungan'])
         ->name('pengaduan.export-pdf-gabungan');
 });
 
-
+// ============================================
+// USER ROUTES - PREFIX: /user
+// ============================================
 Route::middleware(['auth', 'role:User'])->prefix('user')->group(function () {
 
     // Dashboard User
-    Route::get('/dashboard', [\App\Http\Controllers\UserPengaduanController::class, 'dashboard'])
+    Route::get('/dashboard', [UserPengaduanController::class, 'dashboard'])
         ->name('user.dashboard');
 
     // ========== PENGADUAN (USER) ==========
@@ -213,12 +236,15 @@ Route::middleware(['auth', 'role:User'])->prefix('user')->group(function () {
     Route::get('/pengaduan/{pengaduan}', [UserPengaduanController::class, 'show'])
         ->name('user.pengaduan.show');
 
-     Route::get('chat/{pengaduan}', [ChatPengaduanController::class, 'userChat'])->name('user.chat.show');
-        Route::post('chat/{pengaduan}', [ChatPengaduanController::class, 'userStore'])->name('user.chat.store');
-        Route::get('chat/{pengaduan}/new-messages', [ChatPengaduanController::class, 'userGetNewMessages'])
-            ->name('user.chat.get-new-messages');
+    // ========== CHAT PENGADUAN (USER) ==========
     Route::get('chat', [ChatPengaduanController::class, 'userIndex'])
-    ->name('user.chat.index');
+        ->name('user.chat.index');
+    Route::get('chat/{pengaduan}', [ChatPengaduanController::class, 'userChat'])
+        ->name('user.chat.show');
+    Route::post('chat/{pengaduan}', [ChatPengaduanController::class, 'userStore'])
+        ->name('user.chat.store');
+    Route::get('chat/{pengaduan}/new-messages', [ChatPengaduanController::class, 'userGetNewMessages'])
+        ->name('user.chat.get-new-messages');
 });
 
 // ============================================

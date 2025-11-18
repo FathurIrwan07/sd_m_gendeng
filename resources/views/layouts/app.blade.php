@@ -1,36 +1,76 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="@yield('meta_description', 'SD Muhammadiyah Gendeng - Membentuk Generasi Cerdas & Berkarakter')">
+    <title>@yield('title', 'SD Muhammadiyah Gendeng')</title>
+    
+    {{-- Tailwind CSS --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    {{-- AOS Animation Library --}}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    {{-- Custom CSS --}}
+    <style>
+        /* Typography dari globals.css */
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.25rem; }
+        }
+    </style>
+    
+    @stack('styles')
+</head>
+<body class="antialiased bg-white text-gray-900">
+    {{-- Navbar --}}
+    @include('components.navbar')
+    
+    {{-- Main Content --}}
+    <main>
+        @yield('content')
+    </main>
+    
+    {{-- Footer --}}
+    @include('components.footer')
+    
+    {{-- AOS Animation --}}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+    </script>
+    
+    @stack('scripts')
+</body>
 </html>

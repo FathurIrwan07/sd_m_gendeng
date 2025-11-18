@@ -12,6 +12,7 @@ class TenagaPendidikController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         $tenagaPendidik = TenagaPendidik::with('user')->latest()->paginate(10);

@@ -11,6 +11,7 @@ class PrestasiController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         $prestasi = Prestasi::with('user')->latest()->get();
