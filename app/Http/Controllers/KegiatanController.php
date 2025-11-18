@@ -9,27 +9,31 @@ use Illuminate\Support\Facades\Storage;
 
 class KegiatanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function publicIndex()
+    {
+        // Get all categories with their activities
+        $kategoris = KategoriKegiatan::with(['kegiatan' => function($query) {
+            $query->latest();
+        }])->get();
+        
+        // Get all activities for display
+        $kegiatan = Kegiatan::with('kategori')->latest()->get();
+        
+        return view('programs', compact('kategoris', 'kegiatan'));
+    }
+
     public function index()
     {
         $kegiatan = Kegiatan::with(['kategori', 'user'])->latest()->get();
         return view('admin.kegiatan.index', compact('kegiatan'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $kategori = KategoriKegiatan::all();
         return view('admin.kegiatan.create', compact('kategori'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -50,7 +54,6 @@ class KegiatanController extends Controller
 
         $validated['user_id'] = auth()->id();
 
-        // Handle file upload
         if ($request->hasFile('foto_program')) {
             $validated['foto_program'] = $request->file('foto_program')->store('foto-kegiatan', 'public');
         }

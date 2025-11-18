@@ -19,10 +19,12 @@
                     <span class="text-[#B91C1C]">Selamat Datang di SD Muhammadiyah Gendeng</span>
                 </div>
 
-                <h1 class="text-gray-900 mb-6">
-                    Membentuk Generasi <span class="text-[#B91C1C]">Cerdas & Berkarakter</span>
+                <h1 class="text-gray-900 leading-tight text-center md:text-left">
+                    <span class="block text-5xl my-3 font-bold">Happy School</span>
+                    <span class="block text-[#B91C1C] text-3xl font-semibold">
+                        happy to learn and happy to grow
+                    </span>
                 </h1>
-
                 <p class="text-gray-600 mb-8 max-w-lg mx-auto lg:mx-0">
                     Mengembangkan potensi anak dengan pembelajaran berkualitas, fasilitas modern, dan pendekatan yang penuh kasih sayang.
                 </p>
