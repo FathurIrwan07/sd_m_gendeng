@@ -8,10 +8,33 @@ use Illuminate\Support\Facades\Storage;
 
 class PrestasiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    
+    public function publicIndex()
+    {
+        // Get all achievements ordered by date (newest first)
+        $prestasi = Prestasi::latest('tanggal')->get();
+        
+        // Calculate stats by tingkat_prestasi
+        $stats = [
+            [
+                'value' => Prestasi::where('tingkat_prestasi', 'Internasional')->count(),
+                'label' => 'Internasional'
+            ],
+            [
+                'value' => Prestasi::where('tingkat_prestasi', 'Nasional')->count(),
+                'label' => 'Nasional'
+            ],
+            [
+                'value' => Prestasi::where('tingkat_prestasi', 'Provinsi')->count(),
+                'label' => 'Provinsi'
+            ],
+            [
+                'value' => Prestasi::count(),
+                'label' => 'Total Prestasi'
+            ],
+        ];
+        
+        return view('achievements', compact('prestasi', 'stats'));
+    }
     public function index()
     {
         $prestasi = Prestasi::with('user')->latest()->get();

@@ -9,10 +9,35 @@ use Illuminate\Support\Facades\Auth;
 
 class TenagaPendidikController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    
+    public function publicIndex()
+    {
+        // Get all teachers ordered by created_at
+        $tenagaPendidik = TenagaPendidik::latest()->get();
+        
+        // Calculate statistics
+        $stats = [
+            [
+                'value' => $tenagaPendidik->count(),
+                'label' => 'Total Guru'
+            ],
+            [
+                'value' => $tenagaPendidik->where('jabatan', 'like', '%Kepala Sekolah%')->count() + 
+                        $tenagaPendidik->where('jabatan', 'like', '%Guru%')->count(),
+                'label' => 'Guru Profesional'
+            ],
+            [
+                'value' => $tenagaPendidik->filter(function($item) {
+                    return str_contains(strtolower($item->lulusan ?? ''), 's1') || 
+                        str_contains(strtolower($item->lulusan ?? ''), 's2') ||
+                        str_contains(strtolower($item->lulusan ?? ''), 'sarjana') ||
+                        str_contains(strtolower($item->lulusan ?? ''), 'magister');
+                })->count(),
+                'label' => 'Bersertifikat'
+            ],
+        ];
+        
+        return view('teachers', compact('tenagaPendidik', 'stats'));
+    }
     public function index()
     {
         $tenagaPendidik = TenagaPendidik::with('user')->latest()->paginate(10);

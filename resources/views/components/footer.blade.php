@@ -4,11 +4,11 @@
             {{-- About --}}
             <div class="md:col-span-2">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#B91C1C] to-[#991B1B] rounded-lg flex items-center justify-center">
-                        <span class="text-white text-xl font-bold">SH</span>
-                    </div>
+                    <img src="{{ asset('template/img/logo_sd_gendeng.jpg') }}" 
+                    alt="Logo SD Muhammadiyah Gendeng"
+                    class="w-12 h-12 rounded-lg object-cover">
                     <div>
-                        <div class="font-bold text-gray-900">SD Harapan Bangsa</div>
+                        <div class="font-bold text-gray-900">SD Muhammadiyah Gendeng</div>
                         <div class="text-xs text-gray-600">Cerdas & Berkarakter</div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
-                        <span>Jl. Pendidikan No. 123, Jakarta Selatan 12345</span>
+                        <span>Jl. Melati Wetan GK IV/374 RT. / RW. KOTA YOGYAKARTA</span>
                     </li>
                     <li class="flex items-center gap-2">
                         <svg class="w-5 h-5 text-[#B91C1C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

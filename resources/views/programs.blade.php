@@ -98,7 +98,7 @@
         </div>
     </section>
 
-    {{-- CTA Section --}}
+    <!-- {{-- CTA Section --}}
     <section class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-gradient-to-br from-[#B91C1C] to-[#991B1B] rounded-2xl p-8 md:p-12 text-white text-center" data-aos="fade-up">
@@ -111,7 +111,7 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section> -->
 </div>
 @endsection
 

@@ -49,4 +49,33 @@ class Prestasi extends Model
             default => 'badge-secondary'
         };
     }
+        /**
+     * Get icon emoji based on tingkat_prestasi
+     */
+    public function getIconAttribute(): string
+    {
+        return match($this->tingkat_prestasi) {
+            'Internasional' => '🌍',
+            'Nasional' => '🏆',
+            'Provinsi' => '🥇',
+            'Kabupaten/Kota' => '🥈',
+            'Kecamatan' => '🎖️',
+            default => '🏅'
+        };
+    }
+
+    /**
+     * Get color class based on tingkat_prestasi
+     */
+    public function getColorClassAttribute(): string
+    {
+        return match($this->tingkat_prestasi) {
+            'Internasional' => 'bg-gradient-to-br from-yellow-400 to-yellow-600',
+            'Nasional' => 'bg-gradient-to-br from-blue-500 to-blue-700',
+            'Provinsi' => 'bg-gradient-to-br from-green-500 to-green-700',
+            'Kabupaten/Kota' => 'bg-gradient-to-br from-purple-500 to-purple-700',
+            'Kecamatan' => 'bg-gradient-to-br from-orange-500 to-orange-700',
+            default => 'bg-gradient-to-br from-gray-500 to-gray-700'
+        };
+    }
 }

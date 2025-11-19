@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class FasilitasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function publicIndex()
+    {
+        // Get all facilities
+        $fasilitas = Fasilitas::latest()->get();
+        return view('facilities', compact('fasilitas'));
+    }
     public function index()
     {
         $fasilitas = Fasilitas::with('user')->latest()->paginate(10);
