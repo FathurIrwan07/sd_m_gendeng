@@ -38,15 +38,15 @@ return new class extends Migration
         });
 
         // 7. INFO PPDB Table
-        Schema::create('info_ppdb', function (Blueprint $table) {
-            $table->id('id_info_ppdb'); // id_info_ppdb:int (PK)
-            $table->text('syarat_pendaftaran');
-            $table->string('gambar_brosur', 255)->nullable();
-            $table->unsignedBigInteger('user_id')->nullable(); // FK to users (Audit Trail)
+        // Schema::create('info_ppdb', function (Blueprint $table) {
+        //     $table->id('id_info_ppdb'); // id_info_ppdb:int (PK)
+        //     $table->text('syarat_pendaftaran');
+        //     $table->string('gambar_brosur', 255)->nullable();
+        //     $table->unsignedBigInteger('user_id')->nullable(); // FK to users (Audit Trail)
 
-            $table->foreign('user_id')->references('id_user')->on('users')->onDelete('set null');
-            $table->timestamps();
-        });
+        //     $table->foreign('user_id')->references('id_user')->on('users')->onDelete('set null');
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -54,7 +54,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('info_ppdb');
+        // Schema::dropIfExists('info_ppdb');
         Schema::dropIfExists('prestasi');
         Schema::dropIfExists('konten_home');
     }
