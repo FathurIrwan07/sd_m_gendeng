@@ -15,6 +15,7 @@ use App\Http\Controllers\TanggapanPengaduanController;
 use App\Http\Controllers\UserPengaduanController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChatPengaduanController;
+use App\Http\Controllers\PpdbPublicController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -46,8 +47,7 @@ Route::get('/fasilitas', [FasilitasController::class, 'publicIndex'])->name('fac
 Route::get('/guru', [TenagaPendidikController::class, 'publicIndex'])->name('teachers');
 
 // Info PPDB
-Route::get('/ppdb', [InfoPpdbController::class, 'publicIndex'])->name('ppdb');
-
+Route::get('/ppdb', [App\Http\Controllers\PpdbPublicController::class, 'index'])->name('ppdb');
 // ============================================
 // PENGADUAN PUBLIK (TANPA AUTH)
 // ============================================
