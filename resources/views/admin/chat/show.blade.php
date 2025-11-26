@@ -26,7 +26,7 @@
                         <i class="fas fa-user text-primary"></i>
                     </div>
                     <div class="text-white">
-                        <h6 class="m-0 font-weight-bold">
+                        <h6 class="m-0 text-white font-weight-bold">
                             @if($pengaduan->pelapor)
                                 {{ $pengaduan->pelapor->nama_lengkap }}
                             @else

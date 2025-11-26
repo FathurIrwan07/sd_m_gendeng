@@ -1,16 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'PPDB ' . ($infoPpdb->tahun_ajaran ?? '2025/2026') . ' - SD Muhammadiyah Gendeng')
-
-@section('meta_description', 'Informasi lengkap Penerimaan Peserta Didik Baru (PPDB) SD Muhammadiyah Gendeng tahun ajaran ' . ($infoPpdb->tahun_ajaran ?? '2025/2026'))
-
 @section('content')
 <div class="pt-20">
     {{-- Page Header --}}
     <section class="bg-gradient-to-br from-[#B91C1C] to-[#991B1B] text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center" data-aos="fade-up">
-                <h1 class="text-white mb-4">Informasi PPDB {{ $infoPpdb->tahun_ajaran ?? '2025/2026' }}</h1>
+                <h1 class="text-white mb-4">Informasi PPDB {{ $infoPpdb->tahun_ajaran}}</h1>
                 <p class="text-red-100 max-w-2xl mx-auto">
                     Bergabunglah dengan keluarga besar SD Muhammadiyah Gendeng dan wujudkan masa depan cemerlang putra-putri Anda.
                 </p>
@@ -48,24 +44,12 @@
                             {{ $item['status'] == 'berlangsung' ? 'ring-2 ring-[#B91C1C]' : '' }}
                             {{ $item['status'] == 'selesai' ? 'opacity-75' : '' }}">
                             
-                            {{-- Number Badge --}}
                             <div class="absolute -top-4 -left-4 w-10 h-10 
-                                {{ $item['status'] == 'berlangsung' ? 'bg-green-500' : 'bg-[#B91C1C]' }}
-                                {{ $item['status'] == 'selesai' ? 'bg-gray-400' : '' }}
+                                bg-[#B91C1C] 
                                 text-white rounded-full flex items-center justify-center shadow-lg font-semibold">
                                 {{ $index + 1 }}
                             </div>
 
-                            {{-- Status Badge --}}
-                            @if($item['status'] == 'berlangsung')
-                            <div class="absolute -top-2 -right-2 px-3 py-1 bg-green-500 text-white text-xs rounded-full font-semibold">
-                                Aktif
-                            </div>
-                            @elseif($item['status'] == 'selesai')
-                            <div class="absolute -top-2 -right-2 px-3 py-1 bg-gray-400 text-white text-xs rounded-full font-semibold">
-                                Selesai
-                            </div>
-                            @endif
 
                             {{-- Icon --}}
                             <div class="mb-4 pt-2">

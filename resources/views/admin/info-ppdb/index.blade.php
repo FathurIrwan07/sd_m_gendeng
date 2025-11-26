@@ -71,7 +71,7 @@
                                 <i class="fas fa-money-bill-wave"></i>
                                 <div class="ml-2">
                                     <small>Biaya Pendaftaran</small>
-                                    <h6 class="mb-0 font-weight-bold">{{ $item->biaya_pendaftaran }}</h6>
+                                    <h6 class="mb-0 text-white font-weight-bold">{{ $item->biaya_pendaftaran }}</h6>
                                 </div>
                             </div>
 
@@ -80,7 +80,7 @@
                                 <i class="fas fa-wave-square"></i>
                                 <div class="ml-2">
                                     <small>Total Gelombang</small>
-                                    <h6 class="mb-0 font-weight-bold">{{ $item->gelombang->count() }} Gelombang</h6>
+                                    <h6 class="mb-0 text-white font-weight-bold">{{ $item->gelombang->count() }} Gelombang</h6>
                                 </div>
                             </div>
                             @endif
@@ -90,7 +90,7 @@
                                 <i class="fas fa-phone"></i>
                                 <div class="ml-2">
                                     <small>Kontak</small>
-                                    <h6 class="mb-0 font-weight-bold">{{ $item->telepon }}</h6>
+                                    <h6 class="mb-0 text-white font-weight-bold">{{ $item->telepon }}</h6>
                                 </div>
                             </div>
                             @endif
@@ -164,16 +164,6 @@
                                 <span class="text-dark">{{ Str::limit($item->alamat, 50) }}</span>
                             </div>
                             @endif
-                        </div>
-
-                        <!-- Timestamp -->
-                        <div class="mt-3 pt-3 border-top">
-                            <small class="text-muted">
-                                <i class="fas fa-clock"></i> Terakhir diperbarui {{ $item->updated_at->diffForHumans() }}
-                                @if($item->user)
-                                    oleh <strong>{{ $item->user->nama_lengkap ?? $item->user->username }}</strong>
-                                @endif
-                            </small>
                         </div>
                     </div>
                 </div>

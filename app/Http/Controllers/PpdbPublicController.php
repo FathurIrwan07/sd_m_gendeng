@@ -28,17 +28,25 @@ class PpdbPublicController extends Controller
             }
         }
 
-        // Ambil gelombang yang sedang berlangsung atau terdekat
+        // Ambil gelombang yang sedang berlangsung PRIORITAS, jika tidak ada ambil yang terdekat
         $activeGelombang = null;
         if ($infoPpdb) {
+            // Prioritas 1: Gelombang yang sedang berlangsung
             $activeGelombang = $infoPpdb->gelombang()
                 ->where('status', 'berlangsung')
-                ->orWhere('status', 'belum_mulai')
                 ->orderBy('nomor_gelombang')
                 ->first();
+            
+            // Prioritas 2: Jika tidak ada yang berlangsung, ambil yang belum mulai
+            if (!$activeGelombang) {
+                $activeGelombang = $infoPpdb->gelombang()
+                    ->where('status', 'belum_mulai')
+                    ->orderBy('nomor_gelombang')
+                    ->first();
+            }
         }
 
-        // Build timeline dari tahapan
+        // Build timeline dari tahapan gelombang yang aktif
         $timeline = [];
         if ($activeGelombang && $activeGelombang->tahapan) {
             foreach ($activeGelombang->tahapan as $tahapan) {
@@ -97,6 +105,8 @@ class PpdbPublicController extends Controller
             'pengumuman' => '📢',
             'daftar ulang' => '✅',
             'verifikasi' => '🔍',
+            'wawancara' => '💬',
+            'tes' => '📝',
             'hasil' => '🎯'
         ];
 
