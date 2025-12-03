@@ -22,9 +22,20 @@ class KegiatanController extends Controller
         return view('programs', compact('kategoris', 'kegiatan'));
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $kegiatan = Kegiatan::with(['kategori', 'user'])->latest()->get();
+        $query = Kegiatan::with(['kategori', 'user'])->latest();
+        
+        // Filter by category if provided
+        if ($request->has('kategori') && $request->kategori != '') {
+            $query->whereHas('kategori', function($q) use ($request) {
+                $q->where('nama_kategori', $request->kategori);
+            });
+        }
+        
+        // Paginate results (10 items per page, you can change this number)
+        $kegiatan = $query->paginate(10)->withQueryString();
+        
         return view('admin.kegiatan.index', compact('kegiatan'));
     }
 
@@ -64,27 +75,18 @@ class KegiatanController extends Controller
             ->with('success', 'Program kegiatan berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Kegiatan $kegiatan)
     {
         $kegiatan->load(['kategori', 'user']);
         return view('admin.kegiatan.show', compact('kegiatan'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Kegiatan $kegiatan)
     {
         $kategori = KategoriKegiatan::all();
         return view('admin.kegiatan.edit', compact('kegiatan', 'kategori'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Kegiatan $kegiatan)
     {
         $validated = $request->validate([
@@ -120,9 +122,6 @@ class KegiatanController extends Controller
             ->with('success', 'Program kegiatan berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Kegiatan $kegiatan)
     {
         // Delete photo if exists

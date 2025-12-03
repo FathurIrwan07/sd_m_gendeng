@@ -16,6 +16,7 @@ use App\Http\Controllers\UserPengaduanController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChatPengaduanController;
 use App\Http\Controllers\PpdbPublicController;
+use App\Http\Controllers\HomeController; // TAMBAHKAN INI
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +29,7 @@ Route::get('/', function () {
         session()->invalidate();
         session()->regenerateToken();
     }
-    return view('home');
+    return app(HomeController::class)->index();
 })->name('home');
 
 // Tentang Kami
@@ -48,6 +49,7 @@ Route::get('/guru', [TenagaPendidikController::class, 'publicIndex'])->name('tea
 
 // Info PPDB
 Route::get('/ppdb', [App\Http\Controllers\PpdbPublicController::class, 'index'])->name('ppdb');
+
 // ============================================
 // PENGADUAN PUBLIK (TANPA AUTH)
 // ============================================

@@ -39,8 +39,13 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
+            <!-- Topbar -->
+            @include('admin.navbar')
+            <!-- End of Topbar -->
+
             <!-- Main Content -->
             <div id="content">
+
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
@@ -74,7 +79,8 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
@@ -112,7 +118,32 @@
     <script src="{{ asset('template/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{ asset('template/js/demo/chart-pie-demo.js')}}"></script>
 
-    @stack('scripts')
+    <script>
+(function($) {
+    "use strict";
+
+    $("#sidebarToggleTop, #sidebarToggle").on('click', function(e) {
+        e.preventDefault();
+        $("body").toggleClass("sidebar-toggled");
+        $(".sidebar").toggleClass("toggled");
+
+        if ($(".sidebar").hasClass("toggled")) {
+            $('.sidebar .collapse').collapse('hide');
+            localStorage.setItem('sidebarToggled', 'true');
+        } else {
+            localStorage.removeItem('sidebarToggled');
+        }
+    });
+
+    if (localStorage.getItem('sidebarToggled') === 'true') {
+        $("body").addClass("sidebar-toggled");
+        $(".sidebar").addClass("toggled");
+        $('.sidebar .collapse').collapse('hide');
+    }
+})(jQuery);
+</script>
+
+@stack('scripts')
 
 </body>
 
