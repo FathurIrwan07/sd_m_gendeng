@@ -42,7 +42,7 @@ class GelombangPpdb extends Model
     public function tahapan()
     {
         return $this->hasMany(TahapanPpdb::class, 'id_gelombang', 'id_gelombang')
-                    ->orderBy('urutan');
+            ->orderBy('urutan');
     }
 
     /**
@@ -68,7 +68,7 @@ class GelombangPpdb extends Model
     {
         $mulai = Carbon::parse($this->tanggal_mulai);
         $selesai = Carbon::parse($this->tanggal_selesai);
-        
+
         return $mulai->isoFormat('D MMMM') . ' - ' . $selesai->isoFormat('D MMMM YYYY');
     }
 
@@ -78,7 +78,7 @@ class GelombangPpdb extends Model
     public function updateStatus()
     {
         $now = Carbon::now();
-        
+
         if ($now->lessThan($this->tanggal_mulai)) {
             $this->status = 'belum_mulai';
         } elseif ($now->between($this->tanggal_mulai, $this->tanggal_selesai)) {
@@ -86,7 +86,7 @@ class GelombangPpdb extends Model
         } else {
             $this->status = 'selesai';
         }
-        
+
         return $this->save();
     }
 

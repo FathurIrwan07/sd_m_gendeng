@@ -16,15 +16,19 @@ class InfoPpdbController extends Controller
      */
     public function index()
     {
-        $infoPpdb = InfoPpdb::with(['user', 'gelombang' => function($query) {
-            $query->orderBy('nomor_gelombang');
-        }, 'gelombang.tahapan'])->latest()->get();
+        $infoPpdb = InfoPpdb::with([
+            'user',
+            'gelombang' => function ($query) {
+                $query->orderBy('nomor_gelombang');
+            },
+            'gelombang.tahapan'
+        ])->latest()->get();
         foreach ($infoPpdb as $item) {
             foreach ($item->gelombang as $gelombang) {
                 $gelombang->updateStatus(); // ← Gunakan method dari model
             }
         }
-        
+
         return view('admin.info-ppdb.index', compact('infoPpdb'));
     }
 
@@ -52,14 +56,14 @@ class InfoPpdbController extends Controller
             'alamat' => 'nullable|string',
             'lokasi_kantor' => 'nullable|string|max:255',
             'link_pendaftaran' => 'nullable|url|max:255',
-            
+
             // Gelombang
             'gelombang.*.nama_gelombang' => 'required|string|max:50',
             'gelombang.*.nomor_gelombang' => 'required|integer|min:1',
             'gelombang.*.tanggal_mulai' => 'required|date',
             'gelombang.*.tanggal_selesai' => 'required|date|after_or_equal:gelombang.*.tanggal_mulai',
             'gelombang.*.keterangan' => 'nullable|string',
-            
+
             // Tahapan per gelombang
             'gelombang.*.tahapan.*.nama_tahapan' => 'required|string|max:100',
             'gelombang.*.tahapan.*.deskripsi' => 'nullable|string',
@@ -126,7 +130,7 @@ class InfoPpdbController extends Controller
             DB::commit();
             return redirect()->route('info-ppdb.index')
                 ->with('success', 'Info PPDB, gelombang, dan tahapan berhasil ditambahkan.');
-                
+
         } catch (\Exception $e) {
             DB::rollback();
             return back()->withInput()->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
@@ -138,10 +142,13 @@ class InfoPpdbController extends Controller
      */
     public function show(InfoPpdb $infoPpdb)
     {
-        $infoPpdb->load(['user', 'gelombang' => function($query) {
-            $query->orderBy('nomor_gelombang')->with('tahapan');
-        }]);
-        
+        $infoPpdb->load([
+            'user',
+            'gelombang' => function ($query) {
+                $query->orderBy('nomor_gelombang')->with('tahapan');
+            }
+        ]);
+
         return view('admin.info-ppdb.show', compact('infoPpdb'));
     }
 
@@ -150,12 +157,16 @@ class InfoPpdbController extends Controller
      */
     public function edit(InfoPpdb $infoPpdb)
     {
-        $infoPpdb->load(['gelombang' => function($query) {
-            $query->orderBy('nomor_gelombang')->with(['tahapan' => function($q) {
-                $q->orderBy('urutan');
-            }]);
-        }]);
-        
+        $infoPpdb->load([
+            'gelombang' => function ($query) {
+                $query->orderBy('nomor_gelombang')->with([
+                    'tahapan' => function ($q) {
+                        $q->orderBy('urutan');
+                    }
+                ]);
+            }
+        ]);
+
         return view('admin.info-ppdb.edit', compact('infoPpdb'));
     }
 
@@ -176,7 +187,7 @@ class InfoPpdbController extends Controller
             'alamat' => 'nullable|string',
             'lokasi_kantor' => 'nullable|string|max:255',
             'link_pendaftaran' => 'nullable|url|max:255',
-            
+
             // Gelombang
             'gelombang.*.id_gelombang' => 'nullable|integer',
             'gelombang.*.nama_gelombang' => 'required|string|max:50',
@@ -184,7 +195,7 @@ class InfoPpdbController extends Controller
             'gelombang.*.tanggal_mulai' => 'required|date',
             'gelombang.*.tanggal_selesai' => 'required|date|after_or_equal:gelombang.*.tanggal_mulai',
             'gelombang.*.keterangan' => 'nullable|string',
-            
+
             // Tahapan per gelombang
             'gelombang.*.tahapan.*.id_tahapan' => 'nullable|integer',
             'gelombang.*.tahapan.*.nama_tahapan' => 'required|string|max:100',
@@ -293,7 +304,7 @@ class InfoPpdbController extends Controller
             DB::commit();
             return redirect()->route('info-ppdb.index')
                 ->with('success', 'Info PPDB, gelombang, dan tahapan berhasil diperbarui.');
-                
+
         } catch (\Exception $e) {
             DB::rollback();
             return back()->withInput()->with('error', 'Gagal memperbarui data: ' . $e->getMessage());
@@ -314,14 +325,14 @@ class InfoPpdbController extends Controller
 
             // Delete gelombang dan tahapannya (cascade will handle this if FK is set)
             GelombangPpdb::where('id_info_ppdb', $infoPpdb->id_info_ppdb)->delete();
-            
+
             // Delete info PPDB
             $infoPpdb->delete();
 
             DB::commit();
             return redirect()->route('info-ppdb.index')
                 ->with('success', 'Info PPDB, gelombang, dan tahapan berhasil dihapus.');
-                
+
         } catch (\Exception $e) {
             DB::rollback();
             return back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());
@@ -334,7 +345,7 @@ class InfoPpdbController extends Controller
     public function deleteBrosur($id)
     {
         $infoPpdb = InfoPpdb::findOrFail($id);
-        
+
         if ($infoPpdb->gambar_brosur) {
             Storage::disk('public')->delete($infoPpdb->gambar_brosur);
             $infoPpdb->update(['gambar_brosur' => null]);

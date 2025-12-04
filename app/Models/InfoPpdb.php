@@ -25,7 +25,7 @@ class InfoPpdb extends Model
         'link_pendaftaran',
         'user_id'
     ];
-    
+
 
     /**
      * Relasi ke tabel gelombang_ppdb
@@ -33,7 +33,7 @@ class InfoPpdb extends Model
     public function gelombang()
     {
         return $this->hasMany(GelombangPpdb::class, 'id_info_ppdb', 'id_info_ppdb')
-                    ->orderBy('nomor_gelombang');
+            ->orderBy('nomor_gelombang');
     }
 
     /**

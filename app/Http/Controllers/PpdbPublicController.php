@@ -12,14 +12,18 @@ class PpdbPublicController extends Controller
     public function index()
     {
         // Ambil info PPDB terbaru
-        $infoPpdb = InfoPpdb::with(['gelombang' => function($query) {
-            $query->orderBy('nomor_gelombang')
-                  ->with(['tahapan' => function($q) {
-                      $q->orderBy('urutan');
-                  }]);
-        }])
-        ->latest()
-        ->first();
+        $infoPpdb = InfoPpdb::with([
+            'gelombang' => function ($query) {
+                $query->orderBy('nomor_gelombang')
+                    ->with([
+                        'tahapan' => function ($q) {
+                            $q->orderBy('urutan');
+                        }
+                    ]);
+            }
+        ])
+            ->latest()
+            ->first();
 
         // Update status semua gelombang
         if ($infoPpdb && $infoPpdb->gelombang) {
@@ -36,7 +40,7 @@ class PpdbPublicController extends Controller
                 ->where('status', 'berlangsung')
                 ->orderBy('nomor_gelombang')
                 ->first();
-            
+
             // Prioritas 2: Jika tidak ada yang berlangsung, ambil yang belum mulai
             if (!$activeGelombang) {
                 $activeGelombang = $infoPpdb->gelombang()
@@ -111,7 +115,7 @@ class PpdbPublicController extends Controller
         ];
 
         $namaTahapan = strtolower($namaTahapan);
-        
+
         foreach ($icons as $key => $icon) {
             if (strpos($namaTahapan, $key) !== false) {
                 return $icon;
@@ -134,7 +138,7 @@ class PpdbPublicController extends Controller
             $line = trim($line);
             // Remove numbers and bullets
             $line = preg_replace('/^[\d\.\-\*\•]+\s*/', '', $line);
-            
+
             if (!empty($line)) {
                 $requirements[] = $line;
             }

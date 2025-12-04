@@ -18,6 +18,7 @@ class PengaduanController extends Controller
     {
         $search = $request->input('search');
         $filter = $request->input('filter'); // Filter waktu (minggu, bulan, tahun)
+        $status = $request->input('status'); // Filter status pengaduan
 
         // Query dasar dengan relasi
         $query = Pengaduan::with(['pelapor', 'kategori', 'tanggapan']);
@@ -47,6 +48,11 @@ class PengaduanController extends Controller
             } elseif ($filter === 'tahun') {
                 $query->whereYear('tanggal_pengaduan', now()->year);
             }
+        }
+
+        // 📊 Filter berdasarkan status pengaduan
+        if ($status) {
+            $query->where('status_pengaduan', $status);
         }
 
         // Urutkan berdasarkan tanggal terbaru
