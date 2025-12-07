@@ -12,8 +12,8 @@
 <div class="row">
     <div class="col-lg-8">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-user-plus"></i> Form User Baru
                 </h6>
             </div>
@@ -126,8 +126,8 @@
 
     <div class="col-lg-4">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #4b0000;">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-info-circle"></i> Informasi
                 </h6>
             </div>

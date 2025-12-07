@@ -27,8 +27,8 @@
 @endif
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3" style="background-color: #800000;">
-        <h6 class="m-0 font-weight-bold text-white">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
             <i class="fas fa-users"></i> Daftar Users
         </h6>
     </div>
@@ -43,8 +43,7 @@
                         <th width="20%">Nama Lengkap</th>
                         <th width="20%">Email</th>
                         <th width="10%" class="text-center">Role</th>
-                        <th width="15%" class="text-center">Terdaftar</th>
-                        <th width="15%" class="text-center">Aksi</th>
+                        <th width="18%" class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,9 +57,6 @@
                             <span class="badge badge-{{ $user->role->nama_role === 'Admin' ? 'danger' : 'primary' }}">
                                 {{ $user->role->nama_role }}
                             </span>
-                        </td>
-                        <td class="text-center">
-                            <small>{{ $user->created_at->format('d M Y') }}</small>
                         </td>
                         <td class="text-center">
                             <a href="{{ route('users.show', $user->id_user) }}" 
