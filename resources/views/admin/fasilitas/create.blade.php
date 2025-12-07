@@ -11,7 +11,8 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Form Tambah Fasilitas</h6>
+        <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-plus-circle"></i> Form Tambah Fasilitas Sekolah</h6>
     </div>
     <div class="card-body">
         <form action="{{ route('fasilitas.store') }}" method="POST" enctype="multipart/form-data">

@@ -20,16 +20,11 @@ class KontenHomeController extends Controller
     
     public function index()
     {
-        $kontenHome = KontenHome::with('user')->get();
-        return view('admin.konten-home.index', compact('kontenHome')); // ← UBAH INI
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.konten-home.create'); // ← UBAH INI
+        $sambutan = KontenHome::where('tipe_konten', 'Sambutan')->first();
+        $visi = KontenHome::where('tipe_konten', 'Visi')->first();
+        $misi = KontenHome::where('tipe_konten', 'Misi')->first();
+        
+        return view('admin.konten-home.index', compact('sambutan', 'visi', 'misi'));
     }
 
     /**
@@ -39,9 +34,13 @@ class KontenHomeController extends Controller
     {
         $validated = $request->validate([
             'tipe_konten' => ['required', Rule::in(['Sambutan', 'Visi', 'Misi']), 'unique:konten_home,tipe_konten'],
-            'judul_konten' => 'nullable|string|max:50',
             'isi_konten' => 'required|string',
             'foto_kepsek' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'tipe_konten.unique' => 'Konten ' . $request->tipe_konten . ' sudah ada.',
+            'isi_konten.required' => 'Isi konten wajib diisi.',
+            'foto_kepsek.image' => 'File harus berupa gambar.',
+            'foto_kepsek.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         $validated['user_id'] = auth()->id();
@@ -54,38 +53,24 @@ class KontenHomeController extends Controller
         KontenHome::create($validated);
 
         return redirect()->route('konten-home.index')
-            ->with('success', 'Konten berhasil ditambahkan.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-   public function show($id)
-{
-    $kontenHome = KontenHome::with(['user.role']) // Eager load user dan role
-        ->findOrFail($id);
-    
-    return view('admin.konten-home.show', compact('kontenHome'));
-}
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(KontenHome $kontenHome)
-    {
-        return view('admin.konten-home.edit', compact('kontenHome')); // ← UBAH INI
+            ->with('success', 'Konten ' . $request->tipe_konten . ' berhasil ditambahkan.');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, KontenHome $kontenHome)
+    public function update(Request $request, $id)
     {
+        $kontenHome = KontenHome::findOrFail($id);
+        
         $validated = $request->validate([
             'tipe_konten' => ['required', Rule::in(['Sambutan', 'Visi', 'Misi']), Rule::unique('konten_home', 'tipe_konten')->ignore($kontenHome->home_id, 'home_id')],
-            'judul_konten' => 'nullable|string|max:50',
             'isi_konten' => 'required|string',
             'foto_kepsek' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'isi_konten.required' => 'Isi konten wajib diisi.',
+            'foto_kepsek.image' => 'File harus berupa gambar.',
+            'foto_kepsek.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         $validated['user_id'] = auth()->id();
@@ -102,30 +87,16 @@ class KontenHomeController extends Controller
         $kontenHome->update($validated);
 
         return redirect()->route('konten-home.index')
-            ->with('success', 'Konten berhasil diperbarui.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(KontenHome $kontenHome)
-    {
-        // Delete photo if exists
-        if ($kontenHome->foto_kepsek_url) {
-            Storage::disk('public')->delete($kontenHome->foto_kepsek_url);
-        }
-
-        $kontenHome->delete();
-
-        return redirect()->route('konten-home.index')
-            ->with('success', 'Konten berhasil dihapus.');
+            ->with('success', 'Konten ' . $request->tipe_konten . ' berhasil diperbarui.');
     }
 
     /**
      * Delete photo from konten
      */
-    public function deletePhoto(KontenHome $kontenHome)
+    public function deletePhoto($id)
     {
+        $kontenHome = KontenHome::findOrFail($id);
+        
         if ($kontenHome->foto_kepsek_url) {
             Storage::disk('public')->delete($kontenHome->foto_kepsek_url);
             $kontenHome->update(['foto_kepsek_url' => null]);

@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <a href="{{ route('info-ppdb.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    <a href="{{ route('info-ppdb.create') }}" class="btn btn-sm shadow-sm" style="background-color: #800000; color: white;">
         <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Info PPDB
     </a>
 </div>
@@ -31,10 +31,10 @@
     <div class="col-lg-12 mb-4">
         <div class="card shadow-lg h-100 border-0">
             <!-- Header Card -->
-            <div class="card-header py-3" style="background: linear-gradient(135deg, #800000 0%, #4b0000 100%);">
+            <div class="card-header py-3">
                 <div class="row align-items-center">
                     <div class="col-md-8">
-                        <h5 class="m-0 font-weight-bold text-white">
+                        <h5 class="m-0 font-weight-bold text-primary">
                             <i class="fas fa-graduation-cap"></i> PPDB {{ $item->tahun_ajaran }}
                         </h5>
                     </div>
@@ -273,8 +273,8 @@
 
 @if($infoPpdb->count() > 0)
 <div class="card shadow border-0">
-    <div class="card-header py-3" style="background-color: #800000;">
-        <h6 class="m-0 font-weight-bold text-white">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
             <i class="fas fa-info-circle"></i> Informasi
         </h6>
     </div>

@@ -12,9 +12,9 @@
 <div class="row">
     <div class="col-lg-8">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-edit"></i> Edit: {{ $prestasi->judul_prestasi }}
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-edit"></i> Form Edit Prestasi Siswa
                 </h6>
             </div>
             <div class="card-body">
@@ -173,8 +173,8 @@
 
     <div class="col-lg-4">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #4b0000;">
-                <h6 class="m-0 font-weight-bold text-white">
+           <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-history"></i> Informasi Update
                 </h6>
             </div>

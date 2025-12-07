@@ -35,9 +35,11 @@ class PrestasiController extends Controller
         
         return view('achievements', compact('prestasi', 'stats'));
     }
+    
     public function index()
     {
-        $prestasi = Prestasi::with('user')->latest()->get();
+        // Paginate prestasi with 10 items per page
+        $prestasi = Prestasi::with('user')->latest()->paginate(10);
         return view('admin.prestasi.index', compact('prestasi'));
     }
 

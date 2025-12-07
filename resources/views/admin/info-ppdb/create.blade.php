@@ -12,42 +12,45 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-plus-circle"></i> Form Info PPDB Baru
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-plus-circle"></i> Form Info PPDB
                 </h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('info-ppdb.store') }}" method="POST" enctype="multipart/form-data" id="formPpdb">
                     @csrf
                     
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs mb-4" id="ppdbTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#infoTab" 
-                                    type="button" role="tab" aria-controls="infoTab" aria-selected="true">
-                                <i class="fas fa-info-circle me-2"></i> Info Dasar
+                    <!-- Modern Nav Pills -->
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-2">
+                            <button class="btn btn-tab active w-100" type="button" data-tab="infoTab">
+                                <i class="fas fa-info-circle"></i>
+                                <div class="tab-title">Info Dasar</div>
+                                <small>Tahun ajaran & syarat</small>
                             </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="kontak-tab" data-bs-toggle="tab" data-bs-target="#kontakTab" 
-                                    type="button" role="tab" aria-controls="kontakTab" aria-selected="false">
-                                <i class="fas fa-phone me-2"></i> Kontak & Lokasi
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <button class="btn btn-tab w-100" type="button" data-tab="kontakTab">
+                                <i class="fas fa-phone"></i>
+                                <div class="tab-title">Kontak & Lokasi</div>
+                                <small>Telepon, email, alamat</small>
                             </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="gelombang-tab" data-bs-toggle="tab" data-bs-target="#gelombangTab" 
-                                    type="button" role="tab" aria-controls="gelombangTab" aria-selected="false">
-                                <i class="fas fa-wave-square me-2"></i> Gelombang & Tahapan
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <button class="btn btn-tab w-100" type="button" data-tab="gelombangTab">
+                                <i class="fas fa-wave-square"></i>
+                                <div class="tab-title">Gelombang</div>
+                                <small>Jadwal & tahapan</small>
                             </button>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
 
                     <!-- Tab Content -->
-                    <div class="tab-content" id="ppdbTabContent">
+                    <div class="tab-content-custom">
                         
                         <!-- TAB 1: INFO DASAR -->
-                        <div class="tab-pane fade show active" id="infoTab" role="tabpanel" aria-labelledby="info-tab">
+                        <div class="tab-pane-custom active" id="infoTab">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -139,7 +142,7 @@
                         </div>
 
                         <!-- TAB 2: KONTAK & LOKASI -->
-                        <div class="tab-pane fade" id="kontakTab" role="tabpanel" aria-labelledby="kontak-tab">
+                        <div class="tab-pane-custom" id="kontakTab">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -207,7 +210,7 @@
                         </div>
 
                         <!-- TAB 3: GELOMBANG & TAHAPAN -->
-                        <div class="tab-pane fade" id="gelombangTab" role="tabpanel" aria-labelledby="gelombang-tab">
+                        <div class="tab-pane-custom" id="gelombangTab">
                             <div class="alert alert-info mb-4">
                                 <i class="fas fa-info-circle"></i> <strong>Info:</strong> Tambahkan gelombang dan tahapan pendaftaran di sini
                             </div>
@@ -226,7 +229,7 @@
 
                     <!-- Form Actions -->
                     <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary btn-lg">
+                        <button type="submit" class="btn btn-lg" style="background-color: #800000; color: white;">
                             <i class="fas fa-save"></i> Simpan Info PPDB
                         </button>
                         <a href="{{ route('info-ppdb.index') }}" class="btn btn-secondary btn-lg">
@@ -239,12 +242,110 @@
     </div>
 </div>
 
-@push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+@push('styles')
+<style>
+    .btn-tab {
+        background: white;
+        border: 2px solid #e3e6f0;
+        border-radius: 8px;
+        padding: 20px 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-tab:hover {
+        border-color: #800000;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .btn-tab.active {
+        background: linear-gradient(135deg, #800000 0%, #a00000 100%);
+        border-color: #800000;
+        color: white;
+        box-shadow: 0 4px 12px rgba(128, 0, 0, 0.3);
+    }
+    
+    .btn-tab i {
+        font-size: 2rem;
+        display: block;
+        margin-bottom: 8px;
+        color: #800000;
+    }
+    
+    .btn-tab.active i {
+        color: white;
+    }
+    
+    .btn-tab .tab-title {
+        font-weight: bold;
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+    
+    .btn-tab small {
+        font-size: 0.75rem;
+        opacity: 0.8;
+    }
+    
+    .tab-pane-custom {
+        display: none;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    .tab-pane-custom.active {
+        display: block;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .gelombang-card {
+        border-left: 4px solid #800000;
+    }
+    
+    .tahapan-item {
+        transition: all 0.2s ease;
+    }
+    
+    .tahapan-item:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+</style>
+@endpush
 
+@push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Tab Navigation
+    const tabButtons = document.querySelectorAll('.btn-tab');
+    const tabPanes = document.querySelectorAll('.tab-pane-custom');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetTab = this.getAttribute('data-tab');
+            
+            // Remove active class from all buttons and panes
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Add active class to clicked button and corresponding pane
+            this.classList.add('active');
+            document.getElementById(targetTab).classList.add('active');
+        });
+    });
+    
     // Preview Brosur
     const brosurInput = document.getElementById('gambar_brosur');
     const previewContainer = document.getElementById('preview-container');

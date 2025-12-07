@@ -12,8 +12,8 @@
 <div class="row">
     <div class="col-lg-4">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-user"></i> Foto Tenaga Pendidik
                 </h6>
             </div>
@@ -42,8 +42,8 @@
 
     <div class="col-lg-8">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
+           <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-info-circle"></i> Informasi Detail
                 </h6>
             </div>
@@ -90,24 +90,13 @@
                         </td>
                     </tr>
                 </table>
-
-                <hr>
-
-                <div class="btn-group">
-                    <a href="{{ route('tenaga-pendidik.edit', $tenagaPendidik->id_tenaga_pendidik) }}" class="btn btn-warning">
-                        <i class="fas fa-edit"></i> Edit
-                    </a>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
-                        <i class="fas fa-trash"></i> Hapus
-                    </button>
-                </div>
             </div>
         </div>
 
         <!-- Additional Info Card -->
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #4b0000;">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-graduation-cap"></i> Informasi Pendidikan
                 </h6>
             </div>

@@ -14,8 +14,8 @@
 <div class="row">
     <div class="col-lg-8">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background: linear-gradient(135deg, #800000 0%, #4b0000 100%);">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-tag"></i> {{ $kategoriKegiatan->nama_kategori }}
                 </h6>
             </div>
@@ -71,37 +71,14 @@
                 @endif
             </div>
         </div>
-
-        <!-- Action Buttons -->
-        <div class="card shadow mb-4">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <a href="{{ route('kategori-kegiatan.edit', $kategoriKegiatan->id_kategori) }}" class="btn btn-warning">
-                            <i class="fas fa-edit"></i> Edit Kategori
-                        </a>
-                        <button type="button" 
-                                class="btn btn-danger" 
-                                data-toggle="modal" 
-                                data-target="#deleteModal"
-                                {{ $kategoriKegiatan->kegiatan->count() > 0 ? 'disabled' : '' }}>
-                            <i class="fas fa-trash"></i> Hapus Kategori
-                        </button>
-                    </div>
-                    <a href="{{ route('kegiatan.create') }}?kategori={{ $kategoriKegiatan->id_kategori }}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Tambah Program Baru
-                    </a>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="col-lg-4">
         <!-- Statistik -->
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-chart-pie"></i> Statistik
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-chart-pie"></i> Total Program Kegiatan
                 </h6>
             </div>
             <div class="card-body text-center">
@@ -112,48 +89,4 @@
     </div>
 </div>
 
-<!-- Delete Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Konfirmasi Hapus</h5>
-                <button class="close" type="button" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @if($kategoriKegiatan->kegiatan->count() > 0)
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-triangle"></i> 
-                    <strong>Tidak Dapat Dihapus!</strong>
-                </div>
-                <p>Kategori ini memiliki <strong>{{ $kategoriKegiatan->kegiatan->count() }} program</strong> dan tidak dapat dihapus.</p>
-                <p class="mb-0">Silakan hapus atau pindahkan semua program terlebih dahulu.</p>
-                @else
-                <div class="alert alert-warning">
-                    <i class="fas fa-exclamation-triangle"></i> 
-                    <strong>Peringatan!</strong> 
-                    Tindakan ini tidak dapat dibatalkan.
-                </div>
-                <p>Apakah Anda yakin ingin menghapus kategori <strong>{{ $kategoriKegiatan->nama_kategori }}</strong>?</p>
-                @endif
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">
-                    {{ $kategoriKegiatan->kegiatan->count() > 0 ? 'Tutup' : 'Batal' }}
-                </button>
-                @if($kategoriKegiatan->kegiatan->count() == 0)
-                <form action="{{ route('kategori-kegiatan.destroy', $kategoriKegiatan->id_kategori) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fas fa-trash"></i> Ya, Hapus Kategori
-                    </button>
-                </form>
-                @endif
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

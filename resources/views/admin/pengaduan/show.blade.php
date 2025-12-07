@@ -17,11 +17,8 @@
     <div class="row">
         <div class="col-lg-8">
             <div class="card shadow mb-4">
-                <div class="card-header py-3" style="background-color: 
-                        {{ $pengaduan->status_pengaduan === 'Selesai' ? '#28a745' :
-                           ($pengaduan->status_pengaduan === 'Diproses' ? '#ffc107' :
-                           ($pengaduan->status_pengaduan === 'Ditolak' ? '#dc3545' : '#6c757d')) }};">
-                    <h6 class="m-0 font-weight-bold text-white">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-file-alt"></i> Pengaduan - {{ $pengaduan->kategori->nama_kategori }}
                     </h6>
                 </div>
@@ -116,8 +113,8 @@
 
         <div class="col-lg-4">
             <div class="card shadow mb-4">
-                <div class="card-header py-3" style="background-color: #800000;">
-                    <h6 class="m-0 font-weight-bold text-white">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-info-circle"></i> Informasi
                     </h6>
                 </div>

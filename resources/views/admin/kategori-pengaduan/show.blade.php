@@ -5,9 +5,6 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Detail Kategori Pengaduan</h1>
     <div>
-        <a href="{{ route('kategori-pengaduan.edit', $kategoriPengaduan->id_kategori) }}" class="btn btn-sm btn-warning shadow-sm mr-2">
-            <i class="fas fa-edit fa-sm text-white-50"></i> Edit
-        </a>
         <a href="{{ route('kategori-pengaduan.index') }}" class="btn btn-sm btn-secondary shadow-sm">
             <i class="fas fa-arrow-left fa-sm text-white-50"></i> Kembali
         </a>
@@ -17,16 +14,12 @@
 <div class="row">
     <div class="col-lg-8">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background: linear-gradient(135deg, #800000 0%, #4b0000 100%);">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-tag"></i> {{ $kategoriPengaduan->nama_kategori }}
                 </h6>
             </div>
             <div class="card-body">
-                <h4 class="text-primary mb-4">{{ $kategoriPengaduan->nama_kategori }}</h4>
-                
-                <hr>
-
                 <h6 class="font-weight-bold mb-3">
                     <i class="fas fa-list"></i> Daftar Pengaduan dalam Kategori Ini:
                 </h6>
@@ -87,8 +80,8 @@
 
     <div class="col-lg-4">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-chart-pie"></i> Statistik
                 </h6>
             </div>
@@ -99,8 +92,8 @@
         </div>
 
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #4b0000;">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-info-circle"></i> Status Kategori
                 </h6>
             </div>

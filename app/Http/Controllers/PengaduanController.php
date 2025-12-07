@@ -55,8 +55,8 @@ class PengaduanController extends Controller
             $query->where('status_pengaduan', $status);
         }
 
-        // Urutkan berdasarkan tanggal terbaru
-        $pengaduan = $query->latest()->get();
+        // Urutkan berdasarkan tanggal terbaru dan paginate (10 items per page)
+        $pengaduan = $query->latest()->paginate(10)->withQueryString();
 
         return view('admin.pengaduan.index', compact('pengaduan'));
     }

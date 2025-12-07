@@ -13,7 +13,8 @@
     <div class="col-lg-8">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Informasi Fasilitas</h6>
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-info-circle"></i> Informasi Fasilitas</h6>
             </div>
             <div class="card-body">
                 <table class="table table-borderless">
@@ -34,17 +35,6 @@
                         <td>: {{ $fasilita->updated_at->format('d F Y, H:i') }}</td>
                     </tr>
                 </table>
-
-                <hr>
-
-                <div class="btn-group">
-                    <a href="{{ route('fasilitas.edit', $fasilita->id_fasilitas) }}" class="btn btn-warning">
-                        <i class="fas fa-edit"></i> Edit
-                    </a>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
-                        <i class="fas fa-trash"></i> Hapus
-                    </button>
-                </div>
             </div>
         </div>
     </div>
@@ -52,7 +42,8 @@
     <div class="col-lg-4">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Gambar Fasilitas</h6>
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-image"></i> Gambar Fasilitas</h6>
             </div>
             <div class="card-body text-center">
                 @if($fasilita->gambar)
@@ -64,31 +55,6 @@
                         <i class="fas fa-info-circle"></i> Tidak ada gambar
                     </div>
                 @endif
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Konfirmasi Hapus</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Apakah Anda yakin ingin menghapus fasilitas <strong>{{ $fasilita->nama_fasilitas }}</strong>?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <form action="{{ route('fasilitas.destroy', $fasilita->id_fasilitas) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Hapus</button>
-                </form>
             </div>
         </div>
     </div>

@@ -12,11 +12,11 @@
 <div class="row">
     <div class="col-lg-8">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-plus-circle"></i> Form Kategori Baru
-                </h6>
-            </div>
+            <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-plus-circle"></i> Tambah Kategori Kegiatan
+                    </h6>
+                </div>
             <div class="card-body">
                 <form action="{{ route('kategori-kegiatan.store') }}" method="POST">
                     @csrf

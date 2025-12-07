@@ -1,24 +1,42 @@
 @extends('admin.app')
 
 @section('content')
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <a href="{{ route('fasilitas.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Fasilitas
-    </a>
-</div>
-
 @if(session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Berhasil!</strong> {{ session('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 @endif
+
+<!-- Search and Add Card -->
+<div class="card shadow-sm mb-3" style="border: none; border-radius: 8px;">
+    <div class="card-body py-3">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-2 mb-md-0">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-white" style="border-right: none;">
+                            <i class="fas fa-search text-muted"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" id="searchInput" placeholder="Cari nama fasilitas atau deskripsi..." style="border-left: none;">
+                </div>
+            </div>
+            <div class="col-md-6 text-md-right">
+                <a href="{{ route('fasilitas.create') }}" class="btn btn-sm shadow-sm" style="background-color: #800000; color: white;">
+                    <i class="fas fa-plus"></i> Tambah Fasilitas
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Daftar Fasilitas Sekolah</h6>
+        <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-list"></i> Daftar Fasilitas Sekolah</h6>
     </div>
     <div class="card-body">
         @if($fasilitas->isEmpty())
@@ -39,7 +57,7 @@
                         <th width="15%">Gambar</th>
                         <th width="20%">Nama Fasilitas</th>
                         <th width="40%">Deskripsi</th>
-                        <th width="10%">Aksi</th>
+                        <th width="20%">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,28 +79,38 @@
                             </div>
                             @endif
                         </td>
-                        <td><strong>{{ $item->nama_fasilitas }}</strong></td>
-                        <td class="text-justify">{{ Str::limit($item->deskripsi, 150) }}</td>
+                        <td>
+                            <strong>{{ $item->nama_fasilitas }}</strong>
+                            <br>
+                            <small class="text-muted">
+                                <i class="far fa-clock"></i> {{ $item->updated_at->diffForHumans() }}
+                            </small>
+                        </td>
+                        <td>
+                            @if($item->deskripsi)
+                                {{ Str::limit($item->deskripsi, 150) }}
+                            @else
+                                <small class="text-muted"><i>Belum ada deskripsi</i></small>
+                            @endif
+                        </td>
                         <td class="text-center">
-                            <div class="btn-group" role="group">
-                                <a href="{{ route('fasilitas.show', $item->id_fasilitas) }}" 
-                                   class="btn btn-info btn-sm" 
-                                   title="Lihat">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{{ route('fasilitas.edit', $item->id_fasilitas) }}" 
-                                   class="btn btn-warning btn-sm" 
-                                   title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <button type="button" 
-                                        class="btn btn-danger btn-sm" 
-                                        data-toggle="modal" 
-                                        data-target="#deleteModal{{ $item->id_fasilitas }}"
-                                        title="Hapus">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
+                            <a href="{{ route('fasilitas.show', $item->id_fasilitas) }}" 
+                               class="btn btn-info btn-sm mr-1" 
+                               title="Lihat">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{{ route('fasilitas.edit', $item->id_fasilitas) }}" 
+                               class="btn btn-warning btn-sm mr-1" 
+                               title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button type="button" 
+                                    class="btn btn-danger btn-sm" 
+                                    data-toggle="modal" 
+                                    data-target="#deleteModal{{ $item->id_fasilitas }}"
+                                    title="Hapus">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
 
@@ -111,7 +139,7 @@
                     <div class="modal fade" id="deleteModal{{ $item->id_fasilitas }}" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <div class="modal-header" style="background-color: #800000; color: white;">
+                                <div class="modal-header">
                                     <h5 class="modal-title">
                                         <i class="fas fa-exclamation-triangle"></i> Konfirmasi Hapus
                                     </h5>
@@ -135,7 +163,7 @@
                                     <button class="btn btn-secondary" type="button" data-dismiss="modal">
                                         <i class="fas fa-times"></i> Batal
                                     </button>
-                                    <form action="{{ route('fasilitas.destroy', $item->id_fasilitas) }}" method="POST">
+                                    <form action="{{ route('fasilitas.destroy', $item->id_fasilitas) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">
@@ -164,7 +192,6 @@
             <div class="col-md-6">
                 <div class="dataTables_paginate paging_simple_numbers float-right">
                     <ul class="pagination">
-                        {{-- Previous Page Link --}}
                         @if ($fasilitas->onFirstPage())
                             <li class="paginate_button page-item previous disabled">
                                 <span class="page-link">Previous</span>
@@ -175,7 +202,6 @@
                             </li>
                         @endif
 
-                        {{-- Pagination Elements --}}
                         @foreach(range(1, $fasilitas->lastPage()) as $i)
                             @if($i >= $fasilitas->currentPage() - 2 && $i <= $fasilitas->currentPage() + 2)
                                 @if ($i == $fasilitas->currentPage())
@@ -190,7 +216,6 @@
                             @endif
                         @endforeach
 
-                        {{-- Next Page Link --}}
                         @if ($fasilitas->hasMorePages())
                             <li class="paginate_button page-item next">
                                 <a href="{{ $fasilitas->nextPageUrl() }}" class="page-link">Next</a>
@@ -209,15 +234,36 @@
 </div>
 
 <!-- Informasi Section -->
-<div class="card shadow mb-4" style="border-left: 4px solid #800000;">
-    <div class="card-header py-3" style="background-color: #800000; color: white;">
-        <h6 class="m-0 font-weight-bold" style="color: white;">
-            <i class="fas fa-info-circle"></i> Informasi Fasilitas
-        </h6>
+<div class="row mt-4">
+    <div class="col-md-6 mb-3">
+        <div class="card shadow-sm h-100" style="border-left: 4px solid #4e73df; border-radius: 8px;">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="mr-3">
+                        <i class="fas fa-building fa-2x" style="color: #4e73df;"></i>
+                    </div>
+                    <div>
+                        <h6 class="font-weight-bold mb-1" style="color: #5a5c69;">Fasilitas Sekolah</h6>
+                        <small class="text-muted">Sarana dan prasarana yang tersedia di SD Muhammadiyah Gendeng</small>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <p class="mb-2"><i class="fas fa-building text-primary"></i> <strong>Fasilitas:</strong> Sarana dan prasarana yang tersedia di SD Muhammadiyah Gendeng</p>
-        <p class="mb-0"><i class="fas fa-camera text-success"></i> <strong>Gambar:</strong> Gunakan foto berkualitas tinggi untuk hasil terbaik</p>
+    <div class="col-md-6 mb-3">
+        <div class="card shadow-sm h-100" style="border-left: 4px solid #1cc88a; border-radius: 8px;">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="mr-3">
+                        <i class="fas fa-camera fa-2x" style="color: #1cc88a;"></i>
+                    </div>
+                    <div>
+                        <h6 class="font-weight-bold mb-1" style="color: #5a5c69;">Dokumentasi</h6>
+                        <small class="text-muted">Gunakan foto berkualitas tinggi untuk hasil terbaik</small>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -225,19 +271,64 @@
 @push('styles')
 <style>
     .table tbody tr {
-        transition: background-color 0.2s;
+        transition: background-color 0.2s ease;
     }
     
     .table tbody tr:hover {
         background-color: #f8f9fc;
     }
     
-    .img-thumbnail {
-        transition: transform 0.2s;
+    .btn-sm {
+        transition: all 0.2s ease;
     }
     
-    .img-thumbnail:hover {
+    .btn-sm:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    #searchInput {
+        transition: all 0.2s ease;
+    }
+    
+    #searchInput:focus {
+        box-shadow: 0 0 0 0.2rem rgba(128, 0, 0, 0.15);
+        border-color: #800000;
+    }
+    
+    img[data-toggle="modal"] {
+        transition: transform 0.2s ease;
+    }
+    
+    img[data-toggle="modal"]:hover {
         transform: scale(1.05);
     }
+    
+    .pagination .page-link {
+        color: #800000;
+    }
+    
+    .pagination .page-item.active .page-link {
+        background-color: #800000;
+        border-color: #800000;
+    }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const searchValue = this.value.toLowerCase();
+        const tableRows = document.querySelectorAll('#dataTable tbody tr');
+        
+        tableRows.forEach(row => {
+            if (row.querySelector('td[colspan]')) {
+                return;
+            }
+            
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchValue) ? '' : 'none';
+        });
+    });
+</script>
 @endpush

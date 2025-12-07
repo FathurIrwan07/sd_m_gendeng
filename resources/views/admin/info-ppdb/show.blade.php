@@ -16,8 +16,8 @@
     <div class="col-lg-8">
         <!-- Info Dasar -->
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background: linear-gradient(135deg, #800000 0%, #4b0000 100%);">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-info-circle"></i> Informasi Dasar PPDB
                 </h6>
             </div>
@@ -77,8 +77,8 @@
         <!-- Kontak & Lokasi -->
         @if($infoPpdb->telepon || $infoPpdb->email || $infoPpdb->alamat || $infoPpdb->lokasi_kantor || $infoPpdb->link_pendaftaran)
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-phone"></i> Kontak & Lokasi
                 </h6>
             </div>
@@ -149,8 +149,8 @@
         <!-- Gelombang & Tahapan -->
         @if($infoPpdb->gelombang->count() > 0)
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-wave-square"></i> Gelombang & Tahapan Pendaftaran
                 </h6>
             </div>
@@ -232,8 +232,8 @@
     <div class="col-lg-4">
         <!-- Info Card -->
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-info-circle"></i> Informasi
                 </h6>
             </div>
@@ -288,22 +288,6 @@
                         {{ $infoPpdb->gelombang->count() }} Gelombang
                     </span>
                 </div>
-            </div>
-        </div>
-
-        <!-- Status Publication -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #059669;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-eye"></i> Status Publikasi
-                </h6>
-            </div>
-            <div class="card-body text-center">
-                <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
-                <h6>Info PPDB Dipublikasikan</h6>
-                <p class="small text-muted mb-0">
-                    Informasi ini akan tampil di halaman PPDB website
-                </p>
             </div>
         </div>
     </div>

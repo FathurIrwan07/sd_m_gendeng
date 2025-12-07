@@ -19,21 +19,20 @@
     <div class="col-lg-8">
         {{-- CHAT BOX --}}
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background: linear-gradient(135deg, #800000 0%, #4b0000 100%);">
+            <div class="card-header py-3">
                 <div class="d-flex align-items-center">
                     <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mr-3" 
                          style="width: 40px; height: 40px;">
                         <i class="fas fa-user text-primary"></i>
                     </div>
                     <div class="text-white">
-                        <h6 class="m-0 text-white font-weight-bold">
+                        <h6 class="m-0 text-primary font-weight-bold">
                             @if($pengaduan->pelapor)
                                 {{ $pengaduan->pelapor->nama_lengkap }}
                             @else
                                 Pelapor Anonim
                             @endif
                         </h6>
-                        <small>{{ $pengaduan->kategori->nama_kategori }}</small>
                     </div>
                 </div>
             </div>
@@ -81,8 +80,8 @@
     <div class="col-lg-4">
         {{-- INFO PENGADUAN --}}
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-info-circle"></i> Info Pengaduan
                 </h6>
             </div>

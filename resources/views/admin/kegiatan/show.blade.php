@@ -14,9 +14,9 @@
 <div class="row">
     <div class="col-lg-8">
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background: linear-gradient(135deg, #800000 0%, #4b0000 100%);">
+            <div class="card-header py-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-white">
+                    <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-clipboard-list"></i> {{ $kegiatan->nama_program }}
                     </h6>
                     <span class="badge badge-light">{{ $kegiatan->kategori->nama_kategori }}</span>
@@ -48,36 +48,14 @@
                 </div>
             </div>
         </div>
-
-        <!-- Action Buttons -->
-        <div class="card shadow mb-4">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <a href="{{ route('kegiatan.edit', $kegiatan->id_kegiatan) }}" class="btn btn-warning">
-                            <i class="fas fa-edit"></i> Edit Program
-                        </a>
-                        <button type="button" 
-                                class="btn btn-danger" 
-                                data-toggle="modal" 
-                                data-target="#deleteModal">
-                            <i class="fas fa-trash"></i> Hapus Program
-                        </button>
-                    </div>
-                    <a href="{{ route('kegiatan.index') }}" class="btn btn-secondary">
-                        <i class="fas fa-list"></i> Lihat Semua Program
-                    </a>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="col-lg-4">
         <!-- Info Card -->
         <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-info-circle"></i> Informasi Program
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-info-circle"></i> Informasi Program Kegiatan
                 </h6>
             </div>
             <div class="card-body">
@@ -129,72 +107,6 @@
                     </span>
                     @endif
                 </div>
-            </div>
-        </div>
-
-        <!-- Status Card -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #4b0000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-eye"></i> Status Publikasi
-                </h6>
-            </div>
-            <div class="card-body text-center">
-                <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
-                <h6>Program Sudah Dipublikasikan</h6>
-                <p class="small text-muted mb-0">
-                    Program ini akan tampil di halaman website
-                </p>
-            </div>
-        </div>
-        <!-- Related Category -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3" style="background-color: #800000;">
-                <h6 class="m-0 font-weight-bold text-white">
-                    <i class="fas fa-link"></i> Kategori Terkait
-                </h6>
-            </div>
-            <div class="card-body">
-                <a href="{{ route('kategori-kegiatan.show', $kegiatan->kategori->id_kategori) }}" 
-                   class="btn btn-outline-primary btn-block">
-                    <i class="fas fa-folder-open"></i> 
-                    Lihat Semua Program {{ $kegiatan->kategori->nama_kategori }}
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Konfirmasi Hapus</h5>
-                <button class="close" type="button" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-triangle"></i> 
-                    <strong>Peringatan!</strong> 
-                    Tindakan ini tidak dapat dibatalkan.
-                </div>
-                <p>Apakah Anda yakin ingin menghapus program <strong>{{ $kegiatan->nama_program }}</strong>?</p>
-                @if($kegiatan->foto_program)
-                <p class="mb-0"><small class="text-muted">* Foto yang terlampir juga akan dihapus</small></p>
-                @endif
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                <form action="{{ route('kegiatan.destroy', $kegiatan->id_kegiatan) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fas fa-trash"></i> Ya, Hapus Program
-                    </button>
-                </form>
             </div>
         </div>
     </div>

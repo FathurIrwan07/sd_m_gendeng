@@ -10,9 +10,9 @@
 </div>
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3" style="background-color: #800000;">
-        <h6 class="m-0 font-weight-bold text-white">
-            <i class="fas fa-edit"></i> Edit: {{ $tenagaPendidik->nama_lengkap }}
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-edit"></i> Form Edit Tenaga Pendidik
         </h6>
     </div>
     <div class="card-body">

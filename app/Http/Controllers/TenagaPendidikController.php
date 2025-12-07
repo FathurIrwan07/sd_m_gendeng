@@ -38,23 +38,31 @@ class TenagaPendidikController extends Controller
         
         return view('teachers', compact('tenagaPendidik', 'stats'));
     }
-    public function index()
+    
+    public function index(Request $request)
     {
-        $tenagaPendidik = TenagaPendidik::with('user')->latest()->paginate(10);
+        $query = TenagaPendidik::with('user');
+        
+        // Search functionality
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama_lengkap', 'like', '%' . $search . '%')
+                  ->orWhere('jabatan', 'like', '%' . $search . '%')
+                  ->orWhere('lulusan', 'like', '%' . $search . '%');
+            });
+        }
+        
+        $tenagaPendidik = $query->latest()->paginate(9);
+        
         return view('admin.tenaga-pendidik.index', compact('tenagaPendidik'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.tenaga-pendidik.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -86,26 +94,17 @@ class TenagaPendidikController extends Controller
             ->with('success', 'Tenaga pendidik berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(TenagaPendidik $tenagaPendidik)
     {
         $tenagaPendidik->load('user');
         return view('admin.tenaga-pendidik.show', compact('tenagaPendidik'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(TenagaPendidik $tenagaPendidik)
     {
         return view('admin.tenaga-pendidik.edit', compact('tenagaPendidik'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, TenagaPendidik $tenagaPendidik)
     {
         $validated = $request->validate([
@@ -127,7 +126,6 @@ class TenagaPendidikController extends Controller
         $validated['user_id'] = Auth::id();
 
         if ($request->hasFile('foto_tenaga_pendidik')) {
-            // Delete old photo
             if ($tenagaPendidik->foto_tenaga_pendidik) {
                 Storage::disk('public')->delete($tenagaPendidik->foto_tenaga_pendidik);
             }
@@ -141,12 +139,8 @@ class TenagaPendidikController extends Controller
             ->with('success', 'Tenaga pendidik berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(TenagaPendidik $tenagaPendidik)
     {
-        // Delete photo if exists
         if ($tenagaPendidik->foto_tenaga_pendidik) {
             Storage::disk('public')->delete($tenagaPendidik->foto_tenaga_pendidik);
         }
@@ -157,9 +151,6 @@ class TenagaPendidikController extends Controller
             ->with('success', 'Tenaga pendidik berhasil dihapus.');
     }
 
-    /**
-     * Delete foto only
-     */
     public function deleteFoto($id)
     {
         $tenagaPendidik = TenagaPendidik::findOrFail($id);

@@ -5,13 +5,8 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Detail Tanggapan</h1>
     <div>
-        <a href="{{ route('tanggapan.index') }}" class="btn btn-secondary btn-icon-split mr-2">
-            <span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span>
-            <span class="text">Kembali</span>
-        </a>
-        <a href="{{ route('tanggapan.edit', $tanggapan->id_tanggapan) }}" class="btn btn-warning btn-icon-split">
-            <span class="icon text-white-50"><i class="fas fa-edit"></i></span>
-            <span class="text">Edit</span>
+        <a href="{{ route('tanggapan.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Kembali
         </a>
     </div>
 </div>
