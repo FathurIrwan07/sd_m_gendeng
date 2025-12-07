@@ -50,19 +50,7 @@ Route::get('/guru', [TenagaPendidikController::class, 'publicIndex'])->name('tea
 // Info PPDB
 Route::get('/ppdb', [App\Http\Controllers\PpdbPublicController::class, 'index'])->name('ppdb');
 
-// ============================================
-// PENGADUAN PUBLIK (TANPA AUTH)
-// ============================================
 
-// Pengaduan Publik - Lihat daftar pengaduan
-Route::get('/pengaduan/public', [UserPengaduanController::class, 'publicIndex'])
-    ->name('pengaduan.public.index');
-
-// Pengaduan Anonim - Form & Store
-Route::get('/pengaduan/anonim/create', [UserPengaduanController::class, 'createAnonim'])
-    ->name('pengaduan.anonim.create');
-Route::post('/pengaduan/anonim', [UserPengaduanController::class, 'storeAnonim'])
-    ->name('pengaduan.anonim.store');
 
 // ============================================
 // ADMIN ROUTES - PREFIX: /admin
@@ -247,6 +235,15 @@ Route::middleware(['auth', 'role:User'])->prefix('user')->group(function () {
         ->name('user.chat.store');
     Route::get('chat/{pengaduan}/new-messages', [ChatPengaduanController::class, 'userGetNewMessages'])
         ->name('user.chat.get-new-messages');
+     // ========== PENGADUAN ANONIM (dalam user layout) ==========
+    Route::get('/pengaduan-anonim/create', [UserPengaduanController::class, 'createAnonim'])
+        ->name('user.pengaduan-anonim.create');
+    Route::post('/pengaduan-anonim', [UserPengaduanController::class, 'storeAnonim'])
+        ->name('user.pengaduan-anonim.store');
+
+    // ========== PENGADUAN PUBLIK (dalam user layout) ==========
+    Route::get('/pengaduan-publik', [UserPengaduanController::class, 'publicIndex'])
+        ->name('user.pengaduan-publik.index');
 });
 
 // ============================================

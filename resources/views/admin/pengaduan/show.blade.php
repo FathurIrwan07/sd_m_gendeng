@@ -69,6 +69,15 @@
                                             ($pengaduan->status_pengaduan === 'Diproses' ? 'warning' :
                                             ($pengaduan->status_pengaduan === 'Ditolak' ? 'danger' : 'secondary')) 
                                         }} badge-lg">
+                                            @if($pengaduan->status_pengaduan === 'Selesai')
+                                                <i class="fas fa-check-circle"></i>
+                                            @elseif($pengaduan->status_pengaduan === 'Diproses')
+                                                <i class="fas fa-spinner"></i>
+                                            @elseif($pengaduan->status_pengaduan === 'Ditolak')
+                                                <i class="fas fa-times-circle"></i>
+                                            @else
+                                                <i class="fas fa-clock"></i>
+                                            @endif
                                             {{ $pengaduan->status_pengaduan }}
                                         </span>
                                     </td>

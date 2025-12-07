@@ -2,16 +2,6 @@
 @extends('user.app')
 
 @section('content')
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Buat Pengaduan Baru</h1>
-        <a href="{{ route('user.pengaduan.index') }}" class="btn btn-secondary btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-arrow-left"></i>
-            </span>
-            <span class="text">Kembali</span>
-        </a>
-    </div>
-
     <div class="row">
         <div class="col-lg-8">
             <div class="card shadow mb-4">
@@ -114,13 +104,13 @@
 
             <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-warning text-white">
-                    <h6 class="m-0 font-weight-bold">
+                    <h6 class="m-0 font-weight-bold text-white">
                         <i class="fas fa-user-secret"></i> Pengaduan Anonim
                     </h6>
                 </div>
                 <div class="card-body">
                     <p class="mb-3">Tidak ingin identitas Anda diketahui?</p>
-                    <a href="{{ route('pengaduan.anonim.create') }}" class="btn btn-warning btn-block" target="_blank">
+                    <a href="{{ route('user.pengaduan-anonim.create') }}" class="btn btn-warning btn-block" target="_blank">
                         <i class="fas fa-mask"></i> Buat Pengaduan Anonim
                     </a>
                     <small class="text-muted">

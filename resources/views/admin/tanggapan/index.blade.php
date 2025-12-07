@@ -166,8 +166,7 @@
                             <th width="15%">Pelapor</th>
                             <th width="12%">Kategori</th>
                             <th width="25%">Tanggapan</th>
-                            <th width="12%" class="text-center">Tanggal</th>
-                            <th width="14%" class="text-center">Aksi</th>
+                            <th width="18%" class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -193,16 +192,6 @@
                                 </span>
                             </td>
                             <td>{{ Str::limit($item->isi_tanggapan, 80) }}</td>
-                            <td class="text-center">
-                                <small>
-                                    <i class="fas fa-calendar"></i> 
-                                    {{ $item->tanggal_tanggapan->format('d/m/Y') }}
-                                </small>
-                                <br>
-                                <small class="text-muted">
-                                    <i class="far fa-clock"></i> {{ $item->created_at->diffForHumans() }}
-                                </small>
-                            </td>
                             <td class="text-center">
                                 <a href="{{ route('tanggapan.show', $item->id_tanggapan) }}" 
                                    class="btn btn-info btn-sm mr-1" 

@@ -1,176 +1,223 @@
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+{{-- Topbar --}}
+@php
+// Logic to determine the current page title
+$pageTitle = 'Dashboard';
+if (Request::is('user/dashboard')) {
+    $pageTitle = 'Dashboard';
+} elseif (Request::is('user/pengaduan-anonim/create')) {
+    $pageTitle = 'Buat Pengaduan Anonim';
+} elseif (Request::is('user/pengaduan-publik*')) {
+    $pageTitle = 'Pengaduan Publik';
+} elseif (Request::is('user/pengaduan/create')) {
+    $pageTitle = 'Buat Pengaduan Baru';
+} elseif (Request::is('user/pengaduan*')) {
+    $pageTitle = 'Riwayat Pengaduan';
+} elseif (Request::is('user/chat*')) {
+    $pageTitle = 'Chat dengan Admin';
+}
+@endphp
 
-    <!-- Sidebar Toggle (Topbar) -->
-    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-        <i class="fa fa-bars"></i>
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    {{-- Sidebar Toggle Button (Desktop) --}}
+    <button id="sidebarToggle" class="btn btn-link d-none d-md-inline rounded-circle mr-3"
+            style="border: none !important; background: transparent !important; padding: 8px !important; 
+                   outline: none !important; box-shadow: none !important; width: 40px; height: 40px;">
+        <i class="fas fa-bars" style="font-size: 1.25rem; color: #666666;"></i>
     </button>
 
+    {{-- Sidebar Toggle Button (Mobile) --}}
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"
+            style="border: none !important; background: transparent !important; padding: 8px !important; 
+                   outline: none !important; box-shadow: none !important; width: 40px; height: 40px;">
+        <i class="fas fa-bars" style="font-size: 1.25rem; color: #666666;"></i>
+    </button>
 
-    <!-- Topbar Navbar -->
+    {{-- Page Title --}}
+    <div class="topbar-page-title d-none d-sm-inline-block">
+        <h5 class="mb-0 font-weight-bold" style="color: #1a1a1a; font-size: 1.125rem;">{{ $pageTitle }}</h5>
+    </div>
+
+    {{-- Topbar Navbar --}}
     <ul class="navbar-nav ml-auto">
-
-        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-        <li class="nav-item dropdown no-arrow d-sm-none">
-            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-            </a>
-            <!-- Dropdown - Messages -->
-            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                            aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </li>
-
-        <!-- Nav Item - Alerts -->
-        <!-- <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i> -->
-                <!-- Counter - Alerts -->
-                <!-- <span class="badge badge-danger badge-counter">3+</span> -->
-            <!-- </a> -->
-            <!-- Dropdown - Alerts -->
-            <!-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                    Alerts Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-primary">
-                            <i class="fas fa-file-alt text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 12, 2019</div>
-                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-success">
-                            <i class="fas fa-donate text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 7, 2019</div>
-                        $290.29 has been deposited into your account!
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-warning">
-                            <i class="fas fa-exclamation-triangle text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 2, 2019</div>
-                        Spending Alert: We've noticed unusually high spending for your account.
-                    </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-            </div>
-        </li> -->
-
-        <!-- Nav Item - Messages -->
-        <!-- <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-envelope fa-fw"></i> -->
-                <!-- Counter - Messages -->
-                <!-- <span class="badge badge-danger badge-counter">7</span>
-            </a> -->
-            <!-- Dropdown - Messages -->
-            <!-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">
-                    Message Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
-                        <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div class="font-weight-bold">
-                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                            problem I've been having.</div>
-                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
-                        <div class="status-indicator"></div>
-                    </div>
-                    <div>
-                        <div class="text-truncate">I have the photos that you ordered last month, how
-                            would you like them sent to you?</div>
-                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
-                        <div class="status-indicator bg-warning"></div>
-                    </div>
-                    <div>
-                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                            the progress so far, keep up the good work!</div>
-                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
-                        <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div>
-                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                            told me that people say this to all dogs, even if they aren't good...</div>
-                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                    </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-            </div> -->
-        </li>
-
-        <div class="topbar-divider d-none d-sm-block"></div>
-
-        <!-- Nav Item - User Information -->
+        {{-- User Profile Dropdown --}}
         @auth
-            <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}</span>
-                    <img class="img-profile rounded-circle" src="{{ asset('template/img/undraw_profile.svg') }}">
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle d-flex align-items-center px-3" href="#" id="userDropdown" 
+               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               style="transition: all 0.2s ease;">
+                <span class="mr-2 d-none d-lg-inline" style="color: #666666; font-weight: 500; font-size: 0.875rem;">
+                    {{ auth()->user()->nama_lengkap }}
+                </span>
+                <img class="img-profile rounded-circle" src="{{ asset('template/img/undraw_profile.svg') }}" 
+                     style="width: 32px; height: 32px;">
+            </a>
+            {{-- Dropdown Menu --}}
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" 
+                 aria-labelledby="userDropdown"
+                 style="border-radius: 0.5rem; border: none; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"
+                   style="transition: all 0.2s ease; padding: 0.75rem 1.5rem;">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
                 </a>
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Profile
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Logout
-                    </a>
-                </div>
-            </li>
+            </div>
+        </li>
         @endauth
-
-
-
     </ul>
-
 </nav>
+
+{{-- Custom Styles --}}
+<style>
+    /* Topbar Navbar Styling */
+    .topbar {
+        background-color: #fff !important;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+    }
+
+    /* Toggle Button Hover Effect */
+    #sidebarToggleTop:hover i,
+    #sidebarToggle:hover i {
+        color: #4A90E2 !important;
+        transition: color 0.2s ease;
+    }
+
+    /* User Dropdown Styling */
+    .nav-link.dropdown-toggle:hover {
+        background-color: rgba(0, 0, 0, 0.02) !important;
+        border-radius: 0.5rem;
+    }
+
+    .nav-link.dropdown-toggle:hover span {
+        color: #4A90E2 !important;
+    }
+
+    /* Dropdown Item Hover */
+    .dropdown-item:hover {
+        background-color: #4A90E2 !important;
+        color: #fff !important;
+    }
+
+    .dropdown-item:hover i {
+        color: #fff !important;
+    }
+
+    /* Profile Image */
+    .img-profile {
+        border: 2px solid #e3e6f0;
+        transition: border-color 0.2s ease;
+    }
+
+    .nav-link:hover .img-profile {
+        border-color: #4A90E2;
+    }
+
+    /* Dropdown Animation */
+    .animated--grow-in {
+        animation-name: growIn;
+        animation-duration: 200ms;
+        animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1), opacity cubic-bezier(0, 1, 0.4, 1);
+    }
+
+    @keyframes growIn {
+        0% {
+            transform: scale(0.9);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    /* Responsive Title */
+    @media (max-width: 576px) {
+        .topbar-page-title h5 {
+            font-size: 0.95rem !important;
+        }
+    }
+</style>
+
+{{-- Custom JavaScript for Sidebar Toggle --}}
+@push('scripts')
+<script>
+(function($) {
+    "use strict";
+    
+    // Toggle the side navigation
+    $("#sidebarToggleTop, #sidebarToggle").on('click', function(e) {
+        e.preventDefault();
+        
+        $("body").toggleClass("sidebar-toggled");
+        $(".sidebar").toggleClass("toggled");
+        
+        if ($(".sidebar").hasClass("toggled")) {
+            $('.sidebar .collapse').collapse('hide');
+            localStorage.setItem('sidebarToggled', 'true');
+        } else {
+            localStorage.removeItem('sidebarToggled');
+        }
+    });
+
+    // Close any open menu accordions when window is resized below 768px
+    $(window).resize(function() {
+        if ($(window).width() < 768) {
+            $('.sidebar .collapse').collapse('hide');
+        }
+        
+        // Toggle the side navigation when window is resized below 480px
+        if ($(window).width() < 480 && !$(".sidebar").hasClass("toggled")) {
+            $("body").addClass("sidebar-toggled");
+            $(".sidebar").addClass("toggled");
+            $('.sidebar .collapse').collapse('hide');
+        }
+    });
+
+    // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
+    $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function(e) {
+        if ($(window).width() > 768) {
+            var e0 = e.originalEvent,
+                delta = e0.wheelDelta || -e0.detail;
+            this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+            e.preventDefault();
+        }
+    });
+
+    // Scroll to top button appear
+    $(document).on('scroll', function() {
+        var scrollDistance = $(this).scrollTop();
+        if (scrollDistance > 100) {
+            $('.scroll-to-top').fadeIn();
+        } else {
+            $('.scroll-to-top').fadeOut();
+        }
+    });
+
+    // Smooth scrolling using jQuery easing
+    $(document).on('click', 'a.scroll-to-top', function(e) {
+        var $anchor = $(this);
+        $('html, body').stop().animate({
+            scrollTop: ($($anchor.attr('href')).offset().top)
+        }, 1000, 'easeInOutExpo');
+        e.preventDefault();
+    });
+
+    // Check localStorage on page load
+    if (localStorage.getItem('sidebarToggled') === 'true') {
+        $("body").addClass("sidebar-toggled");
+        $(".sidebar").addClass("toggled");
+        $('.sidebar .collapse').collapse('hide');
+    }
+
+    // Hover effects for toggle buttons
+    $('#sidebarToggleTop, #sidebarToggle').hover(
+        function() {
+            $(this).find('i').css('color', '#4A90E2');
+        },
+        function() {
+            $(this).find('i').css('color', '#666666');
+        }
+    );
+
+})(jQuery);
+</script>
+@endpush

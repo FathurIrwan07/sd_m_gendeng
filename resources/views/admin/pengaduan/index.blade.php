@@ -138,24 +138,24 @@
                                             <i class="far fa-clock"></i> {{ $item->created_at->diffForHumans() }}
                                         </small>
                                     </td>
-                                    <td class="text-center">
-                                        <span class="badge badge-{{ 
-                                            $item->status_pengaduan === 'Selesai' ? 'success' :
-                                            ($item->status_pengaduan === 'Diproses' ? 'warning' :
-                                            ($item->status_pengaduan === 'Ditolak' ? 'danger' : 'secondary')) 
-                                        }} px-2 py-1">
-                                            @if($item->status_pengaduan === 'Selesai')
-                                                <i class="fas fa-check-circle"></i>
-                                            @elseif($item->status_pengaduan === 'Diproses')
-                                                <i class="fas fa-spinner"></i>
-                                            @elseif($item->status_pengaduan === 'Ditolak')
-                                                <i class="fas fa-times-circle"></i>
-                                            @else
-                                                <i class="fas fa-clock"></i>
-                                            @endif
-                                            {{ $item->status_pengaduan }}
-                                        </span>
-                                    </td>
+                                     <td class="text-center">
+                                    <span class="badge badge-{{ 
+                                        $item->status_pengaduan === 'Selesai' ? 'success' :
+                                        ($item->status_pengaduan === 'Diproses' ? 'warning' :
+                                        ($item->status_pengaduan === 'Ditolak' ? 'danger' : 'secondary')) 
+                                    }}">
+                                        @if($item->status_pengaduan === 'Selesai')
+                                            <i class="fas fa-check-circle"></i>
+                                        @elseif($item->status_pengaduan === 'Diproses')
+                                            <i class="fas fa-spinner"></i>
+                                        @elseif($item->status_pengaduan === 'Ditolak')
+                                            <i class="fas fa-times-circle"></i>
+                                        @else
+                                            <i class="fas fa-clock"></i>
+                                        @endif
+                                        {{ $item->status_pengaduan }}
+                                    </span>
+                                </td>
                                     <td class="text-center">
                                         <a href="{{ route('pengaduan.show', $item->id_pengaduan) }}" 
                                            class="btn btn-info btn-sm mr-1"

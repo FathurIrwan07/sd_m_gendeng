@@ -2,12 +2,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0" style="color: #800000;">
-            <i class="fas fa-comments"></i> Chat dengan Admin
-        </h1>
-    </div>
-
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Berhasil!</strong> {{ session('success') }}
@@ -17,11 +11,32 @@
     </div>
     @endif
 
+    <div class="card shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center border-right">
+                            <h4 class="text-primary mb-0">{{ $pengaduanList->count() }}</h4>
+                            <small class="text-muted">Total Pengaduan</small>
+                        </div>
+                        <div class="col-md-4 text-center border-right">
+                            <h4 class="text-warning mb-0">{{ $pengaduanList->where('status_pengaduan', 'Diproses')->count() }}</h4>
+                            <small class="text-muted">Sedang Diproses</small>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <h4 class="text-danger mb-0">
+                                {{ $pengaduanList->sum('unread_count') }}
+                            </h4>
+                            <small class="text-muted">Pesan Belum Dibaca</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     <div class="row">
         <div class="col-12">
             <div class="card shadow mb-4">
-                <div class="card-header py-3" style="background: linear-gradient(135deg, #800000 0%, #4b0000 100%);">
-                    <h6 class="m-0 font-weight-bold text-white">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-list"></i> Daftar Pengaduan Anda
                     </h6>
                 </div>
@@ -91,28 +106,6 @@
                         </a>
                     </div>
                     @endif
-                </div>
-            </div>
-
-            {{-- Info Card --}}
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 text-center border-right">
-                            <h4 class="text-primary mb-0">{{ $pengaduanList->count() }}</h4>
-                            <small class="text-muted">Total Pengaduan</small>
-                        </div>
-                        <div class="col-md-4 text-center border-right">
-                            <h4 class="text-warning mb-0">{{ $pengaduanList->where('status_pengaduan', 'Diproses')->count() }}</h4>
-                            <small class="text-muted">Sedang Diproses</small>
-                        </div>
-                        <div class="col-md-4 text-center">
-                            <h4 class="text-danger mb-0">
-                                {{ $pengaduanList->sum('unread_count') }}
-                            </h4>
-                            <small class="text-muted">Pesan Belum Dibaca</small>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

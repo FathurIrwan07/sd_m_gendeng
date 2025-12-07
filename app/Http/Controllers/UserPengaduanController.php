@@ -99,29 +99,32 @@ class UserPengaduanController extends Controller
     }
 
     public function publicIndex()
-{
-    $pengaduan = Pengaduan::with(['kategori', 'tanggapan.penanggap', 'pelapor'])
-        ->whereIn('status_pengaduan', ['Diproses', 'Selesai',])
-        ->whereNull('user_id') // ✅ Hanya yang anonim
-        ->latest()
-        ->paginate(10);
+    {
+        $pengaduan = Pengaduan::with(['kategori', 'tanggapan.penanggap', 'pelapor'])
+            ->whereIn('status_pengaduan', ['Diproses', 'Selesai'])
+            ->whereNull('user_id') // ✅ Hanya yang anonim
+            ->latest()
+            ->paginate(10);
 
-    return view('public.pengaduan.index', compact('pengaduan'));
-}
+        return view('user.pengaduan-publik.index', compact('pengaduan'));
+    }
+
+    // ============================================
+    // PENGADUAN ANONIM (dalam layout user)
+    // ============================================
     public function createAnonim()
     {
         $kategori = KategoriPengaduan::all();
-        return view('public.pengaduan.create', compact('kategori'));
+        return view('user.pengaduan-anonim.create', compact('kategori'));
     }
 
     public function storeAnonim(Request $request)
     {
-        // Validasi input (tanpa tgl_pengaduan)
+        // Validasi input
         $validatedData = $request->validate([
             'id_kategori' => 'required|exists:kategori_pengaduan,id_kategori',
             'deskripsi' => 'required|string|min:20',
         ], [
-            // Pesan kustom
             'id_kategori.required' => 'Kategori pengaduan wajib dipilih',
             'id_kategori.exists' => 'Kategori yang dipilih tidak valid',
             'deskripsi.required' => 'Deskripsi pengaduan wajib diisi',
@@ -141,7 +144,7 @@ class UserPengaduanController extends Controller
         Pengaduan::create($dataToCreate);
 
         // Redirect
-        return redirect()->route('pengaduan.anonim.create')
+        return redirect()->route('user.pengaduan-anonim.create')
             ->with('success', 'Pengaduan anonim Anda berhasil dikirim dan sedang menunggu konfirmasi.');
     }
 }

@@ -50,13 +50,20 @@
                                 </td>
                                 <td>{{ Str::limit($item->deskripsi, 80) }}</td>
                                 <td>{{ $item->tanggal_pengaduan->format('d/m/Y') }}</td>
-                                <td>
-                                    <span class="badge badge-{{ 
-                                        $item->status_pengaduan === 'Selesai' ? 'success' : 
-                                        ($item->status_pengaduan === 'Diproses' ? 'warning' : 'secondary') 
-                                    }}">
-                                        {{ $item->status_pengaduan }}
-                                    </span>
+                                <td class="text-center">
+                                    @if($item->status_pengaduan === 'Selesai')
+                                        <span class="badge badge-success">
+                                            <i class="fas fa-check-circle"></i> Selesai
+                                        </span>
+                                    @elseif($item->status_pengaduan === 'Diproses')
+                                        <span class="badge badge-warning">
+                                            <i class="fas fa-spinner"></i> Diproses
+                                        </span>
+                                    @else
+                                        <span class="badge badge-secondary">
+                                            <i class="fas fa-clock"></i> {{ $item->status_pengaduan }}
+                                        </span>
+                                    @endif
                                 </td>
                                 <td>
                                     <a href="{{ route('pengaduan.show', $item->id_pengaduan) }}" 

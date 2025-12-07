@@ -2,12 +2,6 @@
 @extends('user.app')
 
 @section('content')
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Pengaduan Saya</h1>
-        <a href="{{ route('user.pengaduan.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-plus fa-sm text-white-50"></i> Buat Pengaduan Baru
-        </a>
-    </div>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -93,8 +87,8 @@
     @endif
 
     <div class="card shadow mb-4">
-        <div class="card-header py-3" style="background-color: #800000;">
-            <h6 class="m-0 font-weight-bold text-white">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
                 <i class="fas fa-list"></i> Daftar Pengaduan
             </h6>
         </div>
@@ -133,6 +127,15 @@
                                         ($item->status_pengaduan === 'Diproses' ? 'warning' :
                                         ($item->status_pengaduan === 'Ditolak' ? 'danger' : 'secondary')) 
                                     }}">
+                                        @if($item->status_pengaduan === 'Selesai')
+                                            <i class="fas fa-check-circle"></i>
+                                        @elseif($item->status_pengaduan === 'Diproses')
+                                            <i class="fas fa-spinner"></i>
+                                        @elseif($item->status_pengaduan === 'Ditolak')
+                                            <i class="fas fa-times-circle"></i>
+                                        @else
+                                            <i class="fas fa-clock"></i>
+                                        @endif
                                         {{ $item->status_pengaduan }}
                                     </span>
                                 </td>

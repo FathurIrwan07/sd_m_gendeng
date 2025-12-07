@@ -41,11 +41,21 @@
                         <th>Status</th>
                         <td>
                             @if($tanggapan->pengaduan->status_pengaduan == 'Diproses')
-                                <span class="badge badge-info">Diproses</span>
+                                <span class="badge badge-warning">
+                                    <i class="fas fa-spinner"></i> Diproses
+                                </span>
                             @elseif($tanggapan->pengaduan->status_pengaduan == 'Selesai')
-                                <span class="badge badge-success">Selesai</span>
+                                <span class="badge badge-success">
+                                    <i class="fas fa-check-circle"></i> Selesai
+                                </span>
+                            @elseif($tanggapan->pengaduan->status_pengaduan == 'Ditolak')
+                                <span class="badge badge-danger">
+                                    <i class="fas fa-times-circle"></i> Ditolak
+                                </span>
                             @else
-                                <span class="badge badge-secondary">{{ $tanggapan->pengaduan->status_pengaduan }}</span>
+                                <span class="badge badge-secondary">
+                                    <i class="fas fa-clock"></i> {{ $tanggapan->pengaduan->status_pengaduan }}
+                                </span>
                             @endif
                         </td>
                     </tr>
