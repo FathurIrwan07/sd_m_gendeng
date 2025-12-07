@@ -21,6 +21,21 @@
                 <form action="{{ route('users.store') }}" method="POST">
                     @csrf
                     
+                    {{-- SOLUSI: Tambahkan hidden input untuk role_id --}}
+                    @php
+                        // Dapatkan role_id untuk "User" dari database
+                        $userRole = \App\Models\Role::where('nama_role', 'User')->first();
+                    @endphp
+                    
+                    @if($userRole)
+                        <input type="hidden" name="role_id" value="{{ $userRole->role_id }}">
+                    @else
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle"></i> 
+                            Role "User" tidak ditemukan. Pastikan tabel roles sudah di-seed.
+                        </div>
+                    @endif
+                    
                     <!-- Info Role -->
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle"></i> User baru akan otomatis terdaftar sebagai <strong>User Biasa</strong> (untuk login pengaduan)

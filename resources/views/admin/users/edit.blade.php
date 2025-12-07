@@ -22,6 +22,9 @@
                     @csrf
                     @method('PUT')
                     
+                    {{-- SOLUSI: Tambahkan hidden input untuk role_id --}}
+                    <input type="hidden" name="role_id" value="{{ $user->role_id }}">
+                    
                     <!-- Role Display (Read Only) -->
                     <div class="alert alert-secondary">
                         <strong>Role:</strong> 
