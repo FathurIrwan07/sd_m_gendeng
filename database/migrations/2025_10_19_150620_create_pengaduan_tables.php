@@ -20,20 +20,27 @@ return new class extends Migration
 
         // 11. PENGADUAN Table
         Schema::create('pengaduan', function (Blueprint $table) {
-            $table->id('id_pengaduan'); // id_pengaduan:int (PK)
-            $table->unsignedBigInteger('user_id')->nullable(); // FK to users (Pelapor) - NULL jika anonim
-            $table->unsignedBigInteger('id_kategori'); // id_kategori:int (FK)
+            $table->id('id_pengaduan'); 
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('id_kategori');
 
             $table->text('deskripsi');
-            $table->enum('status_pengaduan', ['Menunggu Konfirmasi', 'Diproses', 'Selesai', 'Ditolak'])->default('Menunggu Konfirmasi');
+
+            // ➕ Tambahkan kolom ini
+            $table->string('foto')->nullable();
+
+            $table->enum('status_pengaduan', ['Menunggu Konfirmasi', 'Diproses', 'Selesai', 'Ditolak'])
+                ->default('Menunggu Konfirmasi');
+
             $table->date('tanggal_pengaduan');
-            
+
             // FOREIGN KEYS
             $table->foreign('user_id')->references('id_user')->on('users')->onDelete('set null');
             $table->foreign('id_kategori')->references('id_kategori')->on('kategori_pengaduan')->onDelete('cascade');
 
             $table->timestamps();
         });
+
 
         // 12. TANGGAPAN PENGADUAN Table
         Schema::create('tanggapan_pengaduan', function (Blueprint $table) {

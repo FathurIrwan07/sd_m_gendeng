@@ -34,7 +34,7 @@
                 </div>
 
                 <!-- Form -->
-                <form action="{{ route('user.pengaduan-anonim.store') }}" method="POST">
+                <form action="{{ route('user.pengaduan-anonim.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <!-- Kategori Pengaduan -->
@@ -60,6 +60,17 @@
                             Pilih kategori yang sesuai dengan pengaduan Anda
                         </small>
                     </div>
+
+                    <div class="form-group">
+                            <label for="foto">Upload Foto (Opsional)</label>
+                            <input type="file" class="form-control @error('foto') is-invalid @enderror" name="foto">
+                            @error('foto')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <small class="form-text text-muted">
+                                Anda dapat menambahkan foto sebagai bukti pendukung (jpg, jpeg, png)
+                            </small>
+                        </div>
 
                     <!-- Deskripsi Pengaduan -->
                     <div class="form-group">

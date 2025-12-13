@@ -100,6 +100,7 @@
                             <tr>
                                 <th class="text-center" width="5%">No</th>
                                 <th width="15%">Kategori</th>
+                                <th width="12%">Foto</th>
                                 <th width="30%">Deskripsi</th>
                                 <th width="12%">Tanggal</th>
                                 <th class="text-center" width="10%">Status</th>
@@ -114,7 +115,21 @@
                                 <td>
                                     <span class="badge badge-info">{{ $item->kategori->nama_kategori }}</span>
                                 </td>
+                                <td>
+    @if ($item->foto)
+        <img src="{{ asset('storage/' . $item->foto) }}"
+     alt="Foto"
+     width="80"
+     class="rounded">
+    @else
+        <span class="text-muted">Tidak ada</span>
+    @endif
+</td>
                                 <td>{{ Str::limit($item->deskripsi, 100) }}</td>
+
+                                
+
+
                                 <td>
                                     <small>
                                         <i class="fas fa-calendar"></i> {{ $item->tanggal_pengaduan->format('d M Y') }}<br>

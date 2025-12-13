@@ -19,6 +19,7 @@ class Pengaduan extends Model
         'user_id', // Nullable (Anonymous)
         'id_kategori',
         'deskripsi',
+        'foto',
         'status_pengaduan',
         'tanggal_pengaduan',
     ];
