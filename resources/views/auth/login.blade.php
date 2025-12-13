@@ -155,8 +155,8 @@
                                     @csrf
 
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" name="email"
-                                            value="{{ old('email') }}" placeholder="Masukkan Alamat Email" required
+                                        <input id="username" class="form-control form-control-user" name="username"
+                                            value="{{ old('username') }}" placeholder="Masukkan username" required
                                             autofocus>
                                     </div>
 
