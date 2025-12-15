@@ -40,6 +40,28 @@
                     <p class="mb-0" style="white-space: pre-line;">{{ $pengaduan->deskripsi }}</p>
                 </div>
 
+                @if($pengaduan->foto)
+    <hr>
+
+    <h6 class="font-weight-bold mb-3"><i class="fas fa-image"></i> Foto Pendukung:</h6>
+
+    <div class="text-center">
+        <img src="{{ asset('storage/' . $pengaduan->foto) }}"
+             alt="Foto Pengaduan"
+             class="img-fluid rounded shadow-sm border"
+             style="max-height: 350px; object-fit: cover;">
+
+        <br>
+
+        <a href="{{ asset('storage/' . $pengaduan->foto) }}"
+           target="_blank"
+           class="btn btn-sm btn-primary mt-2">
+            <i class="fas fa-search-plus"></i> Lihat Ukuran Besar
+        </a>
+    </div>
+@endif
+
+
                 @if($pengaduan->tanggapan)
                 <hr>
                 <h6 class="font-weight-bold mb-3 text-success"><i class="fas fa-reply"></i> Tanggapan dari Admin:</h6>

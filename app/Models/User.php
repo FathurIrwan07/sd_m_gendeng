@@ -36,6 +36,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    // atau ini (salah satu saja)
+    public function username()
+    {
+        return 'username';
+    }
+
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id', 'role_id');

@@ -58,35 +58,34 @@ class UserPengaduanController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validasi input (tanpa tgl_pengaduan)
-        $validatedData = $request->validate([
-            'id_kategori' => 'required|exists:kategori_pengaduan,id_kategori',
-            'deskripsi' => 'required|string|min:20',
-        ], [
-            // Pesan kustom
-            'id_kategori.required' => 'Kategori pengaduan wajib dipilih',
-            'id_kategori.exists' => 'Kategori yang dipilih tidak valid',
-            'deskripsi.required' => 'Deskripsi pengaduan wajib diisi',
-            'deskripsi.min' => 'Deskripsi pengaduan minimal 20 karakter',
-        ]);
+{
+    $validatedData = $request->validate([
+        'id_kategori' => 'required|exists:kategori_pengaduan,id_kategori',
+        'deskripsi' => 'required|string|min:20',
+        'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
 
-        // Siapkan data untuk disimpan
-        $dataToCreate = [
-            'id_kategori' => $validatedData['id_kategori'],
-            'deskripsi' => $validatedData['deskripsi'],
-            'tanggal_pengaduan' => Carbon::now('Asia/Jakarta'),
-            'user_id' => auth()->id(),
-            'status_pengaduan' => 'Menunggu Konfirmasi',
-        ];
+    $dataToCreate = [
+        'id_kategori' => $validatedData['id_kategori'],
+        'deskripsi' => $validatedData['deskripsi'],
+        'tanggal_pengaduan' => Carbon::now('Asia/Jakarta'),
+        'user_id' => auth()->id(),
+        'status_pengaduan' => 'Menunggu Konfirmasi',
+    ];
 
-        // Buat entri pengaduan
-        Pengaduan::create($dataToCreate);
-
-        // Redirect
-        return redirect()->route('user.pengaduan.index')
-            ->with('success', 'Pengaduan Anda berhasil dikirim dan sedang menunggu konfirmasi.');
+    if ($request->hasFile('foto')) {
+    $file = $request->file('foto');
+    $path = $file->store('pengaduan', 'public');
+    $dataToCreate['foto'] = $path;
     }
+
+
+    Pengaduan::create($dataToCreate);
+
+    return redirect()->route('user.pengaduan.index')
+        ->with('success', 'Pengaduan Anda berhasil dikirim dan sedang menunggu konfirmasi.');
+}
+
 
     public function show(Pengaduan $pengaduan)
     {
@@ -124,6 +123,7 @@ class UserPengaduanController extends Controller
         $validatedData = $request->validate([
             'id_kategori' => 'required|exists:kategori_pengaduan,id_kategori',
             'deskripsi' => 'required|string|min:20',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ], [
             'id_kategori.required' => 'Kategori pengaduan wajib dipilih',
             'id_kategori.exists' => 'Kategori yang dipilih tidak valid',
@@ -139,6 +139,12 @@ class UserPengaduanController extends Controller
             'user_id' => null, // Anonim
             'status_pengaduan' => 'Menunggu Konfirmasi',
         ];
+
+        // 🔥 SIMPAN FOTO JIKA ADA
+        if ($request->hasFile('foto')) {
+            $path = $request->file('foto')->store('pengaduan', 'public');
+            $dataToCreate['foto'] = $path;
+        }
 
         // Buat entri pengaduan
         Pengaduan::create($dataToCreate);

@@ -102,6 +102,7 @@
                                 <th width="5%" class="text-center">No</th>
                                 <th width="15%">Pelapor</th>
                                 <th width="10%">Kategori</th>
+                                <th width="12%">Foto</th>
                                 <th width="10%" class="text-center">Tanggal</th>
                                 <th width="10%" class="text-center">Status</th>
                                 <th width="15%" class="text-center">Aksi</th>
@@ -128,6 +129,23 @@
                                             <i class="fas fa-tag"></i> {{ $item->kategori->nama_kategori }}
                                         </span>
                                     </td>
+
+
+                                    <td>
+    @if ($item->foto)
+        <img src="{{ asset('storage/' . $item->foto) }}"
+     alt="Foto"
+     width="80"
+     class="rounded">
+    @else
+        <span class="text-muted">Tidak ada</span>
+    @endif
+</td>
+
+
+
+
+
                                     <td class="text-center">
                                         <small>
                                             <i class="fas fa-calendar"></i> 

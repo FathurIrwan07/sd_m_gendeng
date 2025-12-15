@@ -198,10 +198,10 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <span class="badge badge-{{ 
-                                                                    $item->status_pengaduan === 'Selesai' ? 'success' :
+                                                                                            $item->status_pengaduan === 'Selesai' ? 'success' :
                                     ($item->status_pengaduan === 'Diproses' ? 'warning' :
                                         ($item->status_pengaduan === 'Ditolak' ? 'danger' : 'secondary')) 
-                                                                }}">
+                                                                                        }}">
                                                             @if($item->status_pengaduan === 'Selesai')
                                                                 <i class="fas fa-check-circle"></i>
                                                             @elseif($item->status_pengaduan === 'Diproses')
@@ -304,7 +304,7 @@
                     ]
                 });
             @endif
-        });
+            });
     </script>
 @endpush
 
