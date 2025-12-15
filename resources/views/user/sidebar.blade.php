@@ -4,8 +4,8 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center py-3" href="{{ route('user.dashboard') }}">
         <div class="sidebar-brand-icon">
-            <img src="{{ asset('template/img/logo_sd_gendeng.jpg') }}" class="img-fluid" alt="Logo SD Mugenta" 
-                 style="width: 50px; height: 50px; object-fit: cover;">
+            <img src="{{ asset('template/img/logo_sd_gendeng.jpg') }}" class="img-fluid" alt="Logo SD Mugenta"
+                style="width: 50px; height: 50px; object-fit: cover;">
         </div>
         <div class="sidebar-brand-text mx-2 text-dark">SDMugenta</div>
     </a>
@@ -26,7 +26,8 @@
     <div class="sidebar-heading">Layanan Pengaduan</div>
 
     <!-- Riwayat Pengaduan -->
-    <li class="nav-item {{ Request::is('user/pengaduan') && !Request::is('user/pengaduan/create') && !Request::is('user/pengaduan-*') ? 'active' : '' }}">
+    <li
+        class="nav-item {{ Request::is('user/pengaduan') && !Request::is('user/pengaduan/create') && !Request::is('user/pengaduan-*') ? 'active' : '' }}">
         <a class="nav-link d-flex align-items-center" href="{{ route('user.pengaduan.index') }}">
             <i class="fas fa-list me-2"></i>
             <span>Riwayat Pengaduan</span>
@@ -49,7 +50,7 @@
             @php
                 $userUnread = \App\Models\Pengaduan::where('user_id', auth()->id())
                     ->withCount([
-                        'chats as unread_count' => function($q) {
+                        'chats as unread_count' => function ($q) {
                             $q->where('is_admin', true)->where('is_read', false);
                         }
                     ])
@@ -201,9 +202,12 @@
     }
 
     @keyframes pulse {
-        0%, 100% {
+
+        0%,
+        100% {
             transform: translateY(-50%) scale(1);
         }
+
         50% {
             transform: translateY(-50%) scale(1.1);
         }
