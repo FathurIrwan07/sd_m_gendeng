@@ -5,12 +5,7 @@
 
 @section('content')
     <div class="pt-20">
-        {{-- Hero Section --}}
-        {{-- Hero Section - Improved --}}
-        {{-- Hero Section - Improved --}}
-        {{-- Hero Section - Improved --}}
-        <section
-            class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-red-50/30 to-white">
+        <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-red-50/30 to-white">
 
             {{-- Background Pattern --}}
             <div class="absolute inset-0 opacity-5">
@@ -19,34 +14,34 @@
                 </div>
             </div>
 
-            <div class="relative w-full max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 pb-20 lg:pt-12 lg:pb-24">
-                <div class="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+            <div class="relative w-full max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 py-16 lg:py-20">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
                     {{-- TEXT SECTION --}}
-                    <div class="text-center lg:text-left space-y-6" data-aos="fade-right">
-                        <div class="inline-block mb-2 px-5 py-2.5 bg-red-50 rounded-full border border-red-100">
-                            <span class="text-[#B91C1C] font-medium">Selamat Datang di SD Muhammadiyah Gendeng</span>
+                    <div class="text-center lg:text-left space-y-5" data-aos="fade-right">
+                        <div class="inline-block mb-1 px-4 py-2 bg-red-50 rounded-full border border-red-100">
+                            <span class="text-[#B91C1C] font-medium text-sm">Selamat Datang di SD Muhammadiyah Gendeng</span>
                         </div>
 
                         <h1 class="text-gray-900 leading-tight text-center lg:text-left">
-                            <span class="block text-5xl lg:text-6xl xl:text-7xl my-4 font-bold">Happy School</span>
-                            <span class="block text-[#B91C1C] text-3xl lg:text-4xl xl:text-5xl font-semibold">
+                            <span class="block text-4xl lg:text-5xl xl:text-6xl my-3 font-bold">Happy School</span>
+                            <span class="block text-[#B91C1C] text-2xl lg:text-3xl xl:text-4xl font-semibold">
                                 happy to learn and happy to grow
                             </span>
                         </h1>
 
-                        <p class="text-gray-600 text-base lg:text-lg mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                        <p class="text-gray-600 text-sm lg:text-base mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                             Mengembangkan potensi anak dengan pembelajaran berkualitas, fasilitas modern, dan pendekatan
                             yang penuh kasih sayang.
                         </p>
 
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start pt-2">
                             <a href="{{ route('ppdb') }}"
-                                class="px-10 py-4 bg-[#B91C1C] text-white rounded-lg hover:bg-[#991B1B] transition-all duration-300 shadow-lg shadow-red-200 hover:shadow-xl hover:shadow-red-300 text-center font-semibold">
+                                class="px-8 py-3 bg-[#B91C1C] text-white rounded-lg hover:bg-[#991B1B] transition-all duration-300 shadow-lg shadow-red-200 hover:shadow-xl hover:shadow-red-300 text-center font-semibold">
                                 Daftar Sekarang
                             </a>
                             <a href="{{ route('about') }}"
-                                class="px-10 py-4 border-2 border-gray-200 text-gray-700 rounded-lg hover:border-[#B91C1C] hover:text-[#B91C1C] transition-all duration-300 text-center font-semibold">
+                                class="px-8 py-3 border-2 border-gray-200 text-gray-700 rounded-lg hover:border-[#B91C1C] hover:text-[#B91C1C] transition-all duration-300 text-center font-semibold">
                                 Pelajari Lebih Lanjut
                             </a>
                         </div>
@@ -58,31 +53,31 @@
                         {{-- Main Image Container --}}
                         <div class="relative rounded-3xl overflow-hidden shadow-2xl">
                             <img src="{{ asset('template/img/sekolah.jpg') }}" alt="Gambar Bangunan Sekolah"
-                                class="w-full h-[500px] lg:h-[550px] xl:h-[600px] object-cover object-center">
+                                class="w-full h-[400px] lg:h-[450px] xl:h-[500px] object-cover object-center">
 
                             <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                         </div>
 
                         {{-- Stats Card Over Image --}}
-                        <div class="absolute -bottom-8 lg:-bottom-10 left-1/2 -translate-x-1/2 w-[90%] lg:w-[85%]">
-                            <div class="bg-white rounded-2xl shadow-2xl p-6 lg:p-8">
-                                <div class="grid grid-cols-3 gap-4 lg:gap-6">
+                        <div class="absolute -bottom-6 lg:-bottom-8 left-1/2 -translate-x-1/2 w-[90%] lg:w-[85%]">
+                            <div class="bg-white rounded-2xl shadow-2xl p-5 lg:p-6">
+                                <div class="grid grid-cols-3 gap-3 lg:gap-5">
 
                                     <div class="text-center">
-                                        <div class="text-[#B91C1C] font-bold text-2xl lg:text-3xl mb-1">
+                                        <div class="text-[#B91C1C] font-bold text-xl lg:text-2xl mb-1">
                                             {{ $totalPrestasi }}+</div>
-                                        <div class="text-sm lg:text-base text-gray-600">Prestasi</div>
+                                        <div class="text-xs lg:text-sm text-gray-600">Prestasi</div>
                                     </div>
 
                                     <div class="text-center border-x border-gray-200">
-                                        <div class="text-[#B91C1C] font-bold text-2xl lg:text-3xl mb-1">{{ $totalGuru }}+
+                                        <div class="text-[#B91C1C] font-bold text-xl lg:text-2xl mb-1">{{ $totalGuru }}+
                                         </div>
-                                        <div class="text-sm lg:text-base text-gray-600">Guru</div>
+                                        <div class="text-xs lg:text-sm text-gray-600">Guru</div>
                                     </div>
 
                                     <div class="text-center">
-                                        <div class="text-[#B91C1C] font-bold text-2xl lg:text-3xl mb-1">A</div>
-                                        <div class="text-sm lg:text-base text-gray-600">Akreditasi</div>
+                                        <div class="text-[#B91C1C] font-bold text-xl lg:text-2xl mb-1">A</div>
+                                        <div class="text-xs lg:text-sm text-gray-600">Akreditasi</div>
                                     </div>
 
                                 </div>
