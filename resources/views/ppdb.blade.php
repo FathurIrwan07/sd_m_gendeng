@@ -6,7 +6,7 @@
         <section class="bg-gradient-to-br from-[#B91C1C] to-[#991B1B] text-white py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center" data-aos="fade-up">
-                    <h1 class="text-white mb-4">Informasi PPDB {{ $infoPpdb->tahun_ajaran}}</h1>
+                    <h1 class="text-white mb-4">Informasi PPDB {{ $infoPpdb->tahun_ajaran ?? " "}}</h1>
                     <p class="text-red-100 max-w-2xl mx-auto">
                         Bergabunglah dengan keluarga besar SD Muhammadiyah Gendeng dan wujudkan masa depan cemerlang
                         putra-putri Anda.

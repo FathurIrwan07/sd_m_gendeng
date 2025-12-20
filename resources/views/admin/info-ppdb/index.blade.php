@@ -2,11 +2,6 @@
 @extends('admin.app')
 
 @section('content')
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <a href="{{ route('info-ppdb.create') }}" class="btn btn-sm shadow-sm" style="background-color: #800000; color: white;">
-        <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Info PPDB
-    </a>
-</div>
 
 @if(session('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
